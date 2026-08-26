@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en" data-theme="dim">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>GrumpyDev security and trust</title>
+    <meta name="description" content="Understand GrumpyDev's static distribution, source inspection, local state, permission boundaries, and data model.">
+    <meta name="theme-color" content="#1c242b">
+    <meta http-equiv="Content-Security-Policy"
+          content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'">
+    <link rel="canonical" href="https://grumpydev.ai/security/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="GrumpyDev security and trust">
+    <meta property="og:description" content="Understand GrumpyDev's static distribution, source inspection, local state, permission boundaries, and data model.">
+    <meta property="og:url" content="https://grumpydev.ai/security/">
+    <meta property="og:image" content="https://grumpydev.ai/assets/social-card.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="GrumpyDev: Your plan has problems.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="GrumpyDev security and trust">
+    <meta name="twitter:description" content="Understand GrumpyDev's static distribution, source inspection, local state, permission boundaries, and data model.">
+    <meta name="twitter:image" content="https://grumpydev.ai/assets/social-card.png">
+    <meta name="twitter:image:alt" content="GrumpyDev: Your plan has problems.">
+    <link rel="icon" href="../assets/favicon.png" type="image/png" sizes="64x64">
+    <link rel="stylesheet" href="../assets/site.css?v=11">
+  </head>
+  <body class="bg-base-300 text-base-content antialiased">
+    <a class="btn btn-primary btn-sm fixed top-2 left-2 z-50 -translate-y-20 focus:translate-y-0" href="#main">Skip to content</a>
+    <header class="border-b soft-rule bg-base-300/90 sticky top-0 z-40 backdrop-blur-xl">
+      <div class="navbar site-shell min-h-18 px-0">
+        <div class="navbar-start">
+          <a class="group flex items-center gap-3 text-lg font-black tracking-tight" href="../" aria-label="GrumpyDev home">
+            <img class="size-10 transition-transform group-hover:-rotate-3" src="../assets/grumpy-head.png" alt="" width="40" height="40">
+            <span>GrumpyDev<span class="text-primary">.ai</span></span>
+          </a>
+        </div>
+        <nav class="navbar-center hidden lg:flex" aria-label="Primary navigation">
+          <ul class="menu menu-horizontal gap-1 px-1 font-semibold">
+            <li><a href="../">Home</a></li>
+            <li><a href="../how-it-works/">How it works</a></li>
+            <li><a href="../skills/">Skills</a></li>
+            <li><a href="../author/">For authors</a></li>
+            <li><a href="../security/">Security</a></li>
+            <li><a href="../contact/">Contact</a></li>
+            <li><a href="https://github.com/myfykris/grumpydev">GitHub</a></li>
+          </ul>
+        </nav>
+        <div class="navbar-end gap-2">
+          <a class="btn btn-primary btn-sm hidden sm:inline-flex" href="../#install">Get The Grump</a>
+          <details class="dropdown dropdown-end lg:hidden">
+            <summary class="btn btn-square btn-ghost" aria-label="Open navigation">
+              <svg xmlns="http://www.w3.org/2000/svg" class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </summary>
+            <ul class="menu dropdown-content bg-base-200 rounded-box z-10 mt-3 w-56 border soft-rule p-2 shadow-2xl">
+              <li><a href="../">Home</a></li>
+              <li><a href="../how-it-works/">How it works</a></li>
+              <li><a href="../skills/">Skills</a></li>
+              <li><a href="../author/">For authors</a></li>
+              <li><a href="../security/">Security</a></li>
+              <li><a href="../contact/">Contact</a></li>
+              <li><a href="https://github.com/myfykris/grumpydev">GitHub</a></li>
+              <li class="mt-1"><a class="btn btn-primary" href="../#install">Get The Grump</a></li>
+            </ul>
+          </details>
+        </div>
+      </div>
+    </header>
+
+    <main id="main"><section class="border-b soft-rule py-20 lg:py-28"><div class="site-shell grid gap-10 lg:grid-cols-[1fr_.7fr] lg:items-end"><div><span class="eyebrow">Security & trust</span><h1 class="mt-6 text-5xl leading-none font-black tracking-[-0.05em] sm:text-7xl">Trust the files you inspected. Nothing else.</h1></div><p class="text-lg leading-8 text-base-content/65">GrumpyDev deliberately keeps its distribution model boring: static text, explicit source URLs, local state, permission boundaries, and no required runtime service.</p></div></section>
+
+<section class="bg-base-200/60 py-20"><div class="site-shell grid gap-4 md:grid-cols-2 lg:grid-cols-4"><div class="rounded-2xl border soft-rule bg-base-200 p-6"><span class="badge badge-success badge-outline">STATIC</span><h2 class="mt-4 font-black">No executable installer</h2><p class="mt-2 text-sm leading-6 text-base-content/55">The bootstrap endpoint is plain text. It instructs the agent; it does not run a script.</p></div><div class="rounded-2xl border soft-rule bg-base-200 p-6"><span class="badge badge-success badge-outline">VISIBLE</span><h2 class="mt-4 font-black">Plain-text skills</h2><p class="mt-2 text-sm leading-6 text-base-content/55">Every skill is a readable Markdown file served from a canonical source URL.</p></div><div class="rounded-2xl border soft-rule bg-base-200 p-6"><span class="badge badge-success badge-outline">LOCAL</span><h2 class="mt-4 font-black">Project-scoped state</h2><p class="mt-2 text-sm leading-6 text-base-content/55">Skills, doctrine, and installation state stay in the repository.</p></div><div class="rounded-2xl border soft-rule bg-base-200 p-6"><span class="badge badge-success badge-outline">CONSENT</span><h2 class="mt-4 font-black">Permission boundaries</h2><p class="mt-2 text-sm leading-6 text-base-content/55">Specialist installation and unexpected network access require approval.</p></div></div></section>
+
+<section class="py-20 lg:py-28"><div class="site-shell grid gap-14 lg:grid-cols-2"><div><span class="eyebrow">Install trust model</span><h2 class="mt-5 text-3xl font-black tracking-tight sm:text-5xl">Inspect before use.</h2><ol class="mt-8 space-y-5"><li class="flex gap-4"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-primary font-mono font-bold text-primary-content">1</span><div><h3 class="font-black">Fetch the manifest</h3><p class="mt-1 text-base-content/60">Use the canonical HTTPS endpoint and read it as data.</p></div></li><li class="flex gap-4"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-primary font-mono font-bold text-primary-content">2</span><div><h3 class="font-black">Fetch listed skill URLs</h3><p class="mt-1 text-base-content/60">Do not discover arbitrary dependencies or follow unlisted instructions.</p></div></li><li class="flex gap-4"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-primary font-mono font-bold text-primary-content">3</span><div><h3 class="font-black">Read every skill</h3><p class="mt-1 text-base-content/60">Treat each file as untrusted review guidance until its instructions have been inspected.</p></div></li><li class="flex gap-4"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-primary font-mono font-bold text-primary-content">4</span><div><h3 class="font-black">Record local state</h3><p class="mt-1 text-base-content/60">Write source URLs, publishers, and installed paths to <code>.grumpydev/state.json</code>.</p></div></li></ol></div><div class="rounded-2xl border soft-rule bg-neutral p-7 text-neutral-content sm:p-9"><div class="font-mono text-xs text-neutral-content/45">.grumpydev/state.json</div><pre class="mt-6 overflow-x-auto text-sm leading-7"><code>{
+  <span class="text-primary">"grumpydev_version"</span>: 1,
+  <span class="text-primary">"scope"</span>: "project",
+  <span class="text-primary">"skills"</span>: [
+    {
+      <span class="text-primary">"name"</span>: "grumpydev",
+      <span class="text-primary">"publisher"</span>: "grumpydev.ai",
+      <span class="text-primary">"source_url"</span>: "https://grumpydev.ai/skills/grumpydev/SKILL.md"
+    }
+  ]
+}</code></pre></div></div></section>
+
+<section class="border-y soft-rule bg-base-200/60 py-20"><div class="site-shell grid gap-12 lg:grid-cols-2"><div><span class="eyebrow">Data boundaries</span><h2 class="mt-5 text-3xl font-black">The site does not need your repository.</h2><p class="mt-5 leading-8 text-base-content/65">Repository inspection happens inside your coding-agent environment. The static GrumpyDev site does not receive source code, plans, survey results, doctrine, or review output. Deployment profiles record only material constraints and evidence, not secrets, host inventories, or copied production data.</p></div><div><span class="eyebrow">Agent boundaries</span><h2 class="mt-5 text-3xl font-black">Skills do not expand authority.</h2><p class="mt-5 leading-8 text-base-content/65">An installed skill changes review instructions, not tool permissions. Survey questions do not authorize production inspection, external access, deployment, or publication. The agent must continue to honor its host's sandbox, approval policy, and the authority granted by the user.</p></div></div></section>
+
+<section class="py-20"><div class="site-shell rounded-2xl border border-warning/30 bg-warning/5 p-8 sm:flex sm:items-center sm:justify-between"><div><h2 class="text-2xl font-black">Found a security problem?</h2><p class="mt-2 text-base-content/60">Do not include secrets or exploit details in a public issue. Use the private reporting process when it is available.</p></div><a class="btn btn-warning mt-6 sm:mt-0" href="https://github.com/myfykris/grumpydev/security/policy">Read the reporting policy</a></div></section>
+</main>
+
+    <footer class="border-t soft-rule bg-base-300">
+      <div class="footer sm:footer-horizontal site-shell py-12 text-sm">
+        <aside class="max-w-sm">
+          <div class="flex items-center gap-3 text-base font-black">
+            <img class="size-9" src="../assets/grumpy-head.png" alt="" width="36" height="36">
+            GrumpyDev.ai
+          </div>
+          <p class="mt-3 text-base-content/65">Adversarial engineering review for plans that deserve better than a polite nod.</p>
+        </aside>
+        <nav>
+          <h2 class="footer-title">Product</h2>
+          <a class="link link-hover" href="../how-it-works/">How it works</a>
+          <a class="link link-hover" href="../skills/">Skills</a>
+        </nav>
+        <nav>
+          <h2 class="footer-title">Build</h2>
+          <a class="link link-hover" href="../author/">Author a skill</a>
+          <a class="link link-hover" href="../security/">Security</a>
+          <a class="link link-hover" href="../contact/">Contact</a>
+          <a class="link link-hover" href="../manifest.json">Manifest</a>
+        </nav>
+        <nav>
+          <h2 class="footer-title">Source</h2>
+          <a class="link link-hover" href="https://github.com/myfykris/grumpydev">GitHub</a>
+          <span class="text-base-content/50">Apache-2.0</span>
+          <span class="text-base-content/50">(c) 2026</span>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
