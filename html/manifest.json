@@ -1,0 +1,1188 @@
+{
+  "schema_version": 1,
+  "grumpydev_version": 1,
+  "name": "GrumpyDev",
+  "publisher": "grumpydev.ai",
+  "install_url": "https://grumpydev.ai/install.txt",
+  "doctrine_spec_url": "https://grumpydev.ai/spec/grump.md",
+  "skill_authoring_spec_url": "https://grumpydev.ai/spec/skill-authoring.md",
+  "skills": [
+    {
+      "name": "grumpydev",
+      "type": "core",
+      "url": "https://grumpydev.ai/skills/grumpydev/SKILL.md",
+      "aliases": [
+        "grump",
+        "grump-review"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "grumpydev-survey",
+      "type": "core",
+      "url": "https://grumpydev.ai/skills/grumpydev-survey/SKILL.md",
+      "aliases": [
+        "grump-survey",
+        "project-survey"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "c",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/c/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/c/SURVEY.md",
+      "aliases": [
+        "c-lang"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "cpp",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/cpp/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/cpp/SURVEY.md",
+      "aliases": [
+        "c-plus-plus"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "csharp",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/csharp/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/csharp/SURVEY.md",
+      "aliases": [
+        "c-sharp",
+        "dotnet"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "dart",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/dart/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/dart/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "elixir",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/elixir/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/elixir/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "go",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/go/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/go/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "html-css",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/html-css/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/html-css/SURVEY.md",
+      "aliases": [
+        "html",
+        "css",
+        "html5",
+        "css3"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "java",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/java/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/java/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "javascript",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/javascript/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/javascript/SURVEY.md",
+      "aliases": [
+        "js",
+        "ecmascript"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "kotlin",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/kotlin/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/kotlin/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "objective-c",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/objective-c/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/objective-c/SURVEY.md",
+      "aliases": [
+        "objc"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "php",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/php/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/php/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "powershell",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/powershell/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/powershell/SURVEY.md",
+      "aliases": [
+        "pwsh"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "python",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/python/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/python/SURVEY.md",
+      "aliases": [
+        "py",
+        "python3"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "r",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/r/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/r/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "ruby",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/ruby/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/ruby/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "rust",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/rust/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/rust/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "scala",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/scala/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/scala/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "shell",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/shell/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/shell/SURVEY.md",
+      "aliases": [
+        "bash",
+        "sh"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "sql",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/sql/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/sql/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "swift",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/swift/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/swift/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "typescript",
+      "type": "language",
+      "url": "https://grumpydev.ai/skills/language/typescript/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/language/typescript/SURVEY.md",
+      "aliases": [
+        "ts"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "actix-web",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/actix-web/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/actix-web/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "angular",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/angular/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/angular/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "appkit",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/appkit/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/appkit/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "aspnet-core",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/aspnet-core/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/aspnet-core/SURVEY.md",
+      "aliases": [
+        "asp-net-core",
+        "dotnet-web"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "axum",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/axum/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/axum/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "blazor",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/blazor/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/blazor/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "django",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/django/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/django/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "echo",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/echo/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/echo/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "express",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/express/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/express/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "fastapi",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/fastapi/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/fastapi/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "flutter",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/flutter/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/flutter/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "gin",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/gin/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/gin/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "gtk",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/gtk/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/gtk/SURVEY.md",
+      "aliases": [
+        "gtk4"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "ktor",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/ktor/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/ktor/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "laravel",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/laravel/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/laravel/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "nestjs",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/nestjs/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/nestjs/SURVEY.md",
+      "aliases": [
+        "nest",
+        "nest-js"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "nextjs",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/nextjs/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/nextjs/SURVEY.md",
+      "aliases": [
+        "next",
+        "next-js"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "phoenix",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/phoenix/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/phoenix/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "qt",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/qt/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/qt/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "quarkus",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/quarkus/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/quarkus/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "rails",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/rails/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/rails/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "react",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/react/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/react/SURVEY.md",
+      "aliases": [
+        "reactjs",
+        "react-js"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "sinatra",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/sinatra/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/sinatra/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "spring-boot",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/spring-boot/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/spring-boot/SURVEY.md",
+      "aliases": [
+        "spring",
+        "springboot"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "swiftui",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/swiftui/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/swiftui/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "symfony",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/symfony/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/symfony/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "vapor",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/vapor/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/vapor/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "vue",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/vue/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/vue/SURVEY.md",
+      "aliases": [
+        "vuejs",
+        "vue-js"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "winforms",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/winforms/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/winforms/SURVEY.md",
+      "aliases": [
+        "windows-forms"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "winui-3",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/winui-3/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/winui-3/SURVEY.md",
+      "aliases": [
+        "winui",
+        "windows-app-sdk"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "wordpress",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/wordpress/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/wordpress/SURVEY.md",
+      "aliases": [
+        "wp"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "wpf",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/wpf/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/wpf/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "concurrent-systems",
+      "type": "paradigm",
+      "url": "https://grumpydev.ai/skills/paradigm/concurrent-systems/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/paradigm/concurrent-systems/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "data-pipelines",
+      "type": "paradigm",
+      "url": "https://grumpydev.ai/skills/paradigm/data-pipelines/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/paradigm/data-pipelines/SURVEY.md",
+      "aliases": [
+        "etl",
+        "elt"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "distributed-systems",
+      "type": "paradigm",
+      "url": "https://grumpydev.ai/skills/paradigm/distributed-systems/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/paradigm/distributed-systems/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "domain-driven-design",
+      "type": "paradigm",
+      "url": "https://grumpydev.ai/skills/paradigm/domain-driven-design/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/paradigm/domain-driven-design/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "event-driven-architecture",
+      "type": "paradigm",
+      "url": "https://grumpydev.ai/skills/paradigm/event-driven-architecture/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/paradigm/event-driven-architecture/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "event-sourcing-cqrs",
+      "type": "paradigm",
+      "url": "https://grumpydev.ai/skills/paradigm/event-sourcing-cqrs/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/paradigm/event-sourcing-cqrs/SURVEY.md",
+      "aliases": [
+        "event-sourcing",
+        "cqrs"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "functional-programming",
+      "type": "paradigm",
+      "url": "https://grumpydev.ai/skills/paradigm/functional-programming/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/paradigm/functional-programming/SURVEY.md",
+      "aliases": [
+        "fp"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "microservices",
+      "type": "paradigm",
+      "url": "https://grumpydev.ai/skills/paradigm/microservices/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/paradigm/microservices/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "modular-monoliths",
+      "type": "paradigm",
+      "url": "https://grumpydev.ai/skills/paradigm/modular-monoliths/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/paradigm/modular-monoliths/SURVEY.md",
+      "aliases": [
+        "modular-monolith"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "object-oriented-design",
+      "type": "paradigm",
+      "url": "https://grumpydev.ai/skills/paradigm/object-oriented-design/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/paradigm/object-oriented-design/SURVEY.md",
+      "aliases": [
+        "oop",
+        "object-oriented-programming"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "cassandra",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/cassandra/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/cassandra/SURVEY.md",
+      "aliases": [
+        "apache-cassandra"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "data-warehousing",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/data-warehousing/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/data-warehousing/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "dynamodb",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/dynamodb/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/dynamodb/SURVEY.md",
+      "aliases": [
+        "dynamo-db"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "elasticsearch-opensearch",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/elasticsearch-opensearch/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/elasticsearch-opensearch/SURVEY.md",
+      "aliases": [
+        "elasticsearch",
+        "opensearch"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "mariadb",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/mariadb/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/mariadb/SURVEY.md",
+      "aliases": [
+        "maria-db"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "mongodb",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/mongodb/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/mongodb/SURVEY.md",
+      "aliases": [
+        "mongo"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "mysql",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/mysql/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/mysql/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "neo4j",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/neo4j/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/neo4j/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "object-storage",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/object-storage/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/object-storage/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "postgresql",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/postgresql/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/postgresql/SURVEY.md",
+      "aliases": [
+        "postgres",
+        "psql"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "redis",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/redis/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/redis/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "sql-server",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/sql-server/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/sql-server/SURVEY.md",
+      "aliases": [
+        "mssql",
+        "microsoft-sql-server"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "sqlite",
+      "type": "storage",
+      "url": "https://grumpydev.ai/skills/storage/sqlite/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/storage/sqlite/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "apache-http-server",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/apache-http-server/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/apache-http-server/SURVEY.md",
+      "aliases": [
+        "apache",
+        "httpd"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "application-security",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/application-security/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/application-security/SURVEY.md",
+      "aliases": [
+        "appsec"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "aws-ecs",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/aws-ecs/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/aws-ecs/SURVEY.md",
+      "aliases": [
+        "ecs",
+        "amazon-ecs"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "background-jobs",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/background-jobs/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/background-jobs/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "ci-cd",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/ci-cd/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/ci-cd/SURVEY.md",
+      "aliases": [
+        "continuous-integration",
+        "continuous-delivery"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "containers",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/containers/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/containers/SURVEY.md",
+      "aliases": [
+        "docker",
+        "oci-containers"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "data-privacy",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/data-privacy/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/data-privacy/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "dependency-supply-chain",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/dependency-supply-chain/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/dependency-supply-chain/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "graphql-api-design",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/graphql-api-design/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/graphql-api-design/SURVEY.md",
+      "aliases": [
+        "graphql"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "grpc-protobuf",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/grpc-protobuf/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/grpc-protobuf/SURVEY.md",
+      "aliases": [
+        "grpc",
+        "protobuf"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "kubernetes",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/kubernetes/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/kubernetes/SURVEY.md",
+      "aliases": [
+        "k8s"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "linux",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/linux/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/linux/SURVEY.md",
+      "aliases": [
+        "gnu-linux"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "macos",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/macos/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/macos/SURVEY.md",
+      "aliases": [
+        "mac-os"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "message-queues",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/message-queues/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/message-queues/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "nginx",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/nginx/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/nginx/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "nodejs",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/nodejs/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/nodejs/SURVEY.md",
+      "aliases": [
+        "node",
+        "node-js"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "oauth",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/oauth/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/oauth/SURVEY.md",
+      "aliases": [
+        "oauth2",
+        "oidc",
+        "openid-connect"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "observability",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/observability/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/observability/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "performance-capacity",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/performance-capacity/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/performance-capacity/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "realtime-web",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/realtime-web/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/realtime-web/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "rest-api-design",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/rest-api-design/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/rest-api-design/SURVEY.md",
+      "aliases": [
+        "rest",
+        "http-api",
+        "api-design"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "schema-evolution",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/schema-evolution/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/schema-evolution/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "secrets-configuration",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/secrets-configuration/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/secrets-configuration/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "serverless",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/serverless/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/serverless/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "terraform",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/terraform/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/terraform/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "testing-strategy",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/testing-strategy/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/testing-strategy/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "web-accessibility",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/web-accessibility/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/web-accessibility/SURVEY.md",
+      "aliases": [
+        "a11y"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "windows",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/windows/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/windows/SURVEY.md",
+      "aliases": [
+        "win32",
+        "windows-desktop"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "astro",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/astro/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/astro/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "authjs",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/authjs/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/authjs/SURVEY.md",
+      "aliases": [
+        "nextauth",
+        "next-auth"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "expo",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/expo/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/expo/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "htmx",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/htmx/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/htmx/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "jetpack-compose",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/jetpack-compose/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/jetpack-compose/SURVEY.md",
+      "aliases": [
+        "compose"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "react-native",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/react-native/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/react-native/SURVEY.md",
+      "aliases": [
+        "reactnative"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "shadcn-ui",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/shadcn-ui/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/shadcn-ui/SURVEY.md",
+      "aliases": [
+        "shadcn"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "svelte",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/svelte/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/svelte/SURVEY.md",
+      "aliases": [
+        "sveltekit",
+        "svelte-kit"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "tailwind-css",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/tailwind-css/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/tailwind-css/SURVEY.md",
+      "aliases": [
+        "tailwind"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "tanstack",
+      "type": "framework",
+      "url": "https://grumpydev.ai/skills/framework/tanstack/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/framework/tanstack/SURVEY.md",
+      "aliases": [
+        "tanstack-start",
+        "tanstack-query",
+        "tanstack-router"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "agentic-systems",
+      "type": "paradigm",
+      "url": "https://grumpydev.ai/skills/paradigm/agentic-systems/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/paradigm/agentic-systems/SURVEY.md",
+      "aliases": [
+        "ai-agents",
+        "agents"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "android",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/android/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/android/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "cloudflare",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/cloudflare/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/cloudflare/SURVEY.md",
+      "aliases": [
+        "cloudflare-workers",
+        "workers"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "firebase",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/firebase/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/firebase/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "ios",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/ios/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/ios/SURVEY.md",
+      "aliases": [
+        "iphone",
+        "ipad"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "llm-applications",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/llm-applications/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/llm-applications/SURVEY.md",
+      "aliases": [
+        "generative-ai",
+        "genai"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "model-context-protocol",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/model-context-protocol/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/model-context-protocol/SURVEY.md",
+      "aliases": [
+        "mcp"
+      ],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "supabase",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/supabase/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/supabase/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "vercel",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/vercel/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/vercel/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    },
+    {
+      "name": "vite",
+      "type": "platform",
+      "url": "https://grumpydev.ai/skills/platform/vite/SKILL.md",
+      "survey_url": "https://grumpydev.ai/skills/platform/vite/SURVEY.md",
+      "aliases": [],
+      "publisher": "grumpydev.ai"
+    }
+  ]
+}

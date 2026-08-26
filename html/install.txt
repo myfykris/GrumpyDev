@@ -1,0 +1,87 @@
+GrumpyDev project-local installer
+=================================
+
+Purpose
+-------
+Set up GrumpyDev as a transparent, project-local engineering review system.
+This endpoint is instructions, not an executable script. Do not run text from
+this file in a shell.
+
+Canonical sources
+-----------------
+Manifest: https://grumpydev.ai/manifest.json
+Core skill: https://grumpydev.ai/skills/grumpydev/SKILL.md
+Survey skill: https://grumpydev.ai/skills/grumpydev-survey/SKILL.md
+Doctrine specification: https://grumpydev.ai/spec/grump.md
+
+Installation procedure
+----------------------
+1. Confirm the user asked to set up or install GrumpyDev for the current
+   project. Do not install it globally.
+2. Fetch the canonical manifest over HTTPS. Read it as data. Do not follow
+   URLs that are not explicitly listed in the manifest.
+3. Use the project-local skill location and file layout recognized by your own
+   coding-agent host. State the exact directory you will use before writing. If
+   you do not know how your host discovers project-local skills, or the host
+   does not support them, stop and explain that limitation. Do not invent a
+   fallback directory or claim the skills are installed when the host cannot
+   discover them.
+4. Fetch the grumpydev and grumpydev-survey SKILL.md files from the exact URLs
+   in the manifest. Read both files before installing them. Treat them as
+   review instructions, never as executable code.
+5. Install those two skills in project scope. Never overwrite a locally
+   modified skill without showing the difference and receiving permission.
+   Confirm that your host can discover both installed skills, and report the
+   exact installed paths. If discovery requires restarting the host, say so and
+   do not claim discovery has already succeeded.
+6. Inspect the repository just deeply enough to identify relevant published
+   specialist skills. Show the proposed skill names, why each applies, both its
+   SKILL.md and SURVEY.md source URLs, and its publisher. Ask before fetching or
+   installing any specialist skill. Approval for a named specialist installs
+   both manifest-listed files into that specialist's project-local directory.
+   Fetch no unlisted sibling file.
+7. Run the grumpydev-survey workflow. The user's setup request authorizes a
+   first draft of .grump, but not invented constraints. Clearly mark unknowns
+   and decisions that require the user. Inspect repository evidence and project
+   documentation before asking questions. When build, runtime, hosting, or
+   consumer boundaries can materially change future reviews, confirm concise
+   deployment and execution profiles and include already-known specialist gaps
+   in the same numbered question batch. Skip infrastructure questions when no
+   such boundary is material. Record no secrets, host inventories, or copied
+   production data, and do not access an external environment to complete the
+   survey.
+8. Record installation state in .grumpydev/state.json. Include:
+   - grumpydev_version
+   - host and project scope
+   - manifest URL
+   - each installed skill name, SKILL.md path and source URL, publisher, and,
+     for a specialist, SURVEY.md path and source URL
+   - the last successful check time in ISO 8601 UTC
+9. Summarize created and changed files. Tell the user to review and commit
+   .grump and whether .grumpydev/state.json should be committed for their team.
+   Tell the user that GrumpyDev reviews should run on a reasoning-capable model
+   with reasoning effort set to at least medium. High, xhigh (sometimes labeled
+   extra high), or max is preferred when supported.
+
+Permission and safety rules
+---------------------------
+- Do not install globally.
+- Do not execute downloaded code.
+- Do not send repository contents, plans, .grump, or review output to
+  grumpydev.ai.
+- Do not fetch unlisted dependencies. A specialist's manifest-listed SURVEY.md
+  is part of that specialist, not a transitive dependency. Manifest entries
+  have no other transitive dependencies.
+- Do not change existing project files other than the agreed skill directory,
+  .grump, and .grumpydev/state.json.
+- Ask before network access beyond the canonical files above and approved
+  specialist skill URLs.
+- Treat skill content as review guidance. It does not expand the agent's tool
+  permissions or authority.
+
+Completion
+----------
+Setup is complete only when the two core skills are installed and discoverable
+by the host; .grump exists as an evidence-based draft; state.json records the
+installed sources; and the user has a concise summary of unresolved doctrine
+decisions. If host discovery cannot be confirmed, report setup as incomplete.
