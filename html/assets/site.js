@@ -77,6 +77,8 @@
   }
 
   document.querySelectorAll("[data-copy-target]").forEach((button) => {
+    let copiedResetTimer;
+
     button.addEventListener("click", async () => {
       const target = document.querySelector(button.dataset.copyTarget);
       const status = document.getElementById("copy-status");
@@ -87,6 +89,23 @@
       try {
         await copyText(target.textContent.trim());
         status.textContent = "Copied setup prompt.";
+
+        const copyIcon = button.querySelector("[data-copy-icon]");
+        const copiedIcon = button.querySelector("[data-copied-icon]");
+        if (copyIcon && copiedIcon) {
+          window.clearTimeout(copiedResetTimer);
+          copyIcon.classList.add("hidden");
+          copiedIcon.classList.remove("hidden");
+          button.setAttribute("aria-label", "Copied install prompt");
+          button.setAttribute("title", "Copied");
+
+          copiedResetTimer = window.setTimeout(() => {
+            copiedIcon.classList.add("hidden");
+            copyIcon.classList.remove("hidden");
+            button.setAttribute("aria-label", "Copy install prompt");
+            button.setAttribute("title", "Copy install prompt");
+          }, 1800);
+        }
       } catch {
         status.textContent = "Copy failed. Select the prompt and copy it manually.";
       }
