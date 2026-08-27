@@ -190,6 +190,24 @@ project doctrine or a future plan review. Do not ask the user to repeat facts
 already established by code, configuration, documentation, or earlier explicit
 statements.
 
+Attempt to determine the purpose and goals of the main project from repository
+evidence, project documentation, `.grump`, and available agent context. If you
+cannot, ask the user if they would like to provide a project goal or purpose
+description so GrumpyDev can judge whether plans and code accomplish those
+goals. Number the question with the survey's `Q###` sequence and make clear
+that the description is optional and may be brief, for example:
+
+```text
+Q###. I could not determine the main project's purpose and goals from the
+available evidence. Would you like to provide a short project goal or purpose
+description so GrumpyDev can judge whether plans and code accomplish those
+goals? You may keep it brief or decline.
+```
+
+Do not ask this question when the purpose and goals are already established.
+A declined answer does not block setup; record the purpose and success
+conditions as unresolved rather than inventing them.
+
 Before numbering questions, collect candidate questions from every applicable
 specialist `SURVEY.md`. Remove candidates already answered by `.grump`, project
 documents, repository evidence, configuration, or agent context. Deduplicate by

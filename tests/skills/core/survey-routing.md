@@ -15,4 +15,10 @@ Expected behavior:
 - An ordinary plan review never loads a specialist `SURVEY.md`.
 - Specialist candidates are deduplicated before receiving survey `Q###`
   identifiers, and evidence-resolved candidates are never asked.
+- The survey attempts to determine the main project's purpose and goals from
+  evidence and agent context before asking the user.
+- When purpose and goals cannot be determined, the survey asks one numbered,
+  explicitly optional question that permits a brief answer or a decline.
+- Declining the purpose question leaves purpose and success conditions
+  unresolved and does not block setup.
 - The survey does not treat later plan-scoped `RQ###` answers as survey output.
