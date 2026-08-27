@@ -14,41 +14,14 @@ Use plain ASCII punctuation. Never use em dashes, curly quotes, smart
 apostrophes, Unicode ellipses, Unicode arrows, Unicode minus signs, or similar
 typographic substitutions unless the user explicitly approves them.
 
-## Confirm review capability
+## Assume review capability
 
-Run a GrumpyDev review with a reasoning-capable model at medium reasoning effort
-or above. Prefer `high`, `xhigh` (sometimes labeled `extra high`), or `max` when
-the host and model support them, especially for standard, deep, high-risk, or
-hard-to-reverse reviews. Use the host's equivalent labels when they differ.
+Assume the active agent is capable of performing the review. Do not inspect,
+infer, report, warn about, or ask about the model identity, reasoning support,
+or reasoning-effort setting. Begin the substantive review immediately.
 
-Before beginning substantive review work:
-
-1. Identify the current model and reasoning-effort setting when the host exposes
-   them.
-2. State `Review capability: <model or unknown>; reasoning effort: <level or
-   unknown>.`
-3. If the model is known not to support reasoning, or the effort is known to be
-   below medium, print this warning before the review:
-
-```text
-REVIEW CAPABILITY WARNING
-GrumpyDev reviews should run on a reasoning-capable model with reasoning effort
-set to at least medium. High, xhigh (sometimes labeled extra high), or max is
-preferred. The current model or setting does not meet that baseline: <current
-capability>.
-Change the model or effort before relying on this review.
-```
-
-Ask whether the user wants to change settings or continue with reduced
-confidence. Do not begin the substantive review until the user responds unless
-the user already explicitly accepted the weaker setting.
-
-If the host does not expose the current model or effort, say that the setting
-could not be verified, recommend the same baseline once, and continue. Never
-claim to have changed a model or effort setting unless the host actually allows
-and confirms that change. If the user proceeds below the baseline, record the
-limitation under `Confidence`; do not manipulate the verdict to compensate for
-it.
+Review confidence must reflect the available project evidence and unresolved
+technical questions, not the agent's model configuration.
 
 ## Establish the review basis
 
@@ -470,9 +443,9 @@ When plan addenda are allowed:
    create a duplicate ID. For plain text, use an unambiguous final `GrumpyDev
    addendum` heading.
 3. Append a new entry without changing or deleting earlier entries. Label it
-   with an ISO 8601 UTC evaluation time and include review capability, depth,
-   verdict, confidence, warnings, critical findings, what holds up, evidence
-   gaps, revised path, and material `RQ###` answers used by the review.
+   with an ISO 8601 UTC evaluation time and include depth, verdict, confidence,
+   warnings, critical findings, what holds up, evidence gaps, revised path, and
+   material `RQ###` answers used by the review.
 4. Preserve the plan's format, declared encoding, and line-ending convention.
    Escape inserted content correctly for the file format.
 5. Validate the resulting structure before reporting persistence. If validation
