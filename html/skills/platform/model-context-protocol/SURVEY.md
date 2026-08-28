@@ -2,9 +2,16 @@
 
 ## Applicability
 
-Apply this contribution when a plan adds an mcp client or server. Skip it when Model Context
-Protocol does not constrain a supported build, runtime, client, data, deployment, or operating
-boundary.
+Apply this contribution when the project includes or materially depends on a Model
+Context Protocol client or server.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -51,7 +58,7 @@ Do not duplicate facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey Model Context Protocol when its version, target platform, execution model, trust
-boundary, deployment topology, persistent state, update process, or recovery policy materially
-changes, when evidence conflicts with saved doctrine, or when the user requests a context
-refresh.
+Re-survey Model Context Protocol when the protocol version, client or server roster,
+transport, tool or resource surface, authentication method, trust boundary, consent
+policy, or capability-negotiation behavior materially changes. Also re-survey when
+evidence conflicts with saved doctrine or the user requests a context refresh.

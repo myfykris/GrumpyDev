@@ -2,9 +2,13 @@
 
 ## Applicability
 
-Apply this contribution when redis holds cache, coordination, queue, session, or
-primary application state. Skip it when Redis does not constrain a supported
-build, runtime, client, data, deployment, or operating boundary.
+Apply this contribution when redis holds cache, coordination, queue, session, or primary
+application state. Skip it when Redis does not constrain a supported build, runtime,
+client, data, deployment, or operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -53,13 +57,15 @@ separate state, support, ownership, confidence, source, and scope fields.
 
 ## Do not ask or record
 
-Keep individual query plans, one-off migration steps, current host or replica
-identities, transient load readings, and copied data out of durable Redis
-doctrine. Do not duplicate facts owned by another applicable contribution.
+Keep current keys and values, node identities, latency and memory snapshots,
+temporary TTL overrides, failover event IDs, and copied cache contents out of
+durable Redis doctrine. Do not duplicate facts owned by another applicable
+contribution.
 
 ## Re-survey triggers
 
-Re-survey Redis when product version or provider, topology, engine, consistency
-policy, scale class, schema authority, migration tooling, replication or
-failover, security, or recovery objectives materially change, when evidence
-conflicts with saved doctrine, or when the user requests a context refresh.
+Re-survey Redis when its version or provider, standalone, Sentinel or Cluster
+topology, sharding, eviction or expiration policy, persistence mode, replication
+and failover, module set, access policy, durability expectations, or recovery
+objectives materially change. Also re-survey when evidence conflicts with saved
+doctrine or the user requests a context refresh.

@@ -1,78 +1,50 @@
 ---
 name: vapor
-description: Review Vapor plans for event-loop safety, request lifecycle, async ownership, Fluent transactions, validation, authentication, streaming, and deployment risks. Use when a Swift plan changes Vapor applications, routes, middleware, jobs, or persistence.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review Vapor plans and other engineering artifacts for event-loop safety, request lifecycle, async ownership, Fluent transactions, validation, authentication, streaming, and deployment risks. Project applicability: the project uses or materially depends on Vapor."
 ---
 
-# Vapor plan review
+# Vapor GrumpyDev review
+
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
 Apply this guidance alongside the core GrumpyDev review and the `swift` skill.
 
-## Inspect evidence
+## Lean review
 
 - Read Vapor, Swift, and dependency versions, application configuration, routes,
   middleware, content models, Fluent schemas and migrations, clients, and tests.
+
 - Trace requests, event loops, async tasks, database access, authentication,
   errors, streaming, jobs, and shutdown.
-
-## Establish the operating model
-
-Establish the project target: Vapor and Swift versions, event-loop topology,
-database drivers, queues, proxy and TLS, container or host deployment, and
-supported operating systems. The changed boundary must define: Event loops,
-async and blocking work, request lifecycle, content decoding, authentication,
-Fluent transactions, queues, WebSockets, shutdown, and deployment.
-
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Event loops, async and blocking work, request lifecycle, content decoding,
-authentication. Prove Fluent transactions, queues, WebSockets, shutdown,
-deployment through startup, invalid or denied work, cancellation, background
-execution, mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for blocking work on event loops, incorrect bridging between
 futures and async code, request-owned objects escaping their lifetime, Fluent
 query or migration assumptions, streams without backpressure, and shutdown that
 drops scheduled or in-flight work.
 
-- Keep blocking filesystem, SDK, cryptographic, or database work off event-loop
-  threads and bound any thread-pool use.
-- Require request-scoped ownership and cancellation for tasks, clients, streams,
-  websockets, and temporary resources.
-- Check Content decoding, validation, over-posting, authentication, object
-  authorization, body limits, and error-detail exposure.
-- Analyze Fluent migrations, transactions, eager loading, constraints,
-  concurrency, and old or new application overlap.
-- Test the production server and proxy for timeouts, forwarded headers, TLS
-  assumptions, graceful drain, migrations, and release builds.
-
-## Verify the claims
-
-- Verify these behaviors through the actual Vapor lifecycle and production
-  pipeline: Event loops, async and blocking work, request lifecycle, content
-  decoding, authentication. Use the actual framework pipeline and production
-  build with representative services and configuration.
-- Exercise failure and edge behavior for: Fluent transactions, queues,
-  WebSockets, shutdown, deployment. Exercise invalid input, denied access,
-  cancellation, dependency failure, concurrent work, shutdown, and mixed-version
-  deployment where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Swift, Vapor, SwiftNIO, database driver, and deployment versions apply?
-- How do event-loop affinity, async work, request state, authentication,
-  transactions, errors, and shutdown interact?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat event-loop blocking, unsafe cross-request state, or lost critical work
   during shutdown as critical.
-- Downgrade when exact-version concurrency, auth, transaction, and shutdown
-  behavior are integration-tested.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete Vapor evidence, operating model, failure, verification,
+question, and calibration guidance. Never load `SURVEY.md` during an ordinary
+review.
 
 ## Add to the verdict
 

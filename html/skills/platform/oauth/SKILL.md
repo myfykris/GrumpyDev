@@ -1,92 +1,62 @@
 ---
 name: oauth
-description: Review OAuth 2.0 and OpenID Connect integration plans for flow selection, redirect, PKCE, state, nonce, token, scope, storage, rotation, revocation, and account-linking risks. Use when a plan adds or changes delegated authorization, social login, SSO, OAuth clients, or token-based vendor access.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review token-based authentication and authorization plans and other engineering artifacts for issuance, transport, audience, scope, validation, storage, rotation, revocation, replay, and identity-linking risks. Project applicability: the project uses OAuth, OpenID Connect, SSO, bearer tokens, JWTs, opaque access tokens, API keys, personal access tokens, service tokens, signed tokens, or proof-of-possession tokens. Cookie-only sessions do not make this specialist applicable unless they are backed by or exchanged for such tokens."
 ---
 
-# OAuth and OIDC plan review
+# OAuth, OIDC, and token authentication GrumpyDev review
 
-Apply this guidance alongside the core GrumpyDev review. Treat provider behavior
-and current security guidance as time-sensitive; verify primary documentation
-when the plan depends on vendor-specific claims.
+Treat provider behavior and current security guidance as time-sensitive; verify
+primary documentation when the reviewed work directly or indirectly depends on
+vendor-specific claims.
 
-## Inspect evidence
+## Invocation and participation boundary
 
-- Identify the exact authorization server, client type, grant/flow, redirect
-  URIs, scopes, token types, SDK, callback handling, and storage locations.
-- Distinguish OAuth authorization from OIDC authentication and identify the
-  authoritative local account-linking key.
-- Trace initiation, callback, token exchange, refresh, revocation, logout,
-  expiry, failure, and reconnect paths.
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
 
-## Establish the operating model
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
-Establish the project target: Providers, protocol versions and profiles, client
-types, grants, redirect origins, token formats, scopes, session relationship,
-key rotation, and tenant model. The changed boundary must define: OAuth and OIDC
-roles, flows, redirects, PKCE, state and nonce, token validation, rotation,
-scopes, consent, logout, discovery, key rollover, and threats.
+## Lean review
 
-Name the identity, trust, configuration, capacity, failure-domain, deployment,
-and operational owners for OAuth and OIDC roles, flows, redirects, PKCE, state
-and nonce, token validation, rotation. Prove scopes, consent, logout, discovery,
-key rollover, threats through rotation, overload, partial rollout, drain, forced
-stop, rollback, and recovery.
+- Identify every token or credential type, who issues it, who presents it, who
+  accepts it, its subject, audience, permissions, transport, storage,
+  validation, lifetime, rotation, revocation, and compromise path.
 
-## Challenge the plan
+- When OAuth or OIDC applies, identify the authorization server, client type,
+  flow, redirects, scopes, PKCE, state, nonce, SDK, callback handling, and the
+  authoritative local account-linking key. Do not force OAuth flow concepts
+  onto API keys, personal access tokens, or service tokens.
 
-### Recurring traps
+Watch especially for bearer credentials in URLs, logs, source, browser storage,
+or crash reports; missing audience, issuer, type, scope, signature, algorithm,
+expiry, replay, or tenant validation; API keys treated as user identity; ID
+tokens used as general API credentials; broad redirects; refresh-token reuse;
+opaque-token introspection cached past revocation; and account linking based on
+mutable or unverified claims.
 
-Watch especially for ID tokens used as general API credentials, missing state,
-nonce, or PKCE validation, broad redirect matching, tokens exposed to browser
-storage or logs, refresh-token reuse, issuer and audience confusion, and account
-linking based on an unstable identifier.
+Lean mode is insufficient when this material severity condition may apply:
 
-- Require authorization code flow and PKCE where appropriate. Reject implicit
-  trust in browser-supplied identity or unsigned token contents.
-- Bind each authorization response to the initiating user agent and operation.
-  Validate exact redirect URIs, state, issuer, audience, nonce when applicable,
-  signature, expiry, and authorized algorithms.
-- Treat access and refresh tokens as credentials. Minimize scopes; define
-  encrypted storage, log redaction, rotation, revocation, concurrency, and
-  compromise response.
-- Prevent account takeover through ambiguous email matching, mutable subject
-  identifiers, provider mixing, or unverified claims.
-- Handle denied consent, expired codes, reused callbacks, refresh-token
-  rotation, revoked grants, clock skew, provider outage, and partial
-  persistence.
-- Separate client secrets from public clients and verify backend-for-frontend or
-  browser token exposure assumptions against the actual architecture.
+- Treat account takeover, privilege escalation, cross-tenant acceptance,
+  redirect abuse, reusable token disclosure, or ambiguous account linking as
+  critical.
 
-## Verify the claims
+## Load local references
 
-- Verify these behaviors through the effective OAuth and OIDC configuration and
-  runtime topology: OAuth and OIDC roles, flows, redirects, PKCE, state and
-  nonce, token validation, rotation. Use effective rendered configuration and
-  deployable artifacts in a representative identity, topology, capacity, and
-  policy boundary.
-- Exercise failure and edge behavior for: scopes, consent, logout, discovery,
-  key rollover, threats. Exercise startup, readiness, normal load, overload,
-  dependency loss, rotation, graceful drain, forced stop, failover, and recovery
-  where applicable.
-- Rehearse rolling change, interruption, rollback, and restoration while old and
-  new components or long-lived work coexist.
-
-## Ask when evidence is missing
-
-- Which OAuth or OpenID Connect actors, client type, flow, scopes, redirect
-  rules, and provider behavior apply?
-- How are state, nonce, PKCE, tokens, revocation, rotation, and account linking
-  protected?
-
-## Calibrate findings
-
-- Treat account takeover, redirect abuse, token disclosure, or ambiguous account
-  linking as critical.
-- Downgrade when the selected flow matches the client and provider and protocol
-  controls are enforced and tested.
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete token-authentication evidence, operating model, failure,
+verification, question, and calibration guidance. Never load `SURVEY.md` during
+an ordinary review.
 
 ## Add to the verdict
 
-State the selected protocol flow, trust and account-linking boundary,
-CSRF/replay controls, token lifecycle, scope rationale, and the current provider
-documents or tests needed to support vendor-specific behavior.
+State each token class and purpose, issuer and audience, validation and replay
+controls, storage and transport boundary, lifecycle and compromise response,
+and, when applicable, OAuth flow and account-linking behavior. Identify the
+current provider documents or tests needed to support vendor-specific claims.

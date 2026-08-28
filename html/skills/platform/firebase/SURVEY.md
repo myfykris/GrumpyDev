@@ -2,8 +2,16 @@
 
 ## Applicability
 
-Apply this contribution when a plan relies on firebase services. Skip it when Firebase does not
-constrain a supported build, runtime, client, data, deployment, or operating boundary.
+Apply this contribution when the project uses or materially depends on Firebase
+services.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -49,6 +57,7 @@ duplicate facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey Firebase when its version, target platform, execution model, trust boundary,
-deployment topology, persistent state, update process, or recovery policy materially changes,
-when evidence conflicts with saved doctrine, or when the user requests a context refresh.
+Re-survey Firebase when the services or projects in use, client SDKs, authentication
+providers, Security Rules, indexes, Functions runtime, emulator coverage, retention,
+or backup policy materially changes. Also re-survey when evidence conflicts with saved
+doctrine or the user requests a context refresh.

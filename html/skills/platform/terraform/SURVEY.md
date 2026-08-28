@@ -2,10 +2,16 @@
 
 ## Applicability
 
-Apply this contribution when a plan provisions or changes infrastructure through
-Terraform-compatible configuration. Skip it when Terraform and OpenTofu does not
-constrain a supported build, runtime, client, data, deployment, or operating
-boundary.
+Apply this contribution when the project provisions or manages infrastructure through
+Terraform or OpenTofu configuration.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

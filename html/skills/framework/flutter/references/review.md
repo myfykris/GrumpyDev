@@ -1,0 +1,57 @@
+# Flutter standard review
+
+## Establish the operating model
+
+Establish the project target: Flutter and Dart versions, target platforms and
+minimum versions, state and navigation libraries, build flavors, plugin set,
+signing boundary, and distribution channels. The changed boundary must define:
+Widget and element lifecycle, state ownership, async context, navigation,
+isolates, plugins, platform channels, rendering, accessibility, persistence, and
+release modes.
+
+Assign lifecycle, state, dependency, persistence, and security ownership for
+Widget and element lifecycle, state ownership, async context, navigation,
+isolates, plugins. Prove platform channels, rendering, accessibility,
+persistence, release modes through startup, invalid or denied work,
+cancellation, background execution, mixed versions, shutdown, rollback, and
+recovery.
+
+## Challenge the reviewed work
+
+### Recurring traps
+
+- Require one owner for each state value and dispose controllers, subscriptions,
+  focus nodes, animations, and platform resources.
+- Check stale BuildContext use, work after disposal, duplicate requests,
+  navigation restoration, and app background or resume behavior.
+- Verify plugin support, permissions, storage, networking, and platform-channel
+  contracts on every target platform.
+- Require complete loading, empty, stale, offline, denied, error, and retry
+  states with keyboard and screen-reader behavior.
+- Use profile or release evidence for frame time, memory, startup, binary size,
+  tree shaking, and native build behavior.
+
+## Verify the claims
+
+- Verify these behaviors through the actual Flutter lifecycle and production
+  pipeline: Widget and element lifecycle, state ownership, async context,
+  navigation, isolates, plugins. Use the actual framework pipeline and
+  production build with representative services and configuration.
+- Exercise failure and edge behavior for: platform channels, rendering,
+  accessibility, persistence, release modes. Exercise invalid input, denied
+  access, cancellation, dependency failure, concurrent work, shutdown, and
+  mixed-version deployment where plausible.
+- Inspect effective configuration, generated output, persistence effects, and
+  deployable artifacts, then rehearse recovery from irreversible steps.
+
+## Ask when evidence is missing
+
+- Which Flutter and Dart versions, target platforms, rendering constraints, and
+  state approach apply?
+- How are widget lifetime, navigation, async cancellation, offline state,
+  accessibility, and platform channels handled?
+
+## Calibrate findings
+
+- Downgrade when lifecycle, platform, state restoration, and accessibility
+  behavior are covered by representative tests.

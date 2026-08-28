@@ -2,10 +2,16 @@
 
 ## Applicability
 
-Apply this contribution when a plan changes Rust services, libraries,
-command-line tools, embedded code, or native interfaces. Skip it when Rust does
-not constrain a supported build, runtime, client, data, deployment, or operating
-boundary.
+Apply this contribution when the project contains, builds, deploys, operates, or
+interoperates with Rust code, artifacts, or runtime behavior.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

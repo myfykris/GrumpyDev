@@ -1,86 +1,48 @@
 ---
 name: typescript
-description: Review TypeScript engineering plans for runtime validation, type-safety gaps, module boundaries, build configuration, dependency, and asynchronous failure risks. Use when a plan changes TypeScript services, libraries, tools, or browser applications.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review TypeScript plans and other engineering artifacts for runtime validation, type-safety gaps, module boundaries, build configuration, dependency, and asynchronous failure risks. Project applicability: the project contains, builds, deploys, operates, or interoperates with TypeScript code, artifacts, or runtime behavior."
 ---
 
-# TypeScript plan review
+# TypeScript GrumpyDev review
 
-Apply this guidance alongside the core GrumpyDev review.
+## Invocation and participation boundary
 
-## Inspect evidence
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
+
+## Lean review
 
 - Read `package.json`, the lockfile, `tsconfig` variants, bundler/runtime
   config, package exports, lint rules, and representative tests.
+
 - Identify actual execution targets: browser, Node, edge runtime, worker, test
   runner, CommonJS, ESM, or multiple outputs.
-- Trace external data from network, storage, environment, and JavaScript callers
-  to its runtime validation boundary.
-
-## Establish the operating model
-
-Establish the project target: TypeScript version, runtime targets, module system
-and resolution, strictness flags, emit owner, bundler, package manager,
-declaration consumers, and generated-code sources. The changed boundary must
-define: Erased types, compiler options, narrowing, structural typing,
-declaration accuracy, module resolution, emit modes, runtime validation,
-decorators, generated types, build graph, and JS interoperability.
-
-Define ownership, errors, cancellation, and concurrency for Erased types,
-compiler options, narrowing, structural typing, declaration accuracy, module
-resolution. Verify version, package, native, serialization, and artifact
-compatibility for emit modes, runtime validation, decorators, generated types,
-build graph, JS interoperability across every declared target and rollback path.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for erased types treated as runtime validation, any or
 assertions silencing uncertainty, structural compatibility accepting
 semantically wrong objects, excess-property checks applied inconsistently,
 module-resolution differences, and promises whose rejection path is missing.
 
-- Reject any assumption that a TypeScript type validates runtime data. Require
-  parsing or guards at trust boundaries and defined failure behavior.
-- Find `any`, unchecked `as`, non-null assertions, declaration merging, and
-  suppressed compiler errors that cross the proposed change.
-- Check whether module resolution, conditional exports, path aliases, and
-  generated declarations work in every declared consumer environment.
-- Distinguish source compatibility from emitted JavaScript compatibility and
-  build-time success from runtime availability.
-- Inspect promise ownership, cancellation, timeouts, unhandled rejection paths,
-  concurrent mutation, and retry/idempotency behavior.
-- Require an explicit compatibility plan for API or shared-type evolution;
-  independently deployed consumers may not upgrade atomically.
-- Demand tests that execute emitted/runtime behavior, not only compile-time type
-  assertions.
-
-## Verify the claims
-
-- Verify these behaviors through the declared TypeScript compiler and runtime
-  targets: Erased types, compiler options, narrowing, structural typing,
-  declaration accuracy, module resolution. Use the real compiler or interpreter
-  and supported release modes rather than a development substitute.
-- Exercise failure and edge behavior for: emit modes, runtime validation,
-  decorators, generated types, build graph, JS interoperability. Exercise
-  boundary values, encoding, cancellation, resource exhaustion, concurrency,
-  dependency failure, and termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
-
-## Ask when evidence is missing
-
-- Which TypeScript version, tsconfig strictness, module mode, runtime, and
-  generated-type sources apply?
-- Where do untyped inputs, assertions, narrowing, serialization, async work, and
-  JavaScript consumers cross the boundary?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat trusted static types at an unvalidated runtime boundary or unsafe
   assertion on security-critical input as critical.
-- Downgrade when inputs are internal and proven or runtime validation, strict
-  settings, and compatibility tests cover the boundary.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete TypeScript evidence, operating model, failure,
+verification, question, and calibration guidance. Never load `SURVEY.md` during
+an ordinary review.
 
 ## Add to the verdict
 

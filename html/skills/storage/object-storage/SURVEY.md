@@ -2,26 +2,37 @@
 
 ## Applicability
 
-Apply this contribution when a system stores files, blobs, artifacts, or backups
-in S3-compatible object storage. Skip it when Object storage does not constrain
-a supported build, runtime, client, data, deployment, or operating boundary.
+Apply this contribution when a system stores files, blobs, artifacts, media, or
+backups in provider-managed or self-hosted object storage, including Amazon S3,
+S3-compatible services, Google Cloud Storage, and Azure Blob Storage. Skip it
+when object storage does not constrain a supported build, runtime, client,
+data, deployment, or operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
-For Object storage, inspect product and client declarations, migration
-configuration, schema sources, indexes or key definitions, topology and
-infrastructure files, backup and restore runbooks, capacity evidence, and
-operational ownership. Read existing `.grump` doctrine and project documentation
-before treating a durable fact as unresolved.
+Inspect provider and client declarations, infrastructure policy, bucket or
+container configuration, key construction, version or generation handling,
+conditional operations, upload and download code, signed-access generation,
+event consumers, lifecycle and retention rules, replication, inventory,
+recovery runbooks, cost evidence, project documentation, and existing `.grump`
+doctrine before treating a durable fact as unresolved.
 
 ## Durable project facts
 
-- Target and operating model: Provider and API compatibility, buckets and
-  regions, consistency, versioning, lifecycle and retention, encryption, access
-  model, size limits, and replication.
-- Review doctrine for: Key design, consistency, multipart uploads, metadata,
-  versioning, lifecycle, retention, encryption, signed access, replication,
-  events, and orphan cleanup.
+- Target and operating model: provider and product, API and client versions,
+  compatibility claims, account, bucket or container and region boundaries,
+  namespace and key rules, object or blob types, consistency, and size limits.
+- Concurrency and integrity: version, generation, metageneration, ETag, lease,
+  conditional-operation, checksum, multipart, resumable, block-list, compose,
+  and range-request semantics that actually apply to the selected provider.
+- Security and lifecycle: identities, policies, encryption, signed URL or SAS
+  behavior, retention, legal holds, versioning, delete markers, lifecycle,
+  replication, events, archive retrieval, inventory, orphan cleanup, and
+  recovery.
 - Sources of truth and owners for relevant configuration, contracts, builds,
   deployment, upgrades, incidents, rollback, and recovery.
 - Environment differences that materially change these facts.
@@ -31,10 +42,13 @@ before treating a durable fact as unresolved.
 
 ## Ask only when materially unresolved
 
-- Which object-store provider and exact compatibility guarantees apply to
-  versioning, conditional writes, metadata, and listing?
-- How are partial uploads, overwrite races, deletion, lifecycle, replication,
-  encoding, and recovery handled?
+- Which provider and product, namespace, region, object or blob type, client API,
+  and exact compatibility guarantees apply?
+- Which version, generation, ETag, lease, or conditional-operation rules prevent
+  overwrite races, and how do multipart, resumable, block, or compose operations
+  commit, abort, and recover?
+- How are integrity, metadata, signed access, deletion, retention, lifecycle,
+  events, replication, archive retrieval, cost, and recovery handled?
 - For the affected profiles, which of these facts materially differ across
   current, planned, and retiring operation, what support commitments apply, and
   what evidence establishes each fact: Provider or product, region, account and
@@ -44,7 +58,7 @@ before treating a durable fact as unresolved.
 
 ## Record in .grump
 
-Record Object storage answers in project technology, data, schema, consistency,
+Record object-storage answers in project technology, data, consistency,
 deployment, and recovery doctrine. Preserve source and scope. Record a material
 unknown as unresolved doctrine instead of guessing.
 
@@ -55,15 +69,16 @@ source, and scope fields.
 
 ## Do not ask or record
 
-Keep individual query plans, one-off migration steps, current host or replica
-identities, transient load readings, and copied data out of durable Object
-storage doctrine. Do not duplicate facts owned by another applicable
-contribution.
+Keep object names and payloads, current upload IDs, one-time signed URLs or SAS
+tokens, credentials, transient transfer readings, temporary lifecycle dates,
+and plan-only choices out of durable object-storage doctrine. Do not duplicate
+facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey Object storage when product version or provider, topology, engine,
-consistency policy, scale class, schema authority, migration tooling,
-replication or failover, security, or recovery objectives materially change,
-when evidence conflicts with saved doctrine, or when the user requests a context
-refresh.
+Re-survey object storage when the provider or product, API compatibility,
+account or region boundary, object or blob type, namespace, consistency or
+conditional-operation contract, transfer method, access model, retention,
+lifecycle, event delivery, replication, archive tier, or recovery objective
+materially changes. Also re-survey when evidence conflicts with saved doctrine
+or the user requests a context refresh.

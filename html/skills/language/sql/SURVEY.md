@@ -2,10 +2,16 @@
 
 ## Applicability
 
-Apply this contribution when a plan adds or changes SQL queries, reports, stored
-routines, views, or database access logic independent of one storage engine.
-Skip it when SQL does not constrain a supported build, runtime, client, data,
-deployment, or operating boundary.
+Apply this contribution when the project contains or executes SQL queries, reports,
+stored routines, views, or database access logic independent of one storage engine.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

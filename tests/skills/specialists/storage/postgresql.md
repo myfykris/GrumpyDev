@@ -60,9 +60,20 @@ context in `.grump`.
 
 Expected behavior:
 
-- Load this specialist's `SKILL.md` and the saved `.grump` doctrine.
-- Do not load this specialist's `SURVEY.md` during the ordinary review.
-- Ask a plan-scoped question only if a material decision remains unresolved
+- Because this specialist is installed and not explicitly marked inapplicable,
+  every explicitly invoked GrumpyDev review loads its `SKILL.md`, even when the
+  reviewed work does not name or modify this domain.
+- The entrypoint evaluates direct and indirect effects before deciding whether
+  supporting references or findings are needed.
+- When no material effect exists, the specialist produces no finding.
+- Lean mode loads this specialist's `SKILL.md` and saved doctrine without
+  loading `references/review.md` unless an entrypoint escalation trigger
+  applies.
+- Standard mode loads `SKILL.md` and loads `references/review.md` only when
+  the entrypoint identifies a plausible direct or indirect material effect.
+- Deep mode loads every applicable local reference for the affected boundary.
+- No ordinary review loads this specialist's `SURVEY.md`.
+- Ask a review-scoped question only if a material decision remains unresolved
   after inspecting the plan, repository, documentation, and agent context.
 
 ## Companion-overlap case
@@ -96,3 +107,69 @@ Expected behavior:
   material infrastructure.
 - Ask zero domain questions when current evidence already establishes the
   profile facts.
+
+## Focused-reference routing cases
+
+### `references/schema-migrations-and-locking.md`
+
+Positive trigger: the plan changes DDL, constraints, indexes, defaults, generated values, types, partitions, extensions, table or index rewrites, lock acquisition, validation scans, timeouts, WAL volume, schema migration, backfills, coexistence, expand and contract sequencing, or irreversible data conversion.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/schema-migrations-and-locking.md`.
+- The review applies the focused checks in `references/schema-migrations-and-locking.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/schema-migrations-and-locking.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/transactions-and-concurrency.md`
+
+Positive trigger: the plan changes transaction boundaries, isolation, read-modify-write invariants, constraints, row or advisory locks, leases, leader election, deadlock or serialization retries, multiple writers, outboxes, or non-transactional side effects.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/transactions-and-concurrency.md`.
+- The review applies the focused checks in `references/transactions-and-concurrency.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/transactions-and-concurrency.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/queries-and-indexes.md`
+
+Positive trigger: the plan changes SQL queries, predicates, joins, ordering, pagination, indexes, selectivity, statistics, parameter-sensitive plans, collation, N+1 behavior, write amplification, or performance and capacity claims.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/queries-and-indexes.md`.
+- The review applies the focused checks in `references/queries-and-indexes.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/queries-and-indexes.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/operations-replication-and-recovery.md`
+
+Positive trigger: the plan changes connection pools, pool modes, maintenance, vacuum, bloat, WAL, roles, row-level security, replicas, lag, read routing, failover, backup, retention, point-in-time recovery, restore, recovery objectives, or operator ownership.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/operations-replication-and-recovery.md`.
+- The review applies the focused checks in `references/operations-replication-and-recovery.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/operations-replication-and-recovery.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.

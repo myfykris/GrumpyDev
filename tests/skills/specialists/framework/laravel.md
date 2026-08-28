@@ -60,9 +60,20 @@ context in `.grump`.
 
 Expected behavior:
 
-- Load this specialist's `SKILL.md` and the saved `.grump` doctrine.
-- Do not load this specialist's `SURVEY.md` during the ordinary review.
-- Ask a plan-scoped question only if a material decision remains unresolved
+- Because this specialist is installed and not explicitly marked inapplicable,
+  every explicitly invoked GrumpyDev review loads its `SKILL.md`, even when the
+  reviewed work does not name or modify this domain.
+- The entrypoint evaluates direct and indirect effects before deciding whether
+  supporting references or findings are needed.
+- When no material effect exists, the specialist produces no finding.
+- Lean mode loads this specialist's `SKILL.md` and saved doctrine without
+  loading `references/review.md` unless an entrypoint escalation trigger
+  applies.
+- Standard mode loads `SKILL.md` and loads `references/review.md` only when
+  the entrypoint identifies a plausible direct or indirect material effect.
+- Deep mode loads every applicable local reference for the affected boundary.
+- No ordinary review loads this specialist's `SURVEY.md`.
+- Ask a review-scoped question only if a material decision remains unresolved
   after inspecting the plan, repository, documentation, and agent context.
 
 ## Companion-overlap case
@@ -96,3 +107,69 @@ Expected behavior:
   material infrastructure.
 - Ask zero domain questions when current evidence already establishes the
   profile facts.
+
+## Focused-reference routing cases
+
+### `references/http-validation-and-authorization.md`
+
+Positive trigger: the plan changes routes, middleware, request validation, route model binding, guards, providers, policies, gates, CSRF, signed URLs, rate limits, trusted proxies, API resources, JSON output, pagination, or HTTP error behavior.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/http-validation-and-authorization.md`.
+- The review applies the focused checks in `references/http-validation-and-authorization.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/http-validation-and-authorization.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/eloquent-transactions-and-migrations.md`
+
+Positive trigger: the plan changes Eloquent models, relationships, scopes, casts, observers, bulk updates, constraints, transactions, locking, database connections, schema, indexes, backfills, or mixed-version data behavior.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/eloquent-transactions-and-migrations.md`.
+- The review applies the focused checks in `references/eloquent-transactions-and-migrations.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/eloquent-transactions-and-migrations.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/queues-events-and-workers.md`
+
+Positive trigger: the plan changes queued jobs, events, listeners, notifications, Horizon, scheduler behavior, retry, uniqueness, ordering, idempotency, worker termination, Octane, or another resident process.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/queues-events-and-workers.md`.
+- The review applies the focused checks in `references/queues-events-and-workers.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/queues-events-and-workers.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/caching-configuration-and-deployment.md`
+
+Positive trigger: the plan changes cache keys, invalidation, sessions, generated configuration, route or view caches, maintenance mode, release artifacts, storage links, OPcache, worker restarts, health checks, rollback, or deployment sequencing.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/caching-configuration-and-deployment.md`.
+- The review applies the focused checks in `references/caching-configuration-and-deployment.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/caching-configuration-and-deployment.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.

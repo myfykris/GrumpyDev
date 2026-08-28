@@ -60,9 +60,20 @@ context in `.grump`.
 
 Expected behavior:
 
-- Load this specialist's `SKILL.md` and the saved `.grump` doctrine.
-- Do not load this specialist's `SURVEY.md` during the ordinary review.
-- Ask a plan-scoped question only if a material decision remains unresolved
+- Because this specialist is installed and not explicitly marked inapplicable,
+  every explicitly invoked GrumpyDev review loads its `SKILL.md`, even when the
+  reviewed work does not name or modify this domain.
+- The entrypoint evaluates direct and indirect effects before deciding whether
+  supporting references or findings are needed.
+- When no material effect exists, the specialist produces no finding.
+- Lean mode loads this specialist's `SKILL.md` and saved doctrine without
+  loading `references/review.md` unless an entrypoint escalation trigger
+  applies.
+- Standard mode loads `SKILL.md` and loads `references/review.md` only when
+  the entrypoint identifies a plausible direct or indirect material effect.
+- Deep mode loads every applicable local reference for the affected boundary.
+- No ordinary review loads this specialist's `SURVEY.md`.
+- Ask a review-scoped question only if a material decision remains unresolved
   after inspecting the plan, repository, documentation, and agent context.
 
 ## Companion-overlap case
@@ -96,3 +107,53 @@ Expected behavior:
   shared `INF-###` component when several profiles use it.
 - Ask nothing from this contribution when repository evidence and the core
   profile already resolve every material fact.
+
+## Focused-reference routing cases
+
+### `references/async-processes-and-shutdown.md`
+
+Positive trigger: the plan changes an event loop, async framework, threads, processes, executors, workers, GIL assumptions, task ownership, cancellation, signals, fork behavior, cleanup, retries, or graceful shutdown.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/async-processes-and-shutdown.md`.
+- The review applies the focused checks in `references/async-processes-and-shutdown.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/async-processes-and-shutdown.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/serialization-execution-and-filesystem-security.md`
+
+Positive trigger: the plan handles untrusted pickle, marshal, shelve, YAML, dynamic import, eval, exec, templates, subprocesses, paths, symlinks, archives, decompression, XML, images, regexes, or other attacker-controlled parsing.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/serialization-execution-and-filesystem-security.md`.
+- The review applies the focused checks in `references/serialization-execution-and-filesystem-security.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/serialization-execution-and-filesystem-security.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/packaging-native-and-deployment.md`
+
+Positive trigger: the plan changes interpreter implementation or version, packaging, lock or resolver tooling, imports, optional dependencies, virtual environments, generated files, native extensions, OS or architecture targets, build artifacts, or deployment environment behavior.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/packaging-native-and-deployment.md`.
+- The review applies the focused checks in `references/packaging-native-and-deployment.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/packaging-native-and-deployment.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.

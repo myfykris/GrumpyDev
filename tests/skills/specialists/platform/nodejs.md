@@ -65,9 +65,20 @@ context in `.grump`.
 
 Expected behavior:
 
-- Load this specialist's `SKILL.md` and the saved `.grump` doctrine.
-- Do not load this specialist's `SURVEY.md` during the ordinary review.
-- Ask a plan-scoped question only if a material decision remains unresolved
+- Because this specialist is installed and not explicitly marked inapplicable,
+  every explicitly invoked GrumpyDev review loads its `SKILL.md`, even when the
+  reviewed work does not name or modify this domain.
+- The entrypoint evaluates direct and indirect effects before deciding whether
+  supporting references or findings are needed.
+- When no material effect exists, the specialist produces no finding.
+- Lean mode loads this specialist's `SKILL.md` and saved doctrine without
+  loading `references/review.md` unless an entrypoint escalation trigger
+  applies.
+- Standard mode loads `SKILL.md` and loads `references/review.md` only when
+  the entrypoint identifies a plausible direct or indirect material effect.
+- Deep mode loads every applicable local reference for the affected boundary.
+- No ordinary review loads this specialist's `SURVEY.md`.
+- Ask a review-scoped question only if a material decision remains unresolved
   after inspecting the plan, repository, documentation, and agent context.
 
 ## Companion-overlap case
@@ -101,3 +112,69 @@ Expected behavior:
   material infrastructure.
 - Ask zero domain questions when current evidence already establishes the
   profile facts.
+
+## Focused-reference routing cases
+
+### `references/modules-packages-and-native-addons.md`
+
+Positive trigger: the plan changes CommonJS or ESM, package type, exports or imports maps, loaders, conditional resolution, lockfiles, lifecycle scripts, package-manager versions, native addons, optional platform packages, ABI, OS, architecture, build output, or reproducible installation.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/modules-packages-and-native-addons.md`.
+- The review applies the focused checks in `references/modules-packages-and-native-addons.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/modules-packages-and-native-addons.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/async-context-streams-and-backpressure.md`
+
+Positive trigger: the plan changes promises, callbacks, events, timers, async iterators, AsyncLocalStorage, abort signals, streams, buffers, pipelines, backpressure, half-close, encoding, slow peers, or unbounded in-memory accumulation.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/async-context-streams-and-backpressure.md`.
+- The review applies the focused checks in `references/async-context-streams-and-backpressure.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/async-context-streams-and-backpressure.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/filesystem-child-processes-and-workers.md`
+
+Positive trigger: the plan changes paths, permissions, symlinks, temporary files, durability, file descriptors, child processes, shell use, process arguments, stdio, worker threads, shared memory, message transfer, restart, or orphan prevention.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/filesystem-child-processes-and-workers.md`.
+- The review applies the focused checks in `references/filesystem-child-processes-and-workers.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/filesystem-child-processes-and-workers.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/signals-shutdown-and-deployment.md`
+
+Positive trigger: the plan changes process managers, containers, signals, readiness, admission draining, HTTP or upgraded connections, background jobs, telemetry flush, pool closure, termination deadlines, runtime flags, permissions, rolling deployment, or forced shutdown.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/signals-shutdown-and-deployment.md`.
+- The review applies the focused checks in `references/signals-shutdown-and-deployment.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/signals-shutdown-and-deployment.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.

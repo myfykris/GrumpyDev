@@ -1,127 +1,81 @@
 ---
 name: application-security
-description: Review application-security plans for trust boundaries, authentication, authorization, input handling, session safety, cryptography, abuse, and incident response. Use when a plan changes security-sensitive application behavior or exposed attack surface.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review application-security plans and other engineering artifacts for trust boundaries, authentication, authorization, input handling, session safety, cryptography, abuse, and incident response. Project applicability: the project exposes security-sensitive application behavior, trust boundaries, untrusted input, or attack surface."
 ---
 
-# Application security plan review
+# Application security GrumpyDev review
 
-Apply this guidance alongside the core GrumpyDev review and the relevant
-framework, protocol, and storage skills.
+## Invocation and participation boundary
 
-## Inspect evidence
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
 
-- Read the threat model, trust boundaries, identity flow, authorization checks,
-  input and output handling, sessions, secrets, audit logs, and security tests.
-- Trace anonymous, low-privilege, cross-tenant, replayed, malformed, automated,
-  and compromised-account requests through every boundary.
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
-## Establish the operating model
+During every review, check whether the work directly or indirectly affects
+identity, authentication, authorization, tenant or trust boundaries, exposed
+endpoints, untrusted input or output, uploads, server-side fetches, filesystem
+access, parsing, deserialization, code or command execution, secrets, payments,
+or sensitive data.
 
-Establish the project target: Security requirements, data sensitivity, threat
-actors, identity providers, trust zones, compliance constraints, secret
-handling, scanning, and incident ownership. The changed boundary must define:
-Trust boundaries, threat modeling, input handling, authentication,
-authorization, sessions, injection, SSRF, file handling, crypto use, abuse,
-dependencies, and incident response.
+## Lean review
 
-Name the identity, trust, configuration, capacity, failure-domain, deployment,
-and operational owners for Trust boundaries, threat modeling, input handling,
-authentication, authorization, sessions, injection. Prove SSRF, file handling,
-crypto use, abuse, dependencies, incident response through rotation, overload,
-partial rollout, drain, forced stop, rollback, and recovery.
+- Trace anonymous, low-privilege, cross-tenant, stale-role, replayed, malformed,
+  automated, and compromised-account requests through each changed boundary.
+- Require authorization for the exact object, property, function, and state
+  transition. Authentication, hidden UI, and tenant query scopes are not enough.
+- Validate after the final decode and normalization step, and encode output for
+  its exact sink. Reject ambiguous representations and fail-open errors.
+- Challenge injection, traversal, unsafe uploads, server-side request forgery,
+  unsafe deserialization, custom cryptography, secrets in logs, check-then-use
+  races, and exceptional paths that bypass security decisions.
+- Require bounded abuse controls, session rotation and revocation, safe audit
+  evidence, key rotation, patch ownership, and incident recovery.
 
-## Challenge the plan
+Lean mode is insufficient for a new identity provider, authorization model,
+tenant boundary, executable input path, cryptographic protocol, payment flow,
+or sensitive-data trust transition.
 
-### Recurring traps
+## Load local references
 
-Watch especially for authentication mistaken for authorization, missing
-object, property, or function checks, validation before the final decode or
-canonicalization step, one sanitizer reused across incompatible output
-contexts, fail-open exceptional behavior, server-side request forgery through
-indirect fetches, secrets in logs, and check-then-use races at security
-boundaries.
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md)
+for the shared detailed review contract.
 
-- Require authorization at every object, property, function, and state-change
-  boundary. Test anonymous, lower-privilege, cross-tenant, stale-role, and
-  guessed-identifier requests; a hidden button or authenticated route is not
-  access control.
-- Define the complete transformation chain before validating input. Decode and
-  normalize once, reject ambiguous or duplicate representations, and validate
-  the value the dangerous sink will actually consume.
-- Prevent cross-site scripting with output encoding for the exact HTML,
-  attribute, URL, CSS, or JavaScript context. Avoid unsafe DOM and template
-  sinks, sanitize intentionally supported markup, and use Content Security
-  Policy as defense in depth rather than the primary control.
-- Prevent SQL, NoSQL, operating-system command, code, and template injection
-  with parameterized APIs or fixed command arguments. Allowlist dynamic
-  identifiers and operations; escaping and deny lists are not general
-  substitutes for separating data from instructions.
-- Constrain file reads, writes, and archive extraction to an intended root or
-  object authority. Cover absolute and alternate paths, traversal, symlinks,
-  archive entries, replacement races, filename collisions, and cleanup.
-- Treat uploads as untrusted content. Bound bytes, item count, nesting, and
-  decompression; establish type from content where relevant; store outside an
-  executable web path; randomize server names; scan or transform when the risk
-  requires it; and serve with safe type and disposition headers.
-- For every server-side URL fetch, allow only required schemes, destinations,
-  ports, redirects, and response sizes. Recheck resolved addresses, block local,
-  link-local, metadata, and private ranges when not explicitly required, and
-  enforce network egress boundaries plus timeouts.
-- Reject unsafe deserialization of attacker-controlled types or executable
-  object graphs. Apply schema and size limits to messages before allocation or
-  side effects, including signed or otherwise integrity-protected data.
-- Use established cryptographic libraries and protocols; reject custom
-  encryption, token formats, password hashing, or signature rules.
-- Define session rotation, revocation, CSRF, CORS, cookie flags, rate limits,
-  abuse detection, and account recovery explicitly.
-- Make exceptional and dependency failures fail closed at security boundaries.
-  Roll back partial effects, avoid success from incomplete authorization or
-  validation, return non-sensitive client errors, and correlate them to useful
-  internal diagnostics.
-- Demand a hardened production baseline, safe logs and alerts, vulnerability
-  response, key rotation, dependency patch ownership, and tests for the
-  highest-impact abuse paths.
+Load these focused references only when their stated boundary applies:
 
-## Verify the claims
+- [Focused rules](references/identity-sessions-and-authorization.md):
+  Read when the reviewed work directly or indirectly changes authentication, object or
+  property authorization, tenant
+  isolation, session creation or rotation, cookies, CSRF, CORS, account recovery,
+  revocation, role changes, or security-sensitive state transitions.
+- [Focused rules](references/injection-output-and-untrusted-input.md):
+  Read when the reviewed work directly or indirectly lets untrusted data reach
+  HTML, attributes, URLs, CSS, JavaScript, SQL, NoSQL, operating-system commands,
+  code, templates, dynamic identifiers, parsers, canonicalization, or other
+  instruction-bearing sinks.
+- [Focused rules](references/files-uploads-ssrf-and-deserialization.md):
+  Read when the reviewed work directly or indirectly changes file or archive handling,
+  uploads, path resolution,
+  symlinks, temporary files, decompression, server-side URL fetching, redirects, DNS
+  resolution, private network access, object deserialization, or schema and allocation
+  limits.
+- [Focused rules](references/cryptography-abuse-and-incident-response.md):
+  Read when the reviewed work directly or indirectly changes encryption, hashing,
+  signatures, tokens, key management,
+  secret rotation, rate limits, automation abuse, fail-closed behavior, security logs,
+  vulnerability response, patch ownership, alerts, or incident handling.
 
-- Verify these behaviors through the effective Application security
-  configuration and runtime topology: Trust boundaries, threat modeling, input
-  handling, authentication, authorization, sessions, injection. Use effective
-  rendered configuration and deployable artifacts in a representative identity,
-  topology, capacity, and policy boundary.
-- Exercise failure and edge behavior for: SSRF, file handling, crypto use,
-  abuse, dependencies, incident response. Exercise startup, readiness, normal
-  load, overload, dependency loss, rotation, graceful drain, forced stop,
-  failover, and recovery where applicable.
-- Rehearse rolling change, interruption, rollback, and restoration while old and
-  new components or long-lived work coexist.
-- Build an authorization matrix covering actor, tenant, object, property,
-  function, and state. Run its denied cases through the real entry point and
-  data boundary, not only a mocked policy function.
-- Exercise encoded and duplicate parameters, output contexts, parser and
-  archive bombs, path and symlink changes, redirect and DNS changes, oversized
-  third-party responses, upload handling, and unsafe deserialization where
-  those boundaries exist.
-- Force timeouts, exceptions, malformed dependency responses, partial commits,
-  log and alert delivery failures, and resource exhaustion to prove the system
-  denies unsafe work, preserves invariants, and remains diagnosable.
-
-## Ask when evidence is missing
-
-- Which actors cross each changed trust boundary, and where are object,
-  property, function, tenant, and state-change permissions enforced?
-- Which hostile input or output context, abuse case, exceptional failure,
-  credential failure, or incident response path can change the design?
-
-## Calibrate findings
-
-- Treat an unbounded path to unauthorized access, privilege escalation, secret
-  exposure, or irreversible data change as critical.
-- Downgrade or omit the finding when the boundary is unreachable by untrusted
-  actors or tested centralized controls enforce it.
+Do not load every focused reference merely because this specialist is installed.
+Never load `SURVEY.md` during an ordinary review.
 
 ## Add to the verdict
 
-State trust boundaries, authorization enforcement, hostile input and output
-paths, fail-closed behavior, session and cryptography choices, abuse controls,
-and security evidence.
+Name the attacker capability, trust boundary, protected object or action,
+failure mode, impact, and evidence required to accept the control.

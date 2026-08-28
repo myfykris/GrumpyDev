@@ -41,6 +41,19 @@ Expected behavior:
 - Treat the vendor response and redirect as hostile, with schema, semantic,
   timeout, size, decompression, destination, and local-policy checks.
 
+## Applicability boundary case
+
+Compare a resource-oriented HTTP API that relies on methods, statuses,
+conditional requests and cache semantics with a GraphQL endpoint, gRPC gateway,
+RPC-style JSON endpoint and webhook that merely use HTTP as transport.
+
+Expected behavior:
+
+- Apply this specialist to the resource-oriented contract.
+- Do not install or apply it to the other endpoints solely because they use
+  HTTP. Use their specific skills unless part of their contract deliberately
+  depends on REST and HTTP resource semantics.
+
 ## Evidence-resolved survey case
 
 Run initial setup or an explicit re-survey after `.grump`, repository evidence,
@@ -76,9 +89,20 @@ context in `.grump`.
 
 Expected behavior:
 
-- Load this specialist's `SKILL.md` and the saved `.grump` doctrine.
-- Do not load this specialist's `SURVEY.md` during the ordinary review.
-- Ask a plan-scoped question only if a material decision remains unresolved
+- Because this specialist is installed and not explicitly marked inapplicable,
+  every explicitly invoked GrumpyDev review loads its `SKILL.md`, even when the
+  reviewed work does not name or modify this domain.
+- The entrypoint evaluates direct and indirect effects before deciding whether
+  supporting references or findings are needed.
+- When no material effect exists, the specialist produces no finding.
+- Lean mode loads this specialist's `SKILL.md` and saved doctrine without
+  loading `references/review.md` unless an entrypoint escalation trigger
+  applies.
+- Standard mode loads `SKILL.md` and loads `references/review.md` only when
+  the entrypoint identifies a plausible direct or indirect material effect.
+- Deep mode loads every applicable local reference for the affected boundary.
+- No ordinary review loads this specialist's `SURVEY.md`.
+- Ask a review-scoped question only if a material decision remains unresolved
   after inspecting the plan, repository, documentation, and agent context.
 
 ## Companion-overlap case
@@ -112,3 +136,53 @@ Expected behavior:
   shared `INF-###` component when several profiles use it.
 - Ask nothing from this contribution when repository evidence and the core
   profile already resolve every material fact.
+
+## Focused-reference routing cases
+
+### `references/authorization-input-and-abuse.md`
+
+Positive trigger: the plan changes authentication, object or property authorization, tenant isolation, mutable fields, validation, bulk operations, uploads, body or decompression limits, expensive filters, automation-sensitive business flows, rate limits, or abuse controls.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/authorization-input-and-abuse.md`.
+- The review applies the focused checks in `references/authorization-input-and-abuse.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/authorization-input-and-abuse.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/idempotency-pagination-and-caching.md`
+
+Positive trigger: the plan changes retried mutations, idempotency keys, concurrent duplicate requests, asynchronous jobs, pagination, ordering under concurrent writes, conditional requests, cache keys, cache variance, or stale behavior.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/idempotency-pagination-and-caching.md`.
+- The review applies the focused checks in `references/idempotency-pagination-and-caching.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/idempotency-pagination-and-caching.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/versioning-upstreams-and-evolution.md`
+
+Positive trigger: the plan changes public contracts, independently deployed clients, versions, deprecation, compatibility, error formats, third-party or upstream responses, redirects, exposed routes, administrative surfaces, retirement, mixed versions, or rollout sequencing.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/versioning-upstreams-and-evolution.md`.
+- The review applies the focused checks in `references/versioning-upstreams-and-evolution.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/versioning-upstreams-and-evolution.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.

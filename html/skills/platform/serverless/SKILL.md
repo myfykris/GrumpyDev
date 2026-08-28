@@ -1,84 +1,52 @@
 ---
 name: serverless
-description: Review serverless plans for event contracts, concurrency, cold starts, retries, idempotency, time limits, state, networking, permissions, and cost. Use when a plan runs application work on functions or managed event-driven compute.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review serverless plans and other engineering artifacts for event contracts, concurrency, cold starts, retries, idempotency, time limits, state, networking, permissions, and cost. Project applicability: the project runs application work on functions or managed event-driven compute."
 ---
 
-# Serverless plan review
+# Serverless GrumpyDev review
 
 Apply this guidance alongside the core GrumpyDev review, the `message-queues`
 skill when a broker is involved, and applicable installed storage and provider
 specialists.
 
-## Inspect evidence
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
+
+## Lean review
 
 - Establish the exact provider, service, runtime version, deployment mode,
   region, and provider limits.
+
 - Read triggers, payloads, runtime settings, concurrency, timeouts, retries,
   destinations, permissions, network paths, dependencies, and cost estimates.
-- Trace cold start, duplicate event, partial effect, timeout, throttling,
-  dependency slowdown, deployment, and regional failure.
-
-## Establish the operating model
-
-Establish the project target: Provider and runtimes, regions, triggers,
-concurrency and timeout limits, network attachment, identity, packaging,
-deployment tool, and local-test limits. The changed boundary must define:
-Invocation lifecycle, concurrency, cold starts, timeouts, retries, events,
-idempotency, state, networking, IAM, packaging, observability, and deployment.
-
-Name the identity, trust, configuration, capacity, failure-domain, deployment,
-and operational owners for Invocation lifecycle, concurrency, cold starts,
-timeouts, retries, events, idempotency. Prove state, networking, IAM, packaging,
-observability, deployment through rotation, overload, partial rollout, drain,
-forced stop, rollback, and recovery.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for platform retries repeating effects, timeouts after an
 external commit, reused instances retaining request state, cold starts ignored
 in latency budgets, event-size and concurrency ceilings, local emulators hiding
 managed behavior, and asynchronous destinations with no reconciliation owner.
 
-- Design handlers for duplicate and out-of-order delivery with idempotency at
-  the side-effect boundary.
-- Bound concurrency against databases and downstream quotas; automatic scale can
-  automate an outage.
-- Include cold start, package size, initialization, connection reuse, execution
-  duration, and memory in latency evidence.
-- Keep durable state outside ephemeral execution and make timeout, cancellation,
-  continuation, and poison-event handling explicit.
-- Model request, duration, transfer, logging, provisioned capacity, and idle
-  alternatives before claiming lower cost.
-
-## Verify the claims
-
-- Verify these behaviors through the effective Serverless configuration and
-  runtime topology: Invocation lifecycle, concurrency, cold starts, timeouts,
-  retries, events, idempotency. Use effective rendered configuration and
-  deployable artifacts in a representative identity, topology, capacity, and
-  policy boundary.
-- Exercise failure and edge behavior for: state, networking, IAM, packaging,
-  observability, deployment. Exercise startup, readiness, normal load, overload,
-  dependency loss, rotation, graceful drain, forced stop, failover, and recovery
-  where applicable.
-- Rehearse rolling change, interruption, rollback, and restoration while old and
-  new components or long-lived work coexist.
-
-## Ask when evidence is missing
-
-- Which provider, service, runtime version, deployment mode, trigger, and
-  regional limits apply?
-- What delivery, concurrency, timeout, retry, state, networking, permission, and
-  cost behavior follows from that platform?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat retry-driven irreversible effects, privilege exposure, hard limit
   failure, or unbounded cost amplification as critical.
-- Downgrade when the exact provider semantics are known and load, idempotency,
-  limits, and recovery are tested.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete Serverless evidence, operating model, failure,
+verification, question, and calibration guidance. Never load `SURVEY.md` during
+an ordinary review.
 
 ## Add to the verdict
 

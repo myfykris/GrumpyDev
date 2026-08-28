@@ -17,8 +17,8 @@ Expected behavior:
 
 ## Resolved-evidence case
 
-Review the same plan after evidence establishes the target Compiler and
-language mode, ARC policy, target macOS versions, frameworks, Swift bridging,
+Review the same plan after evidence establishes the target compiler and
+language mode, ARC policy, target Apple platform and operating-system versions, frameworks, Swift bridging,
 Objective-C++ use, architectures, and deployment form, plus the plan-specific
 lifecycle, compatibility, deployment, and recovery behavior.
 
@@ -28,6 +28,19 @@ Expected behavior:
 - Downgrade or omit findings invalidated by target-specific evidence.
 - Retain only findings tied to a demonstrated requirement, invariant, failure
   mode, or unsupported claim.
+
+## Applicability boundary case
+
+Compare a Swift-only Apple application that imports Apple frameworks with a
+project that builds Objective-C++, exposes Objective-C headers, or uses a bridge
+whose correctness depends on Objective-C runtime behavior.
+
+Expected behavior:
+
+- Do not install or apply this specialist to the Swift-only project merely
+  because it targets Apple platforms or imports Apple frameworks.
+- Apply it to the project with Objective-C source, ABI, generated bindings, or
+  runtime-dependent bridging.
 
 ## Evidence-resolved survey case
 
@@ -64,9 +77,20 @@ context in `.grump`.
 
 Expected behavior:
 
-- Load this specialist's `SKILL.md` and the saved `.grump` doctrine.
-- Do not load this specialist's `SURVEY.md` during the ordinary review.
-- Ask a plan-scoped question only if a material decision remains unresolved
+- Because this specialist is installed and not explicitly marked inapplicable,
+  every explicitly invoked GrumpyDev review loads its `SKILL.md`, even when the
+  reviewed work does not name or modify this domain.
+- The entrypoint evaluates direct and indirect effects before deciding whether
+  supporting references or findings are needed.
+- When no material effect exists, the specialist produces no finding.
+- Lean mode loads this specialist's `SKILL.md` and saved doctrine without
+  loading `references/review.md` unless an entrypoint escalation trigger
+  applies.
+- Standard mode loads `SKILL.md` and loads `references/review.md` only when
+  the entrypoint identifies a plausible direct or indirect material effect.
+- Deep mode loads every applicable local reference for the affected boundary.
+- No ordinary review loads this specialist's `SURVEY.md`.
+- Ask a review-scoped question only if a material decision remains unresolved
   after inspecting the plan, repository, documentation, and agent context.
 
 ## Companion-overlap case
@@ -100,3 +124,37 @@ Expected behavior:
   material infrastructure.
 - Ask zero domain questions when current evidence already establishes the
   profile facts.
+
+## Focused-reference routing cases
+
+### `references/dynamic-runtime-kvo-and-notifications.md`
+
+Positive trigger: the plan changes selectors, forwarding, swizzling, categories, associated objects, runtime registration, KVO, notifications, observer lifetime, reentrancy, or dynamic callback ordering.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/dynamic-runtime-kvo-and-notifications.md`.
+- The review applies the focused checks in `references/dynamic-runtime-kvo-and-notifications.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/dynamic-runtime-kvo-and-notifications.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/swift-c-cpp-and-abi-interop.md`
+
+Positive trigger: the plan crosses Core Foundation, Swift, C, C++, Objective-C++, native callbacks, exception boundaries, modules, symbols, method signatures, architecture slices, or ABI and binary compatibility.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/swift-c-cpp-and-abi-interop.md`.
+- The review applies the focused checks in `references/swift-c-cpp-and-abi-interop.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/swift-c-cpp-and-abi-interop.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.

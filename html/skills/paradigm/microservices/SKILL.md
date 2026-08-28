@@ -1,80 +1,51 @@
 ---
 name: microservices
-description: Review microservice plans for service boundaries, data ownership, distributed failure, deployment independence, operational cost, and accidental coupling. Use when a system is split into independently deployed network services.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review microservice plans and other engineering artifacts for service boundaries, data ownership, distributed failure, deployment independence, operational cost, and accidental coupling. Project applicability: a system is split into independently deployed network services."
 ---
 
-# Microservices plan review
+# Microservices GrumpyDev review
+
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
 Apply this guidance alongside the core GrumpyDev review and the
 `distributed-systems` skill.
 
-## Inspect evidence
+## Lean review
 
 - Read service responsibilities, data stores, APIs and events, dependency graph,
   deployment units, ownership, observability, and incident history.
+
 - Trace one business operation across calls, transactions, retries, releases,
   rollback, and support ownership.
-
-## Establish the operating model
-
-Establish the project target: Service and team ownership, data stores,
-protocols, deployment units, consistency expectations, platform capabilities,
-SLOs, and incident ownership. The changed boundary must define: Service
-boundaries, ownership, data separation, contracts, partial failure, deployment
-independence, observability, versioning, testing, and operational cost.
-
-Name the invariants, authorities, owners, and enforcement for Service
-boundaries, ownership, data separation, contracts, partial failure. Prove
-deployment independence, observability, versioning, testing, operational cost
-under concurrency, partial failure, incompatible versions, operational response,
-rollback, and repair, and justify the added complexity.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for a distributed monolith with shared writable data, chatty
 synchronous call chains, lockstep releases, generated clients that spread
 coupling, unclear incident ownership, and service boundaries justified by
 organization charts rather than independent runtime needs.
 
-- Demand a reason each network boundary must be independently deployed; team
-  charts and future scale are not enough.
-- Reject shared-database ownership, lockstep releases, generated-client churn,
-  and chatty call graphs that preserve monolith coupling remotely.
-- Define consistency and compensation where one business operation crosses
-  service-owned data.
-- Account for discovery, identity, authorization, secrets, telemetry, capacity,
-  on-call ownership, and local development cost per service.
-- Prefer a modular monolith until evidence shows one boundary needs independent
-  scale, reliability, release cadence, or ownership.
-
-## Verify the claims
-
-- Verify these behaviors through the claimed architecture and its enforcement
-  boundaries: Service boundaries, ownership, data separation, contracts, partial
-  failure. Use dependency, architecture, contract, schema, or ownership tests
-  that fail when a claimed boundary is violated.
-- Exercise failure and edge behavior for: deployment independence,
-  observability, versioning, testing, operational cost. Exercise the material
-  invariant under concurrency, delay, duplication, partial failure, incompatible
-  versions, rollback, and repair.
-- Verify that operators can observe, diagnose, and recover the design without
-  bypassing its ownership rules.
-
-## Ask when evidence is missing
-
-- What independent ownership, scaling, deployment, or failure requirement
-  justifies each service boundary?
-- How are data ownership, cross-service workflows, compatibility, observability,
-  and operator recovery handled?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat shared writable data, an unrecoverable distributed workflow, or a
   boundary with no operational owner as critical.
-- Downgrade when the split is already operationally mature or autonomy,
-  contracts, failure handling, and ownership are proven.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete Microservices evidence, operating model, failure,
+verification, question, and calibration guidance. Never load `SURVEY.md` during
+an ordinary review.
 
 ## Add to the verdict
 

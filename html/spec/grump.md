@@ -17,7 +17,9 @@ assumptions.
 - Preserve manual wording and unknown sections during re-survey.
 - Do not silently turn an inference into a constraint.
 - Prefer repository evidence; identify the source of important claims.
-- Keep the file compact enough to read for every planning review.
+- Keep the file compact enough to read for every GrumpyDev review.
+- Treat compact and detailed files as two serializations of the same doctrine.
+  Never remove decision-affecting meaning merely to shorten the file.
 
 ## Stable identifiers
 
@@ -48,6 +50,10 @@ and rename.
 - `path/or/location`: scope, authority or status when known, and what it
   establishes
 
+## Doctrine format policy
+- Format: compact | detailed | unresolved
+- Source: Q001 or explicit user statement
+
 ## Review output policy
 - Plan addenda: allowed | chat only | unresolved
 - Source: Q### or explicit user statement
@@ -69,7 +75,7 @@ and rename.
 - Source: Q### or explicit user statement
 
 ## Specialist survey status
-- `<skill-name>`: applied | current | incomplete
+- `<installed-skill-name>`: current | incomplete | not surveyed | inapplicable
   - Last surveyed: ISO 8601 UTC time when useful
   - Evidence: paths or explicit user statements
   - Missing material context: none | concise description
@@ -126,6 +132,72 @@ and rename.
 
 Omit empty sections only when their absence cannot be mistaken for an incomplete
 survey. Use `None identified` when that distinction matters.
+
+## Doctrine format policy
+
+Record whether `.grump` uses `compact`, `detailed`, or `unresolved` formatting.
+The initial repository survey asks this as `Q001`. Re-survey preserves an
+existing unambiguous choice unless the user asks to change it. `Unresolved`
+uses compact formatting without inventing, weakening, or discarding doctrine.
+
+The format controls serialization only. Both formats preserve:
+
+- purpose and success conditions;
+- project documents and scoped evidence;
+- review, interaction, doctrine, readiness, and research policies;
+- concise survey status and explicit inapplicability for installed specialists;
+- non-negotiable constraints, accepted tradeoffs, and durable decisions;
+- deployment profiles and shared infrastructure when material;
+- data, integration, delivery, recovery, and test invariants;
+- unresolved decision-affecting questions; and
+- stable identifiers and distinctions among source scopes.
+
+Compact format:
+
+- stores only project-specific doctrine and selected policy values;
+- uses terse bullets and combines related fields when meaning stays clear;
+- records each fact once and refers to stable identifiers elsewhere;
+- points to project documents rather than copying their contents;
+- records shared infrastructure once as `INF-###`;
+- omits generic GrumpyDev rules already present in installed skills;
+- omits survey transcripts, raw questions and answers, resolved unknowns,
+  deliberation, and repeated rationale; and
+- preserves concise rationale whenever its absence could change how a future
+  reviewer applies the item.
+
+Detailed format may retain more rationale, alternatives, source scope, and
+operational explanation. It still deduplicates facts and is not a transcript.
+
+A compact profile may combine fields without collapsing their meaning:
+
+```markdown
+## Deployment and execution profiles
+- [DEP-001] Web: current; required; project-owned; confirmed
+  - Path/runtime: HTTPS -> PHP-FPM 8.3 behind nginx
+  - State/recovery: MySQL INF-001; rollback requires compatible schema
+  - Boundaries: UTF-8 HTTP and database text; untrusted public input
+  - Evidence: `deploy/nginx.conf`, `composer.json`, user Q004
+
+## Shared infrastructure
+- [INF-001] MySQL: current; required; shared ownership; confirmed
+  - Contract: MySQL 8.0, primary plus replica; restore objective 4 hours
+  - Used by: DEP-001, DEP-002
+  - Evidence: `docs/operations.md`, user Q005
+
+## Non-negotiable constraints
+- [CON-001] Existing API clients must remain compatible. Source: `api/openapi.yaml`.
+
+## Accepted tradeoffs
+- [ACC-001] One maintenance window is accepted for the initial migration.
+
+## Unknowns
+- [UNK-001] Final worker concurrency limit can change database capacity needs.
+```
+
+Do not replace this contract with an instruction to summarize rules as best as
+possible. When converting formats, compare every stable identifier, policy,
+profile relationship, material unknown, and evidence reference before and after
+the conversion. A format conversion must be semantically lossless.
 
 ## Evidence quality
 
@@ -213,15 +285,15 @@ current work without silently rewriting it.
 
 ## Review interaction policy
 
-Record whether plan reviews should pause after their initial evidence pass to
-ask material questions. `Interactive` permits plan-scoped realtime Q&A.
+Record whether reviews should pause after their initial evidence pass to ask
+material questions. `Interactive` permits review-scoped realtime Q&A.
 `Non-interactive` completes the review without pausing and reports unanswered
 material questions as evidence gaps. `Unresolved` defaults to interactive. A
 current explicit instruction may override the preference for one evaluation.
 
 Installation-survey questions use a continuous `Q###` sequence and establish
-durable repository policy. Live plan-review questions use `RQ###`, restart at
-`RQ001` for each evaluation, and remain scoped to that plan and evaluation.
+durable repository policy. Live review questions use `RQ###`, restart at
+`RQ001` for each evaluation, and remain scoped to that target and evaluation.
 They are not `.grump` doctrine merely because the user answered them.
 
 ## Doctrine maintenance policy
@@ -243,7 +315,7 @@ doctrine, GrumpyDev may ask whether to treat it as `project-wide` or keep it as
 `this review only`. Only an explicit project-wide answer confirms the scope.
 The doctrine maintenance policy separately controls whether GrumpyDev writes
 the item or only proposes the exact change. Record an allowed promotion's
-source as the evaluation timestamp, reviewed plan path, and `RQ###` identifier.
+source as the evaluation timestamp, reviewed target path, and `RQ###` identifier.
 
 ## Plan readiness policy
 
@@ -267,7 +339,7 @@ the response to either outcome and leaves no material design choice open.
 Record whether GrumpyDev should perform needed decision-affecting research
 automatically, ask first, or report it without researching. `Automatic` permits
 safe, read-only research within the host's existing permissions. `Ask first`
-requires a plan-scoped permission question before research. `Report only`
+requires a review-scoped permission question before research. `Report only`
 preserves the work as an evidence gap. `Unresolved` defaults to ask first.
 
 This preference does not authorize a project change, external write,
@@ -279,15 +351,28 @@ An answer that requires project-owner judgment cannot be replaced by research.
 
 ## Specialist survey status
 
-Record which installed specialist survey contributions supplied the durable
-context in `.grump`. `Applied` means the contribution was read for the current
-survey. `Current` means an earlier answer and its evidence remain usable, so the
-question was not repeated. `Incomplete` means a missing answer can materially
-limit future reviews; identify that gap and use an `UNK-###` item when
-appropriate.
+Installed project-local specialist packages are the review roster. Record only
+their survey completeness and explicit applicability exceptions in `.grump`.
+Do not copy the package inventory, manifest metadata, or full catalog into
+doctrine.
 
-This status is routing evidence, not a dependency version or integrity system.
-Do not record hashes, checksums, secrets, raw transcripts, or transient machine
+`Current` means the specialist's durable context and evidence remain usable.
+`Incomplete` means missing context can materially limit future reviews;
+identify that gap and use an `UNK-###` item when appropriate. `Not surveyed`
+means the installed specialist has not contributed durable context yet.
+`Inapplicable` is an explicit exception supported by project evidence or a user
+answer showing that an installed package does not apply.
+
+During an explicit review, every installed specialist participates unless it
+is explicitly marked `inapplicable`. A `current`, `incomplete`, `not surveyed`,
+or unrecorded installed specialist still participates. Missing context limits
+only conclusions that depend on it. When evidence exposes a relevant domain
+with no installed specialist, report incomplete specialist coverage without
+downloading anything.
+
+This status is survey and exception evidence, not a second package registry,
+dependency version, or integrity system. Do not record uninstalled catalog
+skills, hashes, checksums, secrets, raw transcripts, or transient machine
 details. Ordinary Grump reviews use the resulting doctrine and do not load the
 specialist `SURVEY.md` files.
 

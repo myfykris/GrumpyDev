@@ -65,9 +65,20 @@ context in `.grump`.
 
 Expected behavior:
 
-- Load this specialist's `SKILL.md` and the saved `.grump` doctrine.
-- Do not load this specialist's `SURVEY.md` during the ordinary review.
-- Ask a plan-scoped question only if a material decision remains unresolved
+- Because this specialist is installed and not explicitly marked inapplicable,
+  every explicitly invoked GrumpyDev review loads its `SKILL.md`, even when the
+  reviewed work does not name or modify this domain.
+- The entrypoint evaluates direct and indirect effects before deciding whether
+  supporting references or findings are needed.
+- When no material effect exists, the specialist produces no finding.
+- Lean mode loads this specialist's `SKILL.md` and saved doctrine without
+  loading `references/review.md` unless an entrypoint escalation trigger
+  applies.
+- Standard mode loads `SKILL.md` and loads `references/review.md` only when
+  the entrypoint identifies a plausible direct or indirect material effect.
+- Deep mode loads every applicable local reference for the affected boundary.
+- No ordinary review loads this specialist's `SURVEY.md`.
+- Ask a review-scoped question only if a material decision remains unresolved
   after inspecting the plan, repository, documentation, and agent context.
 
 ## Companion-overlap case
@@ -101,3 +112,37 @@ Expected behavior:
   material infrastructure.
 - Ask zero domain questions when current evidence already establishes the
   profile facts.
+
+## Focused-reference routing cases
+
+### `references/database-cron-cache-and-multisite.md`
+
+Positive trigger: the plan changes wpdb, schema, options, metadata, taxonomy, object or page caches, cache scope, WP-Cron, an external scheduler, background retries, multisite data, tenant scope, or production query behavior.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/database-cron-cache-and-multisite.md`.
+- The review applies the focused checks in `references/database-cron-cache-and-multisite.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/database-cron-cache-and-multisite.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/updates-migrations-and-rollback.md`
+
+Positive trigger: the plan changes plugin or theme activation, deactivation, uninstall, core or dependency updates, filesystem credentials, maintenance mode, database migrations, mixed-version requests, rollback, or security response ownership.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/updates-migrations-and-rollback.md`.
+- The review applies the focused checks in `references/updates-migrations-and-rollback.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/updates-migrations-and-rollback.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.

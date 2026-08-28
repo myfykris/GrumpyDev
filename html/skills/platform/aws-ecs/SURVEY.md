@@ -2,10 +2,16 @@
 
 ## Applicability
 
-Apply this contribution when a plan changes ECS services, task definitions,
-Fargate or EC2 capacity, load balancing, or container deployment operations.
-Skip it when AWS ECS does not constrain a supported build, runtime, client,
-data, deployment, or operating boundary.
+Apply this contribution when the project deploys or operates workloads with Amazon ECS,
+Fargate, or ECS on EC2.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

@@ -1,81 +1,50 @@
 ---
 name: mysql
-description: Review MySQL plans for schema design, migrations, indexes, transactions, isolation, replication, locking, and recovery. Use when a plan creates, changes, queries, or operates MySQL or compatible relational databases.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review MySQL plans and other engineering artifacts for schema design, migrations, indexes, transactions, isolation, replication, locking, and recovery. Project applicability: the project stores or queries data in MySQL or a compatible relational database."
 ---
 
-# MySQL plan review
+# MySQL GrumpyDev review
+
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
 Apply this guidance alongside the core GrumpyDev review and the `sql` skill.
 
-## Inspect evidence
+## Lean review
 
 - Read engine and version settings, DDL, migrations, constraints, indexes, query
   plans, transactions, replicas, backups, and restore tests.
+
 - Trace critical writes and reads through isolation, locks, failover, lag,
   retry, and mixed-version deployment.
-
-## Establish the operating model
-
-Establish the project target: MySQL or compatible product and version, storage
-engine, SQL modes, character set and collation, topology, isolation, migration
-tooling, and backup or restore process. The changed boundary must define: Engine
-behavior, types, collations, indexes, locking, isolation, replication, online
-DDL, SQL modes, migrations, query plans, and restore.
-
-Name the schema and data authority, writers, scale, consistency, durability, and
-migration owner for Engine behavior, types, collations, indexes, locking,
-isolation. Prove replication, online DDL, SQL modes, migrations, query plans,
-restore under concurrent access, mixed versions, failover, interrupted
-migration, rollback, and restore.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for implicit numeric and string coercion, collation changing
 equality, gap locks and isolation surprises, online DDL that still copies or
 blocks, replica lag used for fresh reads, permissive SQL modes hiding bad data,
 and auto-increment behavior assumed contiguous.
 
-- Verify storage engine, SQL mode, charset, collation, timezone, and
-  case-sensitivity assumptions explicitly.
-- Apply only guarantees documented for the selected product, engine, and
-  version; MySQL-compatible products are not interchangeable by default.
-- Check online DDL behavior, table rebuilds, metadata locks, rollback limits,
-  and deploy ordering on production-sized data.
-- Require indexes justified by real query shapes and `EXPLAIN` evidence; include
-  composite prefix order and covering tradeoffs.
-- Define isolation and locking expectations for lost updates, gap locks,
-  deadlocks, and retry safety.
-- Treat replica lag, promotion, binlog format, backup retention, and tested
-  point-in-time restore as part of correctness.
-
-## Verify the claims
-
-- Verify these behaviors through the declared MySQL topology and workload:
-  Engine behavior, types, collations, indexes, locking, isolation. Use
-  production-shaped scale and workload while observing latency, resource use,
-  locks or conflicts, replication, and application errors.
-- Exercise failure and edge behavior for: replication, online DDL, SQL modes,
-  migrations, query plans, restore. Exercise concurrent writers, retries,
-  duplicate operations, failover, interrupted migration, and mixed application
-  versions where applicable.
-- Restore or reconstruct state in isolation and verify data, metadata, security,
-  application startup, and recovery objectives.
-
-## Ask when evidence is missing
-
-- Which MySQL-compatible product, exact version, storage engine, SQL mode,
-  replication, and hosting model apply?
-- What lock, rewrite, collation, transaction, index, and
-  mixed-application-version behavior applies to the change?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat data loss, prolonged production locking, broken invariants, or
   unverified product compatibility as critical.
-- Downgrade when product-specific migration evidence, constraints,
-  representative queries, and restore behavior are proven.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete MySQL evidence, operating model, failure, verification,
+question, and calibration guidance. Never load `SURVEY.md` during an ordinary
+review.
 
 ## Add to the verdict
 

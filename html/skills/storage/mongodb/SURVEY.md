@@ -2,9 +2,15 @@
 
 ## Applicability
 
-Apply this contribution when a plan stores or queries application data in
-MongoDB. Skip it when MongoDB does not constrain a supported build, runtime,
-client, data, deployment, or operating boundary.
+Apply this contribution when the project stores or queries application data in MongoDB.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -53,14 +59,15 @@ fields.
 
 ## Do not ask or record
 
-Keep individual query plans, one-off migration steps, current host or replica
-identities, transient load readings, and copied data out of durable MongoDB
-doctrine. Do not duplicate facts owned by another applicable contribution.
+Keep one-off query profiles, current member identities or replica lag, transient
+balancer and cache readings, temporary migration batches, and copied documents
+out of durable MongoDB doctrine. Do not duplicate facts owned by another
+applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey MongoDB when product version or provider, topology, engine,
-consistency policy, scale class, schema authority, migration tooling,
-replication or failover, security, or recovery objectives materially change,
-when evidence conflicts with saved doctrine, or when the user requests a context
-refresh.
+Re-survey MongoDB when its version or provider, replica-set or sharded topology,
+shard key, document model or validation, index strategy, read or write concern,
+transaction use, change streams, balancer policy, security boundary, backup, or
+recovery objective materially changes. Also re-survey when evidence conflicts
+with saved doctrine or the user requests a context refresh.

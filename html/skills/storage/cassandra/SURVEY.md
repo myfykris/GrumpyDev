@@ -2,10 +2,16 @@
 
 ## Applicability
 
-Apply this contribution when a plan stores or queries distributed data in
-Cassandra or compatible wide-column databases. Skip it when Cassandra does not
-constrain a supported build, runtime, client, data, deployment, or operating
-boundary.
+Apply this contribution when the project stores or queries distributed data in Cassandra
+or a compatible wide-column database.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -54,14 +60,15 @@ fields.
 
 ## Do not ask or record
 
-Keep individual query plans, one-off migration steps, current host or replica
-identities, transient load readings, and copied data out of durable Cassandra
-doctrine. Do not duplicate facts owned by another applicable contribution.
+Keep one-off query traces, current node identities, transient compaction,
+repair, tombstone and latency readings, temporary rebuild operations, and copied
+partition data out of durable Cassandra doctrine. Do not duplicate facts owned
+by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey Cassandra when product version or provider, topology, engine,
-consistency policy, scale class, schema authority, migration tooling,
-replication or failover, security, or recovery objectives materially change,
-when evidence conflicts with saved doctrine, or when the user requests a context
-refresh.
+Re-survey Cassandra when its distribution or version, data-center topology,
+replication factor or strategy, consistency levels, table or partition-key
+design, compaction, repair, tombstone policy, security boundary, backup, restore,
+or disaster-recovery objective materially changes. Also re-survey when evidence
+conflicts with saved doctrine or the user requests a context refresh.

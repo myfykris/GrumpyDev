@@ -4,10 +4,11 @@
 
 Review a plan in this domain whose available evidence does not answer:
 
-- Which OAuth or OpenID Connect actors, client type, flow, scopes, redirect
-  rules, and provider behavior apply?
-- How are state, nonce, PKCE, tokens, revocation, rotation, and account linking
-  protected?
+- Which token classes exist, what is each one for, who issues and accepts it,
+  and what subject, audience, tenant, permission, transport, and lifetime apply?
+- How does each class handle validation, storage, logging, replay, rotation,
+  revocation, key rollover, and compromise? When OAuth or OIDC applies, which
+  actors, flow, redirects, PKCE, state, nonce, and account-linking rules apply?
 
 Expected behavior:
 
@@ -24,6 +25,22 @@ Expected behavior:
 
 - Ask zero questions that the evidence already answers.
 - Downgrade or omit findings that the supplied evidence invalidates.
+
+## Token-family cases
+
+Review one OAuth authorization-code client, one JWT-protected service, one
+opaque bearer token validated through introspection, one API-key integration,
+and one proof-of-possession token design.
+
+Expected behavior:
+
+- Apply shared token lifecycle, transport, storage, scope, rotation, revocation,
+  replay, disclosure, and compromise checks to every applicable token class.
+- Apply redirects, PKCE, state, nonce, consent, and account linking only where
+  OAuth or OIDC actually uses them.
+- Require JWT algorithm, issuer, audience and type validation; opaque-token
+  introspection and cache behavior; attributable API-key ownership and
+  rotation; and proof-of-possession key and request binding as applicable.
 
 ## Evidence-resolved survey case
 
@@ -60,9 +77,20 @@ context in `.grump`.
 
 Expected behavior:
 
-- Load this specialist's `SKILL.md` and the saved `.grump` doctrine.
-- Do not load this specialist's `SURVEY.md` during the ordinary review.
-- Ask a plan-scoped question only if a material decision remains unresolved
+- Because this specialist is installed and not explicitly marked inapplicable,
+  every explicitly invoked GrumpyDev review loads its `SKILL.md`, even when the
+  reviewed work does not name or modify this domain.
+- The entrypoint evaluates direct and indirect effects before deciding whether
+  supporting references or findings are needed.
+- When no material effect exists, the specialist produces no finding.
+- Lean mode loads this specialist's `SKILL.md` and saved doctrine without
+  loading `references/review.md` unless an entrypoint escalation trigger
+  applies.
+- Standard mode loads `SKILL.md` and loads `references/review.md` only when
+  the entrypoint identifies a plausible direct or indirect material effect.
+- Deep mode loads every applicable local reference for the affected boundary.
+- No ordinary review loads this specialist's `SURVEY.md`.
+- Ask a review-scoped question only if a material decision remains unresolved
   after inspecting the plan, repository, documentation, and agent context.
 
 ## Companion-overlap case
@@ -84,10 +112,11 @@ Expected behavior:
 Run initial setup or an explicit re-survey with an applicable execution profile
 and this domain boundary:
 
-- Domain boundary: Authorization server and
-  resource-server boundaries, browser or native client type, redirect origins,
-  proxy and TLS termination, token storage, issuer reachability, and key
-  rotation.
+- Domain boundary: Token issuers and accepting services, client or workload
+  type, transport and TLS termination, credential storage, validation or
+  introspection reachability, key authority, rotation and revocation, plus
+  authorization-server, resource-server and redirect boundaries when OAuth or
+  OIDC applies.
 
 Expected behavior:
 

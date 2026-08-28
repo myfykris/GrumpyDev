@@ -1,113 +1,68 @@
 ---
 name: gtk
-description: Review GTK plans for GObject ownership, widget lifecycle, signals, main-loop and threading behavior, models, actions, resources, styling, accessibility, rendering, and GTK version compatibility. Use when a Linux or cross-platform desktop plan changes GTK UI code.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review GTK plans and other engineering artifacts for GObject ownership, widget lifecycle, signals, main-loop and threading behavior, models, actions, resources, styling, accessibility, rendering, and GTK version compatibility. Project applicability: the project uses or materially depends on GTK."
 ---
 
-# GTK plan review
+# GTK GrumpyDev review
+
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
 Apply this guidance alongside the core GrumpyDev review and the applicable
-language, `linux`, `application-security`, and `testing-strategy` skills. Select
-only companions that match the plan's real boundaries. Verify behavior against
+language, `linux`, `application-security`, and `testing-strategy` skills. Every
+installed companion that remains applicable to the project participates; the
+reviewed target does not select the roster. Verify behavior against
 the project's declared targets; do not silently substitute the newest version, a
 development default, or a neighboring product's semantics.
 
-## Inspect evidence
+## Lean review
 
 - Inspect GTK and GLib versions, UI definitions, GObject types, ownership
   annotations, widget trees, signal connections, list models, actions,
   resources, CSS, main-context use, and packaging metadata.
+
 - Inspect generated and rendered artifacts in addition to source. Templates,
   designers, metadata, conventions, and lifecycle callbacks can own behavior
   that is invisible in the main code path.
-- Establish declared and effective versions in development, CI, test, and every
-  supported deployment environment. Record differences that change behavior.
-- Trace one representative operation through startup, success, cancellation,
-  failure, shutdown, update, and recovery. Include encoding and serialization at
-  every application, process, native, storage, and network boundary.
-- Prefer observable artifacts, focused experiments, and project documentation
-  over assertions based on a framework or product name.
-
-## Establish the operating model
-
-Establish the project target: GTK version, language binding, GLib version,
-desktop targets, display backends, packaging, theme and accessibility
-requirements, and supported distributions. The changed boundary must define:
-GObject ownership, widget lifecycle, signals, main loop, threading, list and
-model behavior, actions, resources, styling, accessibility, rendering, and GTK 3
-to 4 differences.
-
-Assign lifecycle, state, dependency, persistence, and security ownership for
-GObject ownership, widget lifecycle, signals, main loop, threading, list and
-model behavior. Prove actions, resources, styling, accessibility, rendering, GTK
-3 to 4 differences through startup, invalid or denied work, cancellation,
-background execution, mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for incorrect GObject reference ownership, signals left
 connected through teardown, main-loop blocking or off-thread widget access, GTK
 3 behavior assumed under GTK 4, invalidated model positions, and theme-dependent
 layout or contrast.
 
-- Apply the ownership conventions of the exact C API or language binding.
-  Distinguish borrowed, floating, full, and container ownership, and verify when
-  references are sunk, retained, disconnected, or finalized.
-- Keep GTK objects on the main thread unless the specific object is documented
-  as thread-safe. Marshal results through the intended GLib main context and
-  cancel background work when its widget or model disappears.
-- Match signal connection lifetime, detail, accumulator, ordering, and
-  reentrancy to the object graph. Prevent callbacks into finalized state and
-  avoid handlers that accidentally trigger their own mutation recursively.
-- Review widget disposal, parenting, templates, list-item factories, recycling,
-  selection models, and bindings. Reused list items must not retain stale model
-  state or leaked handlers.
-- Treat GTK 3 to GTK 4 as an architectural migration, not a namespace update.
-  Check removed container, event, rendering, action, menu, accessibility, and
-  windowing behavior against the declared target.
-- Package resources, icons, schemas, translations, loaders, and plugins so
-  installed paths and sandboxed formats work. Development-tree paths are not
-  installation contracts.
-- Validate semantics, focus, shortcuts, accessibility roles and relations,
-  scaling, text direction, themes, contrast, reduced motion, and custom widgets
-  under the real desktop environments.
-- Keep display-backend and compositor assumptions explicit for X11, Wayland,
-  headless tests, clipboard, drag and drop, global positioning, input, and
-  window activation.
-
-## Verify the claims
-
-- Build and test against every supported GTK, GLib, binding, distribution, and
-  display-backend combination.
-- Run ownership and leak diagnostics plus main-thread and reentrancy tests
-  around signal and model teardown.
-- Exercise keyboard and assistive technology workflows, scaling, themes,
-  localization, and custom widgets.
-- Install the built package into a clean environment and verify resources,
-  schemas, translations, plugins, and startup.
-
-## Ask when evidence is missing
-
-Ask only when evidence cannot establish the durable target: GTK version,
-language binding, GLib version, desktop targets, display backends, packaging,
-theme and accessibility requirements, and supported distributions. For the
-changed boundary, ask only about unresolved GObject ownership, widget lifecycle,
-signals, main loop, threading, list and model behavior, actions, resources,
-styling, accessibility, rendering, and GTK 3 to 4 differences when the answer
-can change the verdict or implementation.
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat use-after-free, persistent data loss, an inaccessible primary workflow,
   or a display/backend assumption that makes the application unusable as
   critical or high according to blast radius and realistic likelihood.
-- Treat a lifecycle, authorization, persistence, or deployment defect that
-  breaks a core workflow or loses user state as material when the plan depends
-  on it and lacks either a safe design or credible evidence.
-- Downgrade or close findings when target-specific documentation, representative
-  builds, focused tests, failure exercises, and recovery evidence establish the
-  required behavior.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md)
+for the shared detailed review contract.
+
+Load these focused references only when their stated boundary applies:
+
+- [Focused rules](references/version-migration-packaging-and-display-backends.md):
+  Read when the reviewed work directly or indirectly changes GTK 3 versus GTK 4
+  behavior, GLib or language-binding
+  compatibility, installed resources, schemas, translations, loaders, plugins,
+  packaging, X11, Wayland, headless execution, clipboard, drag and drop, input, or
+  compositor behavior.
+
+Do not load every focused reference merely because this specialist is installed.
+Never load `SURVEY.md` during an ordinary review.
 
 ## Add to the verdict
 

@@ -2,9 +2,16 @@
 
 ## Applicability
 
-Apply this contribution when a plan changes persistent, message, API, file, or
-configuration schemas. Skip it when Schema evolution does not constrain a
-supported build, runtime, client, data, deployment, or operating boundary.
+Apply this contribution when the project has persistent, message, API, file, or
+configuration schemas that can evolve.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

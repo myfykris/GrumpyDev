@@ -64,9 +64,20 @@ context in `.grump`.
 
 Expected behavior:
 
-- Load this specialist's `SKILL.md` and the saved `.grump` doctrine.
-- Do not load this specialist's `SURVEY.md` during the ordinary review.
-- Ask a plan-scoped question only if a material decision remains unresolved
+- Because this specialist is installed and not explicitly marked inapplicable,
+  every explicitly invoked GrumpyDev review loads its `SKILL.md`, even when the
+  reviewed work does not name or modify this domain.
+- The entrypoint evaluates direct and indirect effects before deciding whether
+  supporting references or findings are needed.
+- When no material effect exists, the specialist produces no finding.
+- Lean mode loads this specialist's `SKILL.md` and saved doctrine without
+  loading `references/review.md` unless an entrypoint escalation trigger
+  applies.
+- Standard mode loads `SKILL.md` and loads `references/review.md` only when
+  the entrypoint identifies a plausible direct or indirect material effect.
+- Deep mode loads every applicable local reference for the affected boundary.
+- No ordinary review loads this specialist's `SURVEY.md`.
+- Ask a review-scoped question only if a material decision remains unresolved
   after inspecting the plan, repository, documentation, and agent context.
 
 ## Companion-overlap case
@@ -100,3 +111,37 @@ Expected behavior:
   material infrastructure.
 - Ask zero domain questions when current evidence already establishes the
   profile facts.
+
+## Focused-reference routing cases
+
+### `references/sandbox-privacy-and-keychain.md`
+
+Positive trigger: the plan changes sandboxing, hardened-runtime entitlements, privacy permissions, user consent, app groups, security-scoped URLs, bookmarks, helpers, plugins, keychain groups, keychain accessibility, user presence, or credential migration.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/sandbox-privacy-and-keychain.md`.
+- The review applies the focused checks in `references/sandbox-privacy-and-keychain.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/sandbox-privacy-and-keychain.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/signing-notarization-updates-and-recovery.md`
+
+Positive trigger: the plan changes bundles, nested code, identifiers, resources, document or URL types, architectures, signing identity, notarization, stapling, Gatekeeper, App Store or managed distribution, updates, rollback, crash reporting, symbols, uninstall, or recovery.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/signing-notarization-updates-and-recovery.md`.
+- The review applies the focused checks in `references/signing-notarization-updates-and-recovery.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/signing-notarization-updates-and-recovery.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.

@@ -1,86 +1,59 @@
 ---
 name: object-storage
-description: Review object-storage plans for key design, consistency, integrity, metadata, access control, lifecycle, multipart operations, and recovery. Use when a system stores files, blobs, artifacts, or backups in S3-compatible object storage.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review object-storage plans and other engineering artifacts for object identity, consistency, conditional operations, integrity, metadata, access control, lifecycle, multipart or resumable transfers, events, cost, and recovery. Project applicability: a system stores files, blobs, artifacts, media, or backups in provider-managed or self-hosted object storage, including Amazon S3, S3-compatible services, Google Cloud Storage, and Azure Blob Storage."
 ---
 
-# Object storage plan review
+# Object storage GrumpyDev review
+
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
 Apply this guidance alongside the core GrumpyDev review and the
 `application-security` or `data-pipelines` skill.
 
-## Inspect evidence
+## Lean review
 
-- Establish the exact provider, API version, hosting region, enabled features,
-  and claimed S3-compatibility boundary.
-- Read bucket and key design, metadata, checksums, upload and download flows,
-  credentials, policies, versioning, lifecycle, replication, and inventory.
-- Trace partial upload, overwrite, concurrent update, deletion, retry,
-  replication lag, credential expiry, and restore.
+- Establish the exact provider and product, API and client versions, account,
+  namespace and region boundaries, object or blob types, enabled features, and
+  any claimed compatibility with another provider.
 
-## Establish the operating model
+- Read container, bucket, and key design; version, generation, or ETag use;
+  conditional requests; metadata and integrity fields; transfer flows;
+  credentials and signed access; retention and lifecycle; events; replication;
+  archive tiers; recovery; and inventory.
 
-Establish the project target: Provider and API compatibility, buckets and
-regions, consistency, versioning, lifecycle and retention, encryption, access
-model, size limits, and replication. The changed boundary must define: Key
-design, consistency, multipart uploads, metadata, versioning, lifecycle,
-retention, encryption, signed access, replication, events, and orphan cleanup.
+Watch especially for provider semantics assumed portable, ETags treated as
+universal content checksums, writes without generation or version preconditions,
+orphaned multipart or uncommitted block uploads, unsafe key normalization,
+metadata and media types trusted as validation, signed access broader or longer
+than intended, retention blocking deletion, event delivery treated as exactly
+once, and archive tiers treated as immediately readable.
 
-Name the schema and data authority, writers, scale, consistency, durability, and
-migration owner for Key design, consistency, multipart uploads, metadata,
-versioning, lifecycle. Prove retention, encryption, signed access, replication,
-events, orphan cleanup under concurrent access, mixed versions, failover,
-interrupted migration, rollback, and restore.
-
-## Challenge the plan
-
-### Recurring traps
-
-Watch especially for orphaned multipart uploads, overwrites without a version or
-recovery policy, unsafe key normalization, metadata and media types trusted as
-validation, presigned access broader or longer than intended, retention blocking
-deletion, and archive tiers treated as immediately readable.
-
-- Define object identity and overwrite semantics; listing and filenames are not
-  a transactional metadata database.
-- Apply only guarantees documented for the selected provider; S3-compatible
-  services are not interchangeable by default.
-- Require content length, media type, checksum, encryption, and encoding to be
-  explicit at each producer and consumer boundary.
-- Check multipart cleanup, idempotent retries, presigned URL scope and expiry,
-  range requests, and untrusted content handling.
-- Enforce least privilege, public-access blocking, tenant isolation, audit logs,
-  retention, legal holds, and deletion verification.
-- Model request, transfer, replication, and retrieval cost, then test version
-  recovery and region-loss procedures.
-
-## Verify the claims
-
-- Verify these behaviors through the declared Object storage topology and
-  workload: Key design, consistency, multipart uploads, metadata, versioning,
-  lifecycle. Use production-shaped scale and workload while observing latency,
-  resource use, locks or conflicts, replication, and application errors.
-- Exercise failure and edge behavior for: retention, encryption, signed access,
-  replication, events, orphan cleanup. Exercise concurrent writers, retries,
-  duplicate operations, failover, interrupted migration, and mixed application
-  versions where applicable.
-- Restore or reconstruct state in isolation and verify data, metadata, security,
-  application startup, and recovery objectives.
-
-## Ask when evidence is missing
-
-- Which object-store provider and exact compatibility guarantees apply to
-  versioning, conditional writes, metadata, and listing?
-- How are partial uploads, overwrite races, deletion, lifecycle, replication,
-  encoding, and recovery handled?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat silent object corruption, cross-tenant access, or lifecycle deletion
   without a recovery path as critical.
-- Downgrade when objects are reproducible or versioning, boundary metadata,
-  access controls, and restore are demonstrated.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete Object storage evidence, operating model, failure,
+verification, question, and calibration guidance. Never load `SURVEY.md` during
+an ordinary review.
 
 ## Add to the verdict
 
-State object identity, integrity and encoding contract, access boundary,
-lifecycle behavior, cost risks, and recovery evidence.
+State the exact provider semantics, object identity and concurrency contract,
+integrity and encoding contract, access boundary, lifecycle and event behavior,
+cost risks, and recovery evidence.

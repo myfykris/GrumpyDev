@@ -25,6 +25,9 @@ manifest, core skills, specialist skills, survey behavior, or local state
 contracts. A skill never expands an agent's existing permissions or the
 authority granted by its user.
 
+Installed skills are complete packages whose files are listed in the manifest.
+Ordinary reviews use those local files and must not fetch new instructions.
+
 ## Disclosure
 
 Allow the maintainers a reasonable opportunity to investigate and prepare a

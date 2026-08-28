@@ -1,80 +1,51 @@
 ---
 name: qt
-description: Review Qt plans for QObject ownership, signal and slot threading, event loops, model-view contracts, platform behavior, native resources, and deployment risks. Use when a C++ plan changes Qt desktop, embedded, or cross-platform applications.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review Qt plans and other engineering artifacts for QObject ownership, signal and slot threading, event loops, model-view contracts, platform behavior, native resources, and deployment risks. Project applicability: the project uses or materially depends on Qt."
 ---
 
-# Qt plan review
+# Qt GrumpyDev review
+
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
 Apply this guidance alongside the core GrumpyDev review and the `cpp` skill.
 
-## Inspect evidence
+## Lean review
 
 - Read Qt and compiler versions, object trees, signal and slot connections,
   thread use, models, QML boundaries, resource packaging, target platforms, and
   tests.
+
 - Trace QObject lifetime, event-loop affinity, queued connections, workers,
   native handles, settings, files, and application shutdown.
-
-## Establish the operating model
-
-Establish the project target: Qt and compiler versions, widgets or QML, target
-OS and architectures, static or dynamic linking, plugin and graphics stack,
-packaging, and accessibility targets. The changed boundary must define: QObject
-ownership, parent-child lifetime, signals and slots, thread affinity, event
-loops, QML and C++ boundaries, models, resources, plugins, and packaging.
-
-Assign lifecycle, state, dependency, persistence, and security ownership for
-QObject ownership, parent-child lifetime, signals and slots, thread affinity,
-event loops. Prove QML and C++ boundaries, models, resources, plugins, packaging
-through startup, invalid or denied work, cancellation, background execution,
-mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for QObject parentage and deferred deletion mistakes, direct
 versus queued signal delivery across threads, event-loop blocking, references
 invalidated by implicit sharing or container changes, and platform-plugin
 differences hidden by one desktop environment.
 
-- Require explicit QObject ownership and prevent dangling callbacks, double
-  deletion, or deleteLater calls without a live event loop.
-- Check thread affinity and connection type; direct and queued signals have
-  different ordering and safety guarantees.
-- Validate model notifications, indexes, proxy models, and view updates against
-  Qt model-view invariants.
-- Treat QML and C++ boundaries, variants, JavaScript, URLs, resources, and user
-  input as runtime validation boundaries.
-- Test packaging, plugins, translations, high DPI, permissions, native dialogs,
-  and shutdown on every supported platform.
-
-## Verify the claims
-
-- Verify these behaviors through the actual Qt lifecycle and production
-  pipeline: QObject ownership, parent-child lifetime, signals and slots, thread
-  affinity, event loops. Use the actual framework pipeline and production build
-  with representative services and configuration.
-- Exercise failure and edge behavior for: QML and C++ boundaries, models,
-  resources, plugins, packaging. Exercise invalid input, denied access,
-  cancellation, dependency failure, concurrent work, shutdown, and mixed-version
-  deployment where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Qt, C++ compiler, platform, rendering backend, and ownership model
-  apply?
-- How do parent ownership, signals, threads, event loops, shutdown,
-  accessibility, and native resources interact?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat cross-thread UI access, double ownership, or lifecycle failure that
   corrupts persistent data as critical.
-- Downgrade when thread affinity, ownership, platform behavior, and shutdown are
-  covered by native tests.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete Qt evidence, operating model, failure, verification,
+question, and calibration guidance. Never load `SURVEY.md` during an ordinary
+review.
 
 ## Add to the verdict
 

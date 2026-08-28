@@ -2,11 +2,15 @@
 
 ## Applicability
 
-Apply this contribution when the project deploys workloads to Kubernetes or
-depends on Kubernetes-specific behavior in development, testing, or operations.
-Combine it with containers, CI/CD, observability, security, secrets, cloud,
-network, storage, and application contributions. Deduplicate shared runtime,
-identity, environment, and deployment questions.
+Apply this contribution when the project deploys workloads to Kubernetes or depends on
+Kubernetes-specific behavior in development, testing, or operations. Combine it with
+containers, CI/CD, observability, security, secrets, cloud, network, storage, and
+application contributions. Deduplicate shared runtime, identity, environment, and
+deployment questions.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

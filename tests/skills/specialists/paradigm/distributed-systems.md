@@ -60,9 +60,20 @@ context in `.grump`.
 
 Expected behavior:
 
-- Load this specialist's `SKILL.md` and the saved `.grump` doctrine.
-- Do not load this specialist's `SURVEY.md` during the ordinary review.
-- Ask a plan-scoped question only if a material decision remains unresolved
+- Because this specialist is installed and not explicitly marked inapplicable,
+  every explicitly invoked GrumpyDev review loads its `SKILL.md`, even when the
+  reviewed work does not name or modify this domain.
+- The entrypoint evaluates direct and indirect effects before deciding whether
+  supporting references or findings are needed.
+- When no material effect exists, the specialist produces no finding.
+- Lean mode loads this specialist's `SKILL.md` and saved doctrine without
+  loading `references/review.md` unless an entrypoint escalation trigger
+  applies.
+- Standard mode loads `SKILL.md` and loads `references/review.md` only when
+  the entrypoint identifies a plausible direct or indirect material effect.
+- Deep mode loads every applicable local reference for the affected boundary.
+- No ordinary review loads this specialist's `SURVEY.md`.
+- Ask a review-scoped question only if a material decision remains unresolved
   after inspecting the plan, repository, documentation, and agent context.
 
 ## Companion-overlap case
@@ -96,3 +107,85 @@ Expected behavior:
   material infrastructure.
 - Ask zero domain questions when current evidence already establishes the
   profile facts.
+
+## Focused-reference routing cases
+
+### `references/partial-failure-retries-and-overload.md`
+
+Positive trigger: the plan changes remote calls, timeouts, retries, hedging, backoff, circuit breaking, overload behavior, admission control, cancellation, uncertain outcomes, or dependency failure.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/partial-failure-retries-and-overload.md`.
+- The review applies the focused checks in `references/partial-failure-retries-and-overload.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/partial-failure-retries-and-overload.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/consistency-replication-and-caches.md`
+
+Positive trigger: the plan changes replicated state, read or write consistency, quorum behavior, lag, failover, cache ownership, invalidation, leases, fencing, or stale data tolerance.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/consistency-replication-and-caches.md`.
+- The review applies the focused checks in `references/consistency-replication-and-caches.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/consistency-replication-and-caches.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/messaging-ordering-and-reconciliation.md`
+
+Positive trigger: the plan changes events, queues, delivery guarantees, ordering, deduplication, idempotency, outboxes, sagas, compensation, reconciliation, replay, or poison work.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/messaging-ordering-and-reconciliation.md`.
+- The review applies the focused checks in `references/messaging-ordering-and-reconciliation.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/messaging-ordering-and-reconciliation.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/coordination-clocks-and-leadership.md`
+
+Positive trigger: the plan changes locks, leader election, consensus, coordination services, logical or wall clocks, time-based correctness, split-brain prevention, or ownership transfer.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/coordination-clocks-and-leadership.md`.
+- The review applies the focused checks in `references/coordination-clocks-and-leadership.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/coordination-clocks-and-leadership.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.
+
+### `references/evolution-operations-and-recovery.md`
+
+Positive trigger: the plan changes protocols, schemas, rolling versions, topology, region or zone placement, data migration, observability, incident response, rollback, disaster recovery, or restoration.
+
+Expected behavior:
+
+- Standard or deep mode loads `references/evolution-operations-and-recovery.md`.
+- The review applies the focused checks in `references/evolution-operations-and-recovery.md`.
+
+Negative trigger: Review the same specialist with no affected boundary named in the positive trigger.
+
+Expected behavior:
+
+- Standard or deep mode does not load `references/evolution-operations-and-recovery.md`.
+- Missing evidence follows the material-question or uncertainty policy instead of loading every focused reference.

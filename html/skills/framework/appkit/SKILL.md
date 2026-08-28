@@ -1,116 +1,71 @@
 ---
 name: appkit
-description: Review AppKit plans for application and window lifecycle, responder routing, controllers, bindings, drawing, threading, accessibility, sandboxing, state restoration, and termination risks. Use when a macOS desktop plan changes AppKit UI or application behavior.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review AppKit plans and other engineering artifacts for application and window lifecycle, responder routing, controllers, bindings, drawing, threading, accessibility, sandboxing, state restoration, and termination risks. Project applicability: the project uses or materially depends on AppKit."
 ---
 
-# AppKit plan review
+# AppKit GrumpyDev review
+
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
 Apply this guidance alongside the core GrumpyDev review and the `swift`,
 `objective-c`, `macos`, `application-security`, and `testing-strategy` skills.
-Select only companions that match the plan's real boundaries. Verify behavior
+Every installed companion that remains applicable to the project participates;
+the reviewed target does not select the roster. Verify behavior
 against the project's declared targets; do not silently substitute the newest
 version, a development default, or a neighboring product's semantics.
 
-## Inspect evidence
+## Lean review
 
 - Inspect application delegates, scene or window controllers, responders, menus,
   bindings, document controllers, view code, drawing layers, concurrency
   boundaries, entitlements, and distribution settings.
+
 - Inspect generated and rendered artifacts in addition to source. Templates,
   designers, metadata, conventions, and lifecycle callbacks can own behavior
   that is invisible in the main code path.
-- Establish declared and effective versions in development, CI, test, and every
-  supported deployment environment. Record differences that change behavior.
-- Trace one representative operation through startup, success, cancellation,
-  failure, shutdown, update, and recovery. Include encoding and serialization at
-  every application, process, native, storage, and network boundary.
-- Prefer observable artifacts, focused experiments, and project documentation
-  over assertions based on a framework or product name.
-
-## Establish the operating model
-
-Establish the project target: AppKit and macOS deployment targets, Swift or
-Objective-C use, lifecycle model, document model, sandbox and entitlements,
-persistence, accessibility targets, and distribution. The changed boundary must
-define: Application and window lifecycle, responder chain, controllers,
-bindings, document architecture, drawing, concurrency, accessibility, state
-restoration, SwiftUI interop, sandboxing, and termination.
-
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Application and window lifecycle, responder chain, controllers, bindings,
-document architecture, drawing. Prove concurrency, accessibility, state
-restoration, SwiftUI interop, sandboxing, termination through startup, invalid
-or denied work, cancellation, background execution, mixed versions, shutdown,
-rollback, and recovery.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for responder-chain behavior that hides mutations, bindings or
 observers that outlive their owners, AppKit access off the main thread,
 persistence deferred until a termination callback that may never run, and stale
 security-scoped file access.
 
-- Trace launch, activation, reopening, window creation, window close,
-  application termination, sudden termination, and state restoration. Do not
-  assume a final callback will run after crash, kill, logout, or power loss.
-- Review first-responder and target-action routing, validation, menus, key
-  equivalents, field editors, sheets, and modal sessions. Hidden responder-chain
-  behavior can make authorization and state mutations occur somewhere other than
-  the visible controller.
-- Define ownership among windows, controllers, views, delegates, data sources,
-  bindings, notifications, and observations. Avoid cycles and observers that
-  outlive their owner or receive changes during teardown.
-- Confine AppKit objects and UI mutations to the main thread. Move expensive
-  work off it, then make cancellation and actor or queue hops explicit when
-  windows close or selections change.
-- For document apps, prove open, autosave, conflict, coordination,
-  security-scoped access, undo, close, and recovery semantics. Preserve user
-  data through version changes and interrupted writes.
-- Check layout, backing scale, color spaces, text, focus, keyboard operation,
-  accessibility names and actions, reduced motion, localization expansion, and
-  multiple displays with real system settings.
-- Keep AppKit and SwiftUI state ownership unambiguous at hosting boundaries.
-  Verify object lifetime, environment propagation, navigation, focus, commands,
-  and observation in both directions.
-- Match sandbox entitlements and privacy purpose strings to actual file,
-  network, hardware, automation, and helper access. More entitlement is not a
-  substitute for a coherent access workflow.
-
-## Verify the claims
-
-- Exercise cold launch, reopen, multiple windows, close during work,
-  termination, crash recovery, and state restoration.
-- Run UI and accessibility tests with keyboard-only input, VoiceOver, scaling,
-  localization, dark mode, reduced motion, and multiple displays.
-- Test sandboxed file selection, persistent security-scoped access, helpers,
-  entitlements, and denied permissions.
-- Profile main-thread stalls, drawing, memory, retain cycles, and cancellation
-  through window teardown.
-
-## Ask when evidence is missing
-
-Ask only when evidence cannot establish the durable target: AppKit and macOS
-deployment targets, Swift or Objective-C use, lifecycle model, document model,
-sandbox and entitlements, persistence, accessibility targets, and distribution.
-For the changed boundary, ask only about unresolved Application and window
-lifecycle, responder chain, controllers, bindings, document architecture,
-drawing, concurrency, accessibility, state restoration, SwiftUI interop,
-sandboxing, and termination when the answer can change the verdict or
-implementation.
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat user-data loss, an unsandboxed privilege boundary, an inaccessible core
   workflow, or lifecycle behavior that makes recovery impossible as critical or
   high according to blast radius and realistic likelihood.
-- Treat a lifecycle, authorization, persistence, or deployment defect that
-  breaks a core workflow or loses user state as material when the plan depends
-  on it and lacks either a safe design or credible evidence.
-- Downgrade or close findings when target-specific documentation, representative
-  builds, focused tests, failure exercises, and recovery evidence establish the
-  required behavior.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md)
+for the shared detailed review contract.
+
+Load these focused references only when their stated boundary applies:
+
+- [Focused rules](references/documents-and-state-restoration.md):
+  Read when the reviewed work directly or indirectly changes document architecture,
+  opening, autosave, undo, conflict
+  handling, coordinated access, state restoration, close behavior, or document recovery.
+- [Focused rules](references/sandbox-entitlements-and-file-access.md):
+  Read when the reviewed work directly or indirectly changes sandboxing, entitlements,
+  privacy permissions, security-scoped URLs, helper access, filesystem access,
+  automation, hardware access, or denied
+  permission behavior.
+
+Do not load every focused reference merely because this specialist is installed.
+Never load `SURVEY.md` during an ordinary review.
 
 ## Add to the verdict
 

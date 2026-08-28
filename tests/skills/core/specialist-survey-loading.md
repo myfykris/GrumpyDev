@@ -20,7 +20,10 @@ The same repository later asks GrumpyDev to review an implementation plan.
 
 Expected behavior:
 
-- Read `.grump` and applicable specialist `SKILL.md` files.
+- Read `.grump` and every installed specialist `SKILL.md` not explicitly marked
+  inapplicable.
+- Have every active specialist inspect direct and indirect effects before it
+  decides whether supporting references or findings are needed.
 - Do not read any specialist `SURVEY.md`.
 - Ask an `RQ###` question only when current review evidence still lacks a
   material answer.

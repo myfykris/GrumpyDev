@@ -5,6 +5,10 @@ Expected behavior:
 - `Grump this architecture plan` invokes the review skill, not the survey.
 - Explicit setup, onboarding, re-survey, or doctrine-refresh requests invoke
   the survey.
+- An initial survey asks the doctrine format preference as `Q001`, after the
+  evidence pass and before every other presented question.
+- A re-survey preserves an existing unambiguous format answer unless the user
+  asks to revisit it.
 - The survey records the plan interaction preference in `.grump`.
 - An initial survey always asks for the plan-readiness and research-execution
   policies and records both answers in `.grump`.

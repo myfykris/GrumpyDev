@@ -1,74 +1,51 @@
 ---
 name: expo
-description: Review Expo plans for SDK and React Native compatibility, native configuration, EAS builds, updates, permissions, plugins, routing, and release safety. Use when a plan builds or operates an Expo application.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review Expo plans and other engineering artifacts for SDK and React Native compatibility, native configuration, EAS builds, updates, permissions, plugins, routing, and release safety. Project applicability: the project uses or materially depends on Expo."
 ---
 
-# Expo plan review
+# Expo GrumpyDev review
 
 Apply this guidance alongside the core GrumpyDev review and the `react-native`, `javascript` and
 `typescript` skills.
 
-## Inspect evidence
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
+
+## Lean review
 
 - Read Expo SDK, React Native, React, router, module, config-plugin, and native project
   versions.
+
 - Identify managed or prebuild workflow, development builds, EAS Build profiles, credentials,
   channels, and runtime versions.
-- Trace permissions, deep links, push tokens, background work, secure storage, assets, native
-  modules, and platform differences.
-- Inspect app configuration, generated native changes, update settings, environment values,
-  signing, and store metadata.
 
-## Establish the operating model
+Watch especially for Expo Go treated as production evidence, config plugins that
+mutate native projects unpredictably, over-the-air updates crossing native
+compatibility, secrets placed in public app config, and permissions tested on
+only one platform.
 
-Establish the project target: Expo SDK and React Native versions, target platforms, workflow,
-native directories, EAS profiles, signing ownership, update channels and runtime policy, router,
-plugins, permissions, and minimum OS versions.
-
-The plan must distinguish JavaScript updates from native binary changes. Runtime version policy
-must prevent an update from loading on an incompatible binary.
-
-## Challenge the plan
-
-### Recurring traps
-
-Watch especially for Expo Go treated as production evidence, config plugins that mutate native
-projects unpredictably, over-the-air updates crossing native compatibility, secrets placed in
-public app config, and permissions tested on only one platform.
-
-- Require a compatibility matrix for Expo SDK, React Native, React, native modules, and
-  supported operating systems.
-- Treat config plugins and prebuild output as code changes; review generated entitlements,
-  manifests, permissions, and native dependencies.
-- Define runtime versions, channels, rollback, rollout percentage, failed-update recovery, and
-  binary-to-update compatibility.
-- Separate build-time public configuration from server secrets and assume packaged application
-  values are readable by users.
-- Exercise deep links, notifications, background and resumed state, offline startup, denied
-  permissions, and store release variants.
-
-## Verify the claims
-
-- Produce representative local or EAS-equivalent release builds for every platform and inspect
-  generated native configuration.
-- Test updates against each supported installed binary, including incompatible updates,
-  rollback, offline launch, and failed startup.
-- Use development builds or release binaries for native modules and permissions rather than
-  relying only on Expo Go.
-
-## Ask when evidence is missing
-
-- Which Expo SDK, React Native version, platforms, workflow, native modules, EAS profiles, and
-  minimum OS versions apply?
-- What runtime-version, channel, rollout, rollback, signing, permission, and
-  generated-native-code policy applies?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat signing compromise, secret exposure, incompatible updates that brick a core flow, or
   unsafe permission use as critical.
-- Downgrade when native compatibility, generated configuration, updates, rollback, and
-  real-device release builds are proven.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete Expo evidence, operating model, failure, verification,
+question, and calibration guidance. Never load `SURVEY.md` during an ordinary
+review.
 
 ## Add to the verdict
 

@@ -4,10 +4,10 @@
 
 Review a plan in this domain whose available evidence does not answer:
 
-- Which TanStack products and versions, React runtime, host, route generation, and rendering
-  mode apply?
-- How are query keys, freshness, invalidation, hydration, optimistic updates, server functions,
-  and authorization owned?
+- Which TanStack products and versions apply, which framework and runtime host
+  them, and what project concern does each product own?
+- For the selected products, which identity, state, persistence, authorization,
+  trust, accessibility, performance, build, and deployment rules apply?
 
 Expected behavior:
 
@@ -22,6 +22,23 @@ Expected behavior:
 
 - Ask zero questions that the evidence already answers.
 - Downgrade or omit findings that the supplied evidence invalidates.
+
+## Product-family cases
+
+Review separate changes using Start and Router; Query, DB and Store; Table,
+Form, Virtual and Pacer; AI, Charts, Markdown, Highlight and Hotkeys; and
+Devtools, Config, CLI and Intent.
+
+Expected behavior:
+
+- Apply routing, server-function and deployment checks to Start and Router;
+  cache, collection, sync, persistence and subscription checks to Query, DB and
+  Store; and state, identity, cancellation, accessibility and performance checks
+  to the UI and scheduling products.
+- Treat AI and rendered content as untrusted at tool, HTML and URL boundaries.
+- Verify generated-artifact ownership, secret handling and production exclusion
+  for development and build tooling.
+- Do not reduce every TanStack review to Query keys, Router loaders, or React.
 
 ## Evidence-resolved survey case
 
@@ -45,12 +62,26 @@ Expected behavior:
 
 ## Ordinary-review loading case
 
-Run an ordinary Grump review after setup saved durable domain context in .grump.
+Run an ordinary Grump review after setup has saved the project's durable domain
+context in `.grump`.
 
 Expected behavior:
 
-- Load this specialist's SKILL.md and saved doctrine, but not SURVEY.md.
-- Ask a plan-scoped question only when material evidence remains unresolved.
+- Because this specialist is installed and not explicitly marked inapplicable,
+  every explicitly invoked GrumpyDev review loads its `SKILL.md`, even when the
+  reviewed work does not name or modify this domain.
+- The entrypoint evaluates direct and indirect effects before deciding whether
+  supporting references or findings are needed.
+- When no material effect exists, the specialist produces no finding.
+- Lean mode loads this specialist's `SKILL.md` and saved doctrine without
+  loading `references/review.md` unless an entrypoint escalation trigger
+  applies.
+- Standard mode loads `SKILL.md` and loads `references/review.md` only when
+  the entrypoint identifies a plausible direct or indirect material effect.
+- Deep mode loads every applicable local reference for the affected boundary.
+- No ordinary review loads this specialist's `SURVEY.md`.
+- Ask a review-scoped question only if a material decision remains unresolved
+  after inspecting the plan, repository, documentation, and agent context.
 
 ## Companion-overlap case
 
@@ -65,9 +96,9 @@ Expected behavior:
 
 Run setup or re-survey with this domain boundary:
 
-- TanStack product and React versions, generated routes, server runtime and adapter,
-  regions, cookie and proxy settings, query persistence, environment sources, build output, and
-  production command.
+- Selected TanStack products and UI framework, generated routes or artifacts,
+  server runtime and adapter, regions, cookie and proxy settings, persisted or
+  synchronized state, environment sources, build output, and production command.
 
 Expected behavior:
 
