@@ -1,74 +1,51 @@
 ---
 name: htmx
-description: Review htmx plans for hypermedia contracts, fragment and full-page responses, swaps, request ordering, history, caching, security, and accessibility. Use when a plan adds or changes htmx interactions.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review htmx plans and other engineering artifacts for hypermedia contracts, fragment and full-page responses, swaps, request ordering, history, caching, security, and accessibility. Project applicability: the project uses or materially depends on htmx."
 ---
 
-# htmx plan review
+# htmx GrumpyDev review
 
 Apply this guidance alongside the core GrumpyDev review and the `html-css`, `web-accessibility`
 and `application-security` skills.
 
-## Inspect evidence
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
+
+## Lean review
 
 - Read the htmx version, extensions, configuration, server framework, template system, and
   response conventions.
+
 - Map each request to its trigger, method, parameters, target, swap, synchronization,
   validation, and failure behavior.
-- Trace full-page versus fragment rendering, direct navigation, redirects, history restore,
-  caching, and progressive enhancement.
-- Inspect HTML sanitization, CSP, CSRF controls, response headers, focus behavior,
-  announcements, and disabled states.
 
-## Establish the operating model
+Watch especially for the same URL caching both fragments and full pages,
+race-prone requests overwriting newer state, sensitive HTML entering history
+storage, injected htmx attributes becoming executable behavior, and swaps losing
+focus or form errors.
 
-Establish the project target: htmx version, server and template stack, extensions, request and
-response conventions, fragment detection, history policy, cache variation, CSRF transport, CSP,
-and accessibility behavior.
-
-The URL and server-rendered HTML remain authoritative. Any URL placed in history must return a
-complete navigable page outside an htmx request.
-
-## Challenge the plan
-
-### Recurring traps
-
-Watch especially for the same URL caching both fragments and full pages, race-prone requests
-overwriting newer state, sensitive HTML entering history storage, injected htmx attributes
-becoming executable behavior, and swaps losing focus or form errors.
-
-- Require server responses to define full-page and fragment behavior without trusting a
-  forgeable client header for authorization.
-- Use synchronization or cancellation where concurrent requests can return out of order and
-  corrupt visible state.
-- Vary caches correctly for fragment responses or choose distinct URLs; test browser back,
-  refresh, copied links, and history misses.
-- Disable history storage for sensitive content and validate CSRF, CSP, origin, and HTML
-  sanitization controls.
-- Preserve focus, validation messages, busy state, keyboard behavior, and live announcements
-  across swaps.
-
-## Verify the claims
-
-- Exercise requests with and without htmx headers, direct navigation, refresh, back and
-  forward, cache hits, and history misses.
-- Delay and reorder responses to prove synchronization, stale-response handling, disabled
-  controls, and error recovery.
-- Test injected content, CSRF failure, script policy, sensitive history, and
-  assistive-technology behavior.
-
-## Ask when evidence is missing
-
-- Which htmx version, extensions, server templates, fragment convention, swap targets, and
-  cache behavior apply?
-- How are request races, direct navigation, history storage, CSRF, injected HTML, focus, and
-  errors handled?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat stored sensitive fragments, forged state-changing requests, or executable untrusted
   HTML as critical.
-- Downgrade when URLs, fragment contracts, caching, ordering, security, and accessible swap
-  behavior are tested.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete htmx evidence, operating model, failure, verification,
+question, and calibration guidance. Never load `SURVEY.md` during an ordinary
+review.
 
 ## Add to the verdict
 

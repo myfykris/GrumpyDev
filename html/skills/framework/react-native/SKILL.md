@@ -1,75 +1,51 @@
 ---
 name: react-native
-description: Review React Native plans for architecture compatibility, native bridges, lifecycle, navigation, state, permissions, performance, accessibility, and release behavior. Use when a plan builds or changes React Native applications.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review React Native plans and other engineering artifacts for architecture compatibility, native bridges, lifecycle, navigation, state, permissions, performance, accessibility, and release behavior. Project applicability: the project uses or materially depends on React Native."
 ---
 
-# React Native plan review
+# React Native GrumpyDev review
 
 Apply this guidance alongside the core GrumpyDev review and the `react`, `javascript` and
 `typescript` skills.
 
-## Inspect evidence
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
+
+## Lean review
 
 - Read React Native, React, platform, engine, native module, navigation, and state-library
   versions.
+
 - Identify New Architecture support, code generation, bridged or bridgeless modules, native
   build settings, and minimum OS levels.
-- Trace application lifecycle, navigation, deep links, background work, permissions, storage,
-  networking, and offline behavior.
-- Inspect list rendering, image use, thread work, memory, accessibility, signing, and
-  production bundle configuration.
 
-## Establish the operating model
+Watch especially for old native modules assumed compatible with the New
+Architecture, JavaScript-thread stalls hidden by simulators, lifecycle work lost
+in background state, navigation state duplicated, and platform permission
+differences ignored.
 
-Establish the project target: React Native and React versions, New Architecture status,
-JavaScript engine, target platforms and OS versions, native modules, navigation, state
-ownership, build variants, permissions, signing, updates, and release channels.
-
-The plan must separate JavaScript-thread work, UI-thread work, native module work, and durable
-platform services. A library claim is not enough without compatibility on each target
-architecture and OS.
-
-## Challenge the plan
-
-### Recurring traps
-
-Watch especially for old native modules assumed compatible with the New Architecture,
-JavaScript-thread stalls hidden by simulators, lifecycle work lost in background state,
-navigation state duplicated, and platform permission differences ignored.
-
-- Require a version and architecture compatibility matrix for React Native, React, engine,
-  native modules, and build tools.
-- Trace every native boundary for thread, ownership, cancellation, serialization, error, and
-  platform-specific behavior.
-- Define startup, background, resume, termination, deep-link, offline, denied-permission, and
-  state-restoration behavior.
-- Check lists, images, animations, memory, bundle size, startup, and bridge traffic using
-  release builds on real devices.
-- Require semantic roles, labels, focus, screen-reader flow, text scaling, touch targets,
-  keyboard, and reduced-motion behavior.
-
-## Verify the claims
-
-- Build signed release variants for each platform and architecture, then test on representative
-  physical devices.
-- Exercise native module failure, background transitions, process termination, low memory,
-  offline launch, and deep links.
-- Profile JavaScript and UI threads, startup, memory, lists, and animations with
-  production-like data.
-
-## Ask when evidence is missing
-
-- Which React Native, React, engine, architecture, platforms, OS versions, and native modules
-  apply?
-- How are threads, lifecycle, navigation, permissions, offline state, accessibility, signing,
-  and release behavior handled?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat unsafe native memory behavior, secret exposure, inaccessible core flows, or lost
   committed data as critical.
-- Downgrade when architecture compatibility, lifecycle, native boundaries, accessibility, and
-  real-device release evidence are complete.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete React Native evidence, operating model, failure,
+verification, question, and calibration guidance. Never load `SURVEY.md` during
+an ordinary review.
 
 ## Add to the verdict
 

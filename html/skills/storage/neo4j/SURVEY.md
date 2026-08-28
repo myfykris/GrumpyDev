@@ -2,9 +2,15 @@
 
 ## Applicability
 
-Apply this contribution when a plan stores or queries connected data in Neo4j.
-Skip it when Neo4j does not constrain a supported build, runtime, client, data,
-deployment, or operating boundary.
+Apply this contribution when the project stores or queries connected data in Neo4j.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -52,13 +58,14 @@ separate state, support, ownership, confidence, source, and scope fields.
 
 ## Do not ask or record
 
-Keep individual query plans, one-off migration steps, current host or replica
-identities, transient load readings, and copied data out of durable Neo4j
-doctrine. Do not duplicate facts owned by another applicable contribution.
+Keep one-off PROFILE output, current cluster-member identities, transient cache
+or transaction readings, import job IDs, and copied graph data out of durable
+Neo4j doctrine. Do not duplicate facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey Neo4j when product version or provider, topology, engine, consistency
-policy, scale class, schema authority, migration tooling, replication or
-failover, security, or recovery objectives materially change, when evidence
-conflicts with saved doctrine, or when the user requests a context refresh.
+Re-survey Neo4j when its edition, version or Aura service, cluster topology,
+read-routing policy, graph model, constraints or indexes, Cypher compatibility,
+import method, authentication, backup, failover, or recovery objectives
+materially change. Also re-survey when evidence conflicts with saved doctrine
+or the user requests a context refresh.

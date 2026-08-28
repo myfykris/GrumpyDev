@@ -2,10 +2,14 @@
 
 ## Applicability
 
-Apply this contribution when Laravel owns the application's HTTP, console,
-queue, event, scheduling, model, or deployment lifecycle. Combine it with PHP,
-the selected database, queue, cache, filesystem, web-server, and deployment
-survey contributions. Do not repeat their version or topology questions.
+Apply this contribution when Laravel owns the application's HTTP, console, queue, event,
+scheduling, model, or deployment lifecycle. Combine it with PHP, the selected database,
+queue, cache, filesystem, web-server, and deployment survey contributions. Do not repeat
+their version or topology questions.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

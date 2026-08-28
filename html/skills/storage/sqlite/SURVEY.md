@@ -2,9 +2,13 @@
 
 ## Applicability
 
-Apply this contribution when an application embeds SQLite or shares a SQLite
-database file. Skip it when SQLite does not constrain a supported build,
-runtime, client, data, deployment, or operating boundary.
+Apply this contribution when an application embeds SQLite or shares a SQLite database
+file. Skip it when SQLite does not constrain a supported build, runtime, client, data,
+deployment, or operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -53,13 +57,15 @@ separate state, support, ownership, confidence, source, and scope fields.
 
 ## Do not ask or record
 
-Keep individual query plans, one-off migration steps, current host or replica
-identities, transient load readings, and copied data out of durable SQLite
-doctrine. Do not duplicate facts owned by another applicable contribution.
+Keep one-off EXPLAIN output, disposable database copies, current connection or
+transaction IDs, transient WAL and checkpoint readings, temporary per-connection
+PRAGMAs, and copied row data out of durable SQLite doctrine. Do not duplicate
+facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey SQLite when product version or provider, topology, engine, consistency
-policy, scale class, schema authority, migration tooling, replication or
-failover, security, or recovery objectives materially change, when evidence
-conflicts with saved doctrine, or when the user requests a context refresh.
+Re-survey SQLite when the library or binding version, filesystem or process
+boundary, journal and synchronous modes, locking and concurrency model, schema
+authority, migration tool, encryption extension, backup method, or recovery
+objective materially changes. Also re-survey when evidence conflicts with saved
+doctrine or the user requests a context refresh.

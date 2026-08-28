@@ -2,11 +2,18 @@
 
 ## Applicability
 
-Apply this contribution when the project uses Objective-C or when its behavior
-constrains a supported build, deployment, client, or operating environment.
-Combine it with the `c`, `cpp`, `swift`, `macos`, and applicable Apple UI
-framework skills. Deduplicate shared version, runtime, architecture, identity,
-data, security, and deployment questions.
+Apply this contribution when the project contains or builds Objective-C or
+Objective-C++ source, exposes an Objective-C ABI, or uses generated bindings or
+a bridge whose correctness depends on Objective-C runtime semantics. Do not
+apply it merely because the project targets an Apple platform, imports Apple
+frameworks, or contains Swift code. Combine it with the `c`, `cpp`, `swift`,
+`macos`, and applicable Apple UI framework skills when those domains are also
+applicable. Deduplicate shared version, runtime, architecture, identity, data,
+security, and deployment questions.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -23,7 +30,7 @@ Collect only durable facts that will improve later reviews:
 
 - Compiler and language mode.
 - ARC policy and manual-ownership islands.
-- Target macOS versions.
+- Target Apple platform and minimum operating-system versions.
 - Apple and third-party frameworks.
 - Swift bridging and module boundaries.
 - Objective-C++ use.
@@ -41,8 +48,9 @@ Collect only durable facts that will improve later reviews:
 ## Ask only when materially unresolved
 
 Ask only when inspection cannot establish a durable fact above and the answer
-will change later Objective-C reviews. Candidate subjects are: Compiler and
-language mode, ARC policy, target macOS versions, frameworks, Swift bridging,
+will change later Objective-C reviews. Candidate subjects are: compiler and
+language mode, ARC policy, target Apple platform and operating-system versions,
+frameworks, Swift bridging,
 Objective-C++ use, architectures, and deployment form.
 - Align existing domain questions with this deployment guidance when it is
   material: macOS or iOS targets, architectures, runtime and framework

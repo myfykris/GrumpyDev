@@ -2,9 +2,13 @@
 
 ## Applicability
 
-Apply this contribution when work runs in parallel across threads, processes,
-tasks, actors, or workers. Skip it when Concurrent systems does not constrain a
-supported build, runtime, client, data, deployment, or operating boundary.
+Apply this contribution when work runs in parallel across threads, processes, tasks,
+actors, or workers. Skip it when Concurrent systems do not constrain a supported
+build, runtime, client, data, deployment, or operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

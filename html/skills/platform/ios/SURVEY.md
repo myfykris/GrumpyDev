@@ -2,8 +2,13 @@
 
 ## Applicability
 
-Apply this contribution when software targets apple mobile devices. Skip it when iOS and iPadOS
-does not constrain a supported build, runtime, client, data, deployment, or operating boundary.
+Apply this contribution when software targets Apple mobile devices. Skip it when iOS and
+iPadOS do not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -48,6 +53,7 @@ duplicate facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey iOS and iPadOS when its version, target platform, execution model, trust boundary,
-deployment topology, persistent state, update process, or recovery policy materially changes,
-when evidence conflicts with saved doctrine, or when the user requests a context refresh.
+Re-survey iOS and iPadOS when the supported OS or device classes, entitlement or
+permission set, application lifecycle, background modes, data-protection policy,
+signing identity, or distribution channel materially changes. Also re-survey when
+evidence conflicts with saved doctrine or the user requests a context refresh.

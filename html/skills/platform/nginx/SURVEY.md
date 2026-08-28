@@ -2,11 +2,15 @@
 
 ## Applicability
 
-Apply this contribution when the project uses Nginx or when its behavior
-constrains a supported build, deployment, client, or operating environment.
-Combine it with the application runtime, `application-security`,
-`performance-capacity`, and deployment skills. Deduplicate shared version,
-runtime, architecture, identity, data, security, and deployment questions.
+Apply this contribution when the project uses Nginx or when its behavior constrains a
+supported build, deployment, client, or operating environment. Combine it with the
+application runtime, `application-security`, `performance-capacity`, and deployment
+skills. Deduplicate shared version, runtime, architecture, identity, data, security, and
+deployment questions.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

@@ -2,10 +2,15 @@
 
 ## Applicability
 
-Apply this contribution when an Elixir plan changes Phoenix endpoints,
-controllers, LiveViews, channels, contexts, or releases. Skip it when Phoenix
-does not constrain a supported build, runtime, client, data, deployment, or
+Apply this contribution when the project uses or materially depends on Phoenix.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
 operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

@@ -1,76 +1,64 @@
 ---
 name: tanstack
-description: Review TanStack Start, Router, and Query plans for server functions, routing, loaders, caching, invalidation, hydration, authorization, and deployment. Use when a plan depends on TanStack Start, Router, or Query.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review TanStack plans and other engineering artifacts across Start, Router, Query, DB, Store, Table, Form, Virtual, Pacer, AI, Charts, Hotkeys, Markdown, Highlight, Devtools, Config, CLI, Intent, and related packages for state, data, rendering, authorization, accessibility, performance, build, and deployment risks. Project applicability: the project uses or materially depends on one or more TanStack products."
 ---
 
-# TanStack plan review
+# TanStack GrumpyDev review
 
 Apply this guidance alongside the core GrumpyDev review and the `react`, `typescript` and `vite`
 skills.
 
-## Inspect evidence
+## Invocation and participation boundary
 
-- Identify which TanStack products and versions apply: Start, Router, Query, Form, Table, or
-  related packages.
-- Read route trees, loaders, server functions, middleware, query clients, keys, defaults,
-  persistence, and dehydration code.
-- Trace server, client, edge, build, and serialized boundaries plus authentication and
-  per-operation authorization.
-- Inspect navigation, preloading, cache ownership, invalidation, optimistic updates, retries,
-  errors, and deployment output.
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
 
-## Establish the operating model
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
-Establish the project target: TanStack product versions, React and runtime versions, router
-generation, Start server runtime, hosting adapter, query-key conventions, cache defaults,
-persistence, hydration, server-function middleware, and authorization boundary.
+## Lean review
 
-Route visibility and client middleware are user experience controls, not data authorization.
-Every server function and protected data source must enforce its own trusted authorization.
+- Identify every TanStack product and version in use. Classify it as routing or
+  full stack, remote data or client state, data presentation or input,
+  scheduling or virtualization, AI or content rendering, or development and
+  build tooling. Do not assume one product's guarantees apply to another.
 
-## Challenge the plan
+- Inspect the product-specific sources of truth: route trees, loaders, server
+  functions and middleware; query clients and keys; DB collections and sync;
+  stores and selectors; table, form and virtualizer state; pacer controls; AI
+  streams and tools; content renderers; and generated build or configuration
+  artifacts.
 
-### Recurring traps
+Watch especially for cross-user cache or dehydrated-state leakage, optimistic
+effects without persistence or rollback, server functions trusted because
+callers are generated, competing data owners, unstable row or item identities,
+async validation races, inaccessible virtualization or table behavior,
+debounced work lost on teardown, untrusted model or Markdown output rendered as
+safe, development tooling exposed in production, and generated artifacts that
+silently diverge from their source.
 
-Watch especially for query keys missing tenant or filter inputs, stale caches crossing users,
-optimistic updates without reconciliation, server functions trusted because callers are
-generated, loaders duplicating query ownership, and runtime adapters assumed equivalent.
+Lean mode is insufficient when this material severity condition may apply:
 
-- Require canonical query keys that include every identity, tenant, locale, filter, and version
-  dimension affecting data.
-- Define freshness, garbage collection, retries, cancellation, invalidation, optimistic
-  rollback, persistence, and offline behavior per query class.
-- Authorize and validate inside every server function or trusted service boundary regardless of
-  route guards or generated clients.
-- Ensure loaders, router context, query cache, and server rendering have one coherent data
-  owner and hydration contract.
-- Verify Start build output, server runtime APIs, streaming, cookies, environment values, and
-  deployment adapter behavior.
-
-## Verify the claims
-
-- Exercise navigation, preloading, parallel requests, cancellation, stale data, failed
-  mutations, optimistic rollback, and tenant changes.
-- Inspect dehydrated state and persisted caches for private data, incompatible versions, and
-  missing query-key dimensions.
-- Run production Start output or the actual Router and Query integration under the selected
-  runtime and cache topology.
-
-## Ask when evidence is missing
-
-- Which TanStack products and versions, React runtime, host, route generation, and rendering
-  mode apply?
-- How are query keys, freshness, invalidation, hydration, optimistic updates, server functions,
-  and authorization owned?
-
-## Calibrate findings
-
-- Treat cross-user cache leakage, missing server-function authorization, or unreconciled
+- Treat cross-user data leakage, missing server-function authorization,
+  untrusted output reaching an executable or HTML sink, or unreconciled
   irreversible optimistic effects as critical.
-- Downgrade when keys, cache policy, invalidation, authorization, hydration, and production
-  runtime behavior are tested.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete TanStack evidence, operating model, failure, verification,
+question, and calibration guidance. Never load `SURVEY.md` during an ordinary
+review.
 
 ## Add to the verdict
 
-State the products in use, route and data owners, key schema, cache and invalidation policy,
-authorization boundary, and runtime evidence.
+State the products in use, source of truth and identity model for each, data and
+authorization boundaries, persistence and failure behavior, accessibility and
+performance limits, generated-artifact ownership, and representative runtime
+evidence.

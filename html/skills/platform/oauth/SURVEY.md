@@ -1,55 +1,78 @@
-# OAuth and OIDC survey contribution
+# OAuth OIDC and token authentication survey contribution
 
 ## Applicability
 
-Apply this contribution when a plan adds or changes delegated authorization,
-social login, SSO, OAuth clients, or token-based vendor access. Skip it when
-OAuth and OIDC does not constrain a supported build, runtime, client, data,
-deployment, or operating boundary.
+Apply this contribution when the project uses OAuth, OpenID Connect, delegated
+authorization, social login, SSO, bearer tokens, JWTs, opaque access tokens, API
+keys, personal access tokens, service tokens, signed tokens, or
+proof-of-possession tokens. Do not apply it to cookie-only sessions unless they
+are backed by or exchanged for one of these token types.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
-For OAuth and OIDC, inspect version declarations, effective configuration
-sources, rendered artifacts, infrastructure and identity policy, build and
-deployment workflows, service objectives, operational runbooks, and project
-documentation. Read existing `.grump` doctrine and project documentation before
+Inspect authentication and authorization middleware, token issuers and
+consumers, API client configuration, secret sources, key sets, discovery or
+introspection configuration, logs and redaction rules, deployment workflows,
+incident runbooks, project documentation, and existing `.grump` doctrine before
 treating a durable fact as unresolved.
 
 ## Durable project facts
 
-- Target and operating model: Providers, protocol versions and profiles, client
-  types, grants, redirect origins, token formats, scopes, session relationship,
-  key rotation, and tenant model.
-- Review doctrine for: OAuth and OIDC roles, flows, redirects, PKCE, state and
-  nonce, token validation, rotation, scopes, consent, logout, discovery, key
-  rollover, and threats.
+- Token classes and purposes; issuer or creator, presenter, accepting service,
+  subject, audience, tenant, permission or scope model, format, and lifetime.
+- Transport, storage, logging and redaction, validation, clock-skew, replay,
+  rotation, revocation, bootstrap, recovery, and compromise-response policy.
+- For OAuth and OIDC: providers, protocol profiles, client types, grants,
+  redirect origins, PKCE, state, nonce, consent, logout, discovery, refresh
+  tokens, account linking, and session relationship.
+- For JWTs and other signed tokens: allowed algorithms, issuer, audience, type,
+  key source and binding, claim rules, and key rollover.
+- For opaque tokens, API keys, personal access tokens, and service tokens:
+  lookup or introspection authority, caching, scoping, ownership, rotation, and
+  revocation behavior.
+- For proof-of-possession tokens: key binding, request binding, nonce or replay
+  policy, and key-loss recovery.
 - Sources of truth and owners for relevant configuration, contracts, builds,
   deployment, upgrades, incidents, rollback, and recovery.
 - Environment differences that materially change these facts.
-- Deployment-profile facts: Authorization server and resource-server
-  boundaries, browser or native client type, redirect origins, proxy and TLS
-  termination, token storage, issuer reachability, and key rotation.
+- Deployment-profile facts: token issuers and accepting services, client or
+  workload type, transport and TLS termination, credential storage, validation
+  or introspection reachability, key authority, rotation, and revocation. When
+  OAuth or OIDC applies, include authorization-server and resource-server
+  boundaries and redirect origins.
 
 ## Ask only when materially unresolved
 
-- Which OAuth or OpenID Connect actors, client type, flow, scopes, redirect
-  rules, and provider behavior apply?
-- How are state, nonce, PKCE, tokens, revocation, rotation, and account linking
-  protected?
+- Which token classes exist, what is each one for, who issues and accepts it,
+  and what subject, audience, tenant, scope, format, transport, and lifetime
+  apply?
+- How does each token class handle validation, storage, logging, replay,
+  rotation, revocation, key rollover, and compromise? When OAuth or OIDC is
+  involved, which actors, client type, flow, redirects, PKCE, state, nonce, and
+  account-linking rules apply?
 - For the affected profiles, which of these facts materially differ across
   current, planned, and retiring operation, what support commitments apply, and
-  what evidence establishes each fact: Authorization server and resource-server
-  boundaries, browser or native client type, redirect origins, proxy and TLS
-  termination, token storage, issuer reachability, and key rotation? Ask only
+  what evidence establishes each fact: token issuers and accepting services,
+  client or workload type, transport and TLS termination, credential storage,
+  validation or introspection reachability, key authority, rotation and
+  revocation, plus OAuth redirects when applicable? Ask only
   when evidence and the core profile confirmation do not resolve them.
 
 ## Record in .grump
 
-Record OAuth and OIDC answers in project technology, runtime, security,
+Record token authentication and authorization answers in project technology, runtime, security,
 deployment, verification, and operational doctrine. Preserve source and scope.
 Record a material unknown as unresolved doctrine instead of guessing.
 
-Record confirmed OAuth and OIDC deployment facts on the affected `DEP-###`
+Record confirmed token-authentication deployment facts on the affected `DEP-###`
 profile. Use a referenced `INF-###` entry for a material component shared by
 several profiles. Preserve separate state, support, ownership, confidence,
 source, and scope fields.
@@ -57,13 +80,14 @@ source, and scope fields.
 ## Do not ask or record
 
 Keep current host or process identifiers, transient resource readings, one
-rollout value, private endpoints, and plan-only topology out of durable OAuth
-and OIDC doctrine. Do not duplicate facts owned by another applicable
-contribution.
+rollout value, private endpoints, actual credentials or token values, and
+plan-only topology out of durable token-authentication doctrine. Do not
+duplicate facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey OAuth and OIDC when product or protocol version, topology,
-environment, identity, trust boundary, resource model, configuration authority,
-deployment process, or recovery objectives materially change, when evidence
-conflicts with saved doctrine, or when the user requests a context refresh.
+Re-survey when a token type, issuer, accepting audience, identity or tenant
+model, scope policy, validation rule, key authority, storage or transport
+boundary, OAuth flow, rotation or revocation process, or compromise response
+materially changes. Also re-survey when evidence conflicts with saved doctrine
+or the user requests a context refresh.

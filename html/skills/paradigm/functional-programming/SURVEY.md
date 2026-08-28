@@ -2,10 +2,16 @@
 
 ## Applicability
 
-Apply this contribution when a plan relies on functional architecture or
-functional language features for correctness. Skip it when Functional
-programming does not constrain a supported build, runtime, client, data,
-deployment, or operating boundary.
+Apply this contribution when the project architecture or correctness materially depends
+on functional programming concepts or language features.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

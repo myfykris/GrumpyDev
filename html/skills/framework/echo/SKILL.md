@@ -1,80 +1,49 @@
 ---
 name: echo
-description: Review Echo framework plans for middleware order, request binding, validation, context lifetime, concurrency, error responses, and graceful shutdown risks. Use when a Go plan changes Echo HTTP services, handlers, middleware, or server configuration.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review Echo framework plans and other engineering artifacts for middleware order, request binding, validation, context lifetime, concurrency, error responses, and graceful shutdown risks. Project applicability: the project uses or materially depends on Echo."
 ---
 
-# Echo plan review
+# Echo GrumpyDev review
+
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
 Apply this guidance alongside the core GrumpyDev review and the `go` skill.
 
-## Inspect evidence
+## Lean review
 
 - Establish the exact Go, Echo, server, and deployment versions or modes.
+
 - Read server setup, routes, middleware order, binders and validators, context
   use, limits, dependency clients, shutdown, and integration tests.
-- Trace request data, authentication, errors, goroutines, streaming, timeouts,
-  client disconnects, and server lifecycle.
-
-## Establish the operating model
-
-Establish the project target: Echo and Go versions, server topology, middleware
-stack, trusted proxies, request limits, validation, TLS termination, and
-deployment target. The changed boundary must define: Middleware order, context
-lifetime, binder and validator behavior, error handling, concurrency, streaming,
-shutdown, proxy trust, and deployment.
-
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Middleware order, context lifetime, binder and validator behavior, error
-handling, concurrency. Prove streaming, shutdown, proxy trust, deployment
-through startup, invalid or denied work, cancellation, background execution,
-mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for middleware-order changes, binders accepting fields that
 callers must not control, request contexts retained after the request, blocking
 handlers, partial responses followed by error handling, and proxy headers
 trusted without an explicit proxy boundary.
 
-- Do not retain or use Echo contexts outside the request lifecycle; copy only
-  required immutable data.
-- Check binding and validation against over-posting, body size, duplicate
-  fields, content type, and sensitive error output.
-- Verify middleware order and route coverage for authentication, authorization,
-  recovery, CORS, logging, and rate limits.
-- Require bounded goroutines, propagated contexts, server timeouts, and graceful
-  shutdown for handlers and streams.
-- Test behind the production proxy for headers, paths, TLS assumptions,
-  cancellation, and draining.
-
-## Verify the claims
-
-- Verify these behaviors through the actual Echo lifecycle and production
-  pipeline: Middleware order, context lifetime, binder and validator behavior,
-  error handling, concurrency. Use the actual framework pipeline and production
-  build with representative services and configuration.
-- Exercise failure and edge behavior for: streaming, shutdown, proxy trust,
-  deployment. Exercise invalid input, denied access, cancellation, dependency
-  failure, concurrent work, shutdown, and mixed-version deployment where
-  plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Go and Echo versions, server settings, middleware order, and binder
-  behavior apply?
-- How are validation, authentication, request limits, cancellation, errors, and
-  graceful shutdown handled?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat mass assignment, auth-order bypass, unbounded input, or shutdown data
   loss as critical.
-- Downgrade when explicit binding, middleware ordering, limits, and shutdown
-  tests prove the boundary.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete Echo evidence, operating model, failure, verification,
+question, and calibration guidance. Never load `SURVEY.md` during an ordinary
+review.
 
 ## Add to the verdict
 

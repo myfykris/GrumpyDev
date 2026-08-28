@@ -1,82 +1,48 @@
 ---
 name: elixir
-description: Review Elixir engineering plans for supervision, process ownership, message ordering, backpressure, fault recovery, distribution, state, and release risks. Use when a plan changes Elixir or Erlang services, OTP applications, jobs, or distributed nodes.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review Elixir plans and other engineering artifacts for supervision, process ownership, message ordering, backpressure, fault recovery, distribution, state, and release risks. Project applicability: the project contains, builds, deploys, operates, or interoperates with Elixir or Erlang code, OTP applications, or runtime behavior."
 ---
 
-# Elixir plan review
+# Elixir GrumpyDev review
 
-Apply this guidance alongside the core GrumpyDev review.
+## Invocation and participation boundary
 
-## Inspect evidence
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
+
+## Lean review
 
 - Establish the exact Elixir, Erlang/OTP, release-target, and dependency
   versions.
+
 - Read mix files, supervision trees, process registries, GenServer state, queue
   or stream configuration, clustering, release configuration, and tests.
-- Trace process startup, ownership, mailbox growth, crash propagation, restart
-  behavior, external calls, and node membership changes.
-
-## Establish the operating model
-
-Establish the project target: Elixir and OTP versions, release tooling, node
-topology, clustering and discovery, deployment model, scheduler and resource
-limits, and persistence dependencies. The changed boundary must define: BEAM
-processes, supervision, linking and monitoring, mailbox growth, OTP behaviors,
-fault isolation, clustering, distribution, hot upgrades, persistence boundaries,
-and releases.
-
-Define ownership, errors, cancellation, and concurrency for BEAM processes,
-supervision, linking and monitoring, mailbox growth, OTP behaviors, fault
-isolation. Verify version, package, native, serialization, and artifact
-compatibility for clustering, distribution, hot upgrades, persistence
-boundaries, releases across every declared target and rollback path.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for unbounded mailboxes, GenServer callbacks doing slow work,
 incorrect links or monitors, supervision restart loops that amplify failure,
 dynamically created atoms from external input, ETS tables whose owner dies, and
 retries that repeat side effects.
 
-- Require a deliberate supervisor strategy and restart intensity for every
-  long-lived process.
-- Check mailbox growth, unbounded tasks, caller timeouts, stale replies, message
-  ordering, and overload behavior.
-- Separate recoverable process crashes from corrupted or externally persisted
-  state that restart cannot repair.
-- Verify idempotency and delivery semantics across Oban, Broadway, queues,
-  retries, and node failures when used.
-- Test rolling releases, configuration at runtime, clustering partitions, and
-  dependency outages rather than only happy-path process tests.
-
-## Verify the claims
-
-- Verify these behaviors through the declared Elixir compiler and runtime
-  targets: BEAM processes, supervision, linking and monitoring, mailbox growth,
-  OTP behaviors, fault isolation. Use the real compiler or interpreter and
-  supported release modes rather than a development substitute.
-- Exercise failure and edge behavior for: clustering, distribution, hot
-  upgrades, persistence boundaries, releases. Exercise boundary values,
-  encoding, cancellation, resource exhaustion, concurrency, dependency failure,
-  and termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
-
-## Ask when evidence is missing
-
-- Which Elixir, Erlang/OTP, release target, and dependency versions define
-  runtime behavior?
-- Which process owns state and work, and how do supervision, messages, timeouts,
-  overload, and upgrades behave?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat unsupervised critical work, mailbox exhaustion, or incompatible rolling
   release behavior as critical.
-- Downgrade when process lifecycles are bounded and supervision, overload,
-  failure, and release tests prove recovery.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete Elixir evidence, operating model, failure, verification,
+question, and calibration guidance. Never load `SURVEY.md` during an ordinary
+review.
 
 ## Add to the verdict
 

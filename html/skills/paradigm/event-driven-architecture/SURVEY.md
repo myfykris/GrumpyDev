@@ -2,9 +2,13 @@
 
 ## Applicability
 
-Apply this contribution when services communicate or trigger work through events
-or messages. Skip it when Event-driven architecture does not constrain a
-supported build, runtime, client, data, deployment, or operating boundary.
+Apply this contribution when services communicate or trigger work through events or
+messages. Skip it when Event-driven architecture does not constrain a supported build,
+runtime, client, data, deployment, or operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

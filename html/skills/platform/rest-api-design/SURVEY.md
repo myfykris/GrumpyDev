@@ -2,10 +2,20 @@
 
 ## Applicability
 
-Apply this contribution when a plan creates or changes HTTP endpoints, request
-or response schemas, API clients, or public service contracts. Skip it when REST
-API design does not constrain a supported build, runtime, client, data,
-deployment, or operating boundary.
+Apply this contribution when the project exposes or consumes a resource-oriented
+HTTP API whose contract intentionally depends on REST and HTTP semantics. Do not
+apply it merely because a system has an HTTP endpoint, webhook, GraphQL endpoint,
+gRPC gateway, or RPC-style JSON API. Apply the more specific applicable skills
+unless some part of that contract deliberately uses REST resource, method,
+status, caching, or conditional-request semantics.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

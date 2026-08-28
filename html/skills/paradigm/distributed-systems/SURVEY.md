@@ -2,11 +2,15 @@
 
 ## Applicability
 
-Apply this contribution when correctness or availability crosses independently
-failing processes, services, machines, regions, or external authorities. A small
-application with a database, queue, cache, or remote API can qualify. Combine it
-with protocol, messaging, storage, security, observability, and platform
-contributions. Deduplicate the concrete technology questions.
+Apply this contribution when correctness or availability crosses independently failing
+processes, services, machines, regions, or external authorities. A small application
+with a database, queue, cache, or remote API can qualify. Combine it with protocol,
+messaging, storage, security, observability, and platform contributions. Deduplicate the
+concrete technology questions.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

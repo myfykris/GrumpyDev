@@ -1,81 +1,50 @@
 ---
 name: flutter
-description: Review Flutter plans for widget and application state, lifecycle, navigation, asynchronous work, platform plugins, accessibility, performance, and release risks. Use when a Dart plan changes Flutter applications, widgets, routes, state management, or native integration.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review Flutter plans and other engineering artifacts for widget and application state, lifecycle, navigation, asynchronous work, platform plugins, accessibility, performance, and release risks. Project applicability: the project uses or materially depends on Flutter."
 ---
 
-# Flutter plan review
+# Flutter GrumpyDev review
+
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
 Apply this guidance alongside the core GrumpyDev review and the `dart` skill.
 
-## Inspect evidence
+## Lean review
 
 - Read Flutter and Dart versions, supported platforms, navigation, state and
   data libraries, plugin configuration, persistence, permissions, and tests.
+
 - Trace widget and app lifecycle, state ownership, futures and streams,
   background work, platform channels, navigation, and offline or error states.
-
-## Establish the operating model
-
-Establish the project target: Flutter and Dart versions, target platforms and
-minimum versions, state and navigation libraries, build flavors, plugin set,
-signing boundary, and distribution channels. The changed boundary must define:
-Widget and element lifecycle, state ownership, async context, navigation,
-isolates, plugins, platform channels, rendering, accessibility, persistence, and
-release modes.
-
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Widget and element lifecycle, state ownership, async context, navigation,
-isolates, plugins. Prove platform channels, rendering, accessibility,
-persistence, release modes through startup, invalid or denied work,
-cancellation, background execution, mixed versions, shutdown, rollback, and
-recovery.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for side effects during build, use of a stale BuildContext
 after asynchronous work, undisposed controllers and subscriptions, two state
 owners for the same value, and mobile-only testing that misses desktop, web,
 accessibility, or restoration behavior.
 
-- Require one owner for each state value and dispose controllers, subscriptions,
-  focus nodes, animations, and platform resources.
-- Check stale BuildContext use, work after disposal, duplicate requests,
-  navigation restoration, and app background or resume behavior.
-- Verify plugin support, permissions, storage, networking, and platform-channel
-  contracts on every target platform.
-- Require complete loading, empty, stale, offline, denied, error, and retry
-  states with keyboard and screen-reader behavior.
-- Use profile or release evidence for frame time, memory, startup, binary size,
-  tree shaking, and native build behavior.
-
-## Verify the claims
-
-- Verify these behaviors through the actual Flutter lifecycle and production
-  pipeline: Widget and element lifecycle, state ownership, async context,
-  navigation, isolates, plugins. Use the actual framework pipeline and
-  production build with representative services and configuration.
-- Exercise failure and edge behavior for: platform channels, rendering,
-  accessibility, persistence, release modes. Exercise invalid input, denied
-  access, cancellation, dependency failure, concurrent work, shutdown, and
-  mixed-version deployment where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Flutter and Dart versions, target platforms, rendering constraints, and
-  state approach apply?
-- How are widget lifetime, navigation, async cancellation, offline state,
-  accessibility, and platform channels handled?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat cross-user state leakage, lost critical offline data, or a core flow
   inaccessible on a supported platform as critical.
-- Downgrade when lifecycle, platform, state restoration, and accessibility
-  behavior are covered by representative tests.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete Flutter evidence, operating model, failure, verification,
+question, and calibration guidance. Never load `SURVEY.md` during an ordinary
+review.
 
 ## Add to the verdict
 

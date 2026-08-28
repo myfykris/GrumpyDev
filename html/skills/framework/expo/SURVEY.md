@@ -2,8 +2,15 @@
 
 ## Applicability
 
-Apply this contribution when a plan builds or operates an expo application. Skip it when Expo
-does not constrain a supported build, runtime, client, data, deployment, or operating boundary.
+Apply this contribution when the project uses or materially depends on Expo.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -47,6 +54,7 @@ facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey Expo when its version, target platform, rendering or execution model, trust boundary,
-deployment adapter, persistent state, update process, or recovery policy materially changes,
-when evidence conflicts with saved doctrine, or when the user requests a context refresh.
+Re-survey Expo when its SDK or React Native version, native project ownership, build
+profile, update channel or runtime version, target platform, permission set, or deep
+link contract materially changes. Also re-survey when evidence conflicts with saved
+doctrine or the user requests a context refresh.

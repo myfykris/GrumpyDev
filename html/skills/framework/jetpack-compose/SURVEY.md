@@ -2,9 +2,15 @@
 
 ## Applicability
 
-Apply this contribution when a plan creates or changes android compose ui. Skip it when Jetpack
-Compose does not constrain a supported build, runtime, client, data, deployment, or operating
-boundary.
+Apply this contribution when the project uses or materially depends on Jetpack Compose.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -49,7 +55,7 @@ duplicate facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey Jetpack Compose when its version, target platform, rendering or execution model, trust
-boundary, deployment adapter, persistent state, update process, or recovery policy materially
-changes, when evidence conflicts with saved doctrine, or when the user requests a context
-refresh.
+Re-survey Jetpack Compose when its Compose Compiler or Kotlin version, target platform,
+minimum Android API, state ownership, navigation model, lifecycle integration, theme,
+or accessibility requirements materially change. Also re-survey when evidence
+conflicts with saved doctrine or the user requests a context refresh.

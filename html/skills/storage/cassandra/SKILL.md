@@ -1,86 +1,51 @@
 ---
 name: cassandra
-description: Review Cassandra plans for query-driven modeling, partition sizing, consistency, tombstones, compaction, repair, topology, and recovery. Use when a plan stores or queries distributed data in Cassandra or compatible wide-column databases.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review Cassandra plans and other engineering artifacts for query-driven modeling, partition sizing, consistency, tombstones, compaction, repair, topology, and recovery. Project applicability: the project stores or queries distributed data in Cassandra or a compatible wide-column database."
 ---
 
-# Cassandra plan review
+# Cassandra GrumpyDev review
+
+## Invocation and participation boundary
+
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
 
 Apply this guidance alongside the core GrumpyDev review and the
 `distributed-systems` skill.
 
-## Inspect evidence
+## Lean review
 
 - Establish the exact product, version, edition, topology, hosting mode, and
   compatibility boundary.
+
 - Read query inventory, primary keys, partition estimates, consistency levels,
   TTLs, compaction, replication, repair, backup, and load tests.
-- Trace writes and reads through coordinator loss, replica lag, hinted handoff,
-  tombstones, repair, and topology change.
-
-## Establish the operating model
-
-Establish the project target: Cassandra version, topology and replication,
-consistency levels, compaction, repair process, workload shape, partition
-limits, drivers, and backup strategy. The changed boundary must define:
-Partition and clustering keys, consistency levels, tombstones, compaction,
-repair, replication, LWT, batches, hot partitions, schema evolution, and
-recovery.
-
-Name the schema and data authority, writers, scale, consistency, durability, and
-migration owner for Partition and clustering keys, consistency levels,
-tombstones, compaction, repair, replication. Prove LWT, batches, hot partitions,
-schema evolution, recovery under concurrent access, mixed versions, failover,
-interrupted migration, rollback, and restore.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for hot or unbounded partitions, tombstone accumulation, ALLOW
 FILTERING accepted as a design, consistency levels treated as freshness
 guarantees, lightweight transactions used as general locking, repair falling
 behind gc_grace, and topology changes ignored in capacity plans.
 
-- Require tables designed for known queries; server-side filtering and ad hoc
-  joins are not a scaling plan.
-- Apply only guarantees documented for the selected product and version;
-  compatible wide-column products are not interchangeable by default.
-- Bound partition size and hotspot risk across time buckets, high-cardinality
-  tenants, and skewed workloads.
-- Define read and write consistency as a pair and identify when stale,
-  conflicting, or unavailable results are acceptable.
-- Check TTL and delete volume, tombstone scans, compaction strategy, disk
-  headroom, and repair completion under peak load.
-- Prove multi-datacenter replication, node replacement, backup restore, and
-  schema rollout with production-like failure drills.
-
-## Verify the claims
-
-- Verify these behaviors through the declared Cassandra topology and workload:
-  Partition and clustering keys, consistency levels, tombstones, compaction,
-  repair, replication. Use production-shaped scale and workload while observing
-  latency, resource use, locks or conflicts, replication, and application
-  errors.
-- Exercise failure and edge behavior for: LWT, batches, hot partitions, schema
-  evolution, recovery. Exercise concurrent writers, retries, duplicate
-  operations, failover, interrupted migration, and mixed application versions
-  where applicable.
-- Restore or reconstruct state in isolation and verify data, metadata, security,
-  application startup, and recovery objectives.
-
-## Ask when evidence is missing
-
-- Which Cassandra-compatible product, exact version, topology, replication, and
-  repair model apply?
-- Which query paths require which consistency, partition-size, compaction,
-  tombstone, and failure behavior?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat an unbounded partition, unrecoverable consistency gap, or topology
   change that risks data loss as critical.
-- Downgrade when measured partitions, product-specific semantics, repair, and
-  failure tests support the design.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete Cassandra evidence, operating model, failure,
+verification, question, and calibration guidance. Never load `SURVEY.md` during
+an ordinary review.
 
 ## Add to the verdict
 

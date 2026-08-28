@@ -2,9 +2,13 @@
 
 ## Applicability
 
-Apply this contribution when an llm or automated agent can select actions, call tools, or
-coordinate other agents. Skip it when Agentic systems does not constrain a supported build,
-runtime, client, data, deployment, or operating boundary.
+Apply this contribution when an LLM or automated agent can select actions, call tools,
+or coordinate other agents. Skip it when this domain does not constrain a supported
+build, runtime, client, data, deployment, or operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -51,6 +55,7 @@ duplicate facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey Agentic systems when its version, target platform, execution model, trust boundary,
-deployment topology, persistent state, update process, or recovery policy materially changes,
-when evidence conflicts with saved doctrine, or when the user requests a context refresh.
+Re-survey agentic systems when the model or provider, tool set, permission boundary,
+autonomy level, memory design, sandbox, approval policy, multi-agent topology, or
+failure-containment policy materially changes. Also re-survey when evidence conflicts
+with saved doctrine or the user requests a context refresh.

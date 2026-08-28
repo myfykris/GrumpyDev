@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Author a GrumpyDev skill</title>
-    <meta name="description" content="Learn how to package domain-specific, evidence-first engineering review judgment as a GrumpyDev skill.">
+    <meta name="description" content="Learn how to author a complete GrumpyDev skill with concise main instructions, survey questions, and focused supporting guidance.">
     <meta name="theme-color" content="#1c242b">
     <meta http-equiv="Content-Security-Policy"
           content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'">
     <link rel="canonical" href="https://grumpydev.ai/author/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Author a GrumpyDev skill">
-    <meta property="og:description" content="Learn how to package domain-specific, evidence-first engineering review judgment as a GrumpyDev skill.">
+    <meta property="og:description" content="Learn how to author a complete GrumpyDev skill with concise main instructions, survey questions, and focused supporting guidance.">
     <meta property="og:url" content="https://grumpydev.ai/author/">
     <meta property="og:image" content="https://grumpydev.ai/assets/social-card.png">
     <meta property="og:image:width" content="1200">
@@ -19,7 +19,7 @@
     <meta property="og:image:alt" content="GrumpyDev: Your plan has problems.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Author a GrumpyDev skill">
-    <meta name="twitter:description" content="Learn how to package domain-specific, evidence-first engineering review judgment as a GrumpyDev skill.">
+    <meta name="twitter:description" content="Learn how to author a complete GrumpyDev skill with concise main instructions, survey questions, and focused supporting guidance.">
     <meta name="twitter:image" content="https://grumpydev.ai/assets/social-card.png">
     <meta name="twitter:image:alt" content="GrumpyDev: Your plan has problems.">
     <link rel="icon" href="../assets/favicon.png" type="image/png" sizes="64x64">
@@ -67,13 +67,49 @@
       </div>
     </header>
 
-    <main id="main"><section class="border-b soft-rule py-20 lg:py-28"><div class="site-shell max-w-4xl"><span class="eyebrow">For skill authors</span><h1 class="mt-6 text-5xl leading-none font-black tracking-[-0.05em] sm:text-7xl">Package hard-won judgment, not generic advice.</h1><p class="mt-7 max-w-2xl text-lg leading-8 text-base-content/65">A good specialist skill teaches an agent what to inspect, which failures hide behind plausible plans, and what evidence earns confidence.</p></div></section>
+    <main id="main"><section class="border-b soft-rule py-20 lg:py-28"><div class="site-shell max-w-4xl"><span class="eyebrow">For skill authors</span><h1 class="mt-6 text-5xl leading-none font-black tracking-[-0.05em] sm:text-7xl">Turn hard-won judgment into a skill.</h1><p class="mt-7 max-w-2xl text-lg leading-8 text-base-content/65">A good specialist skill teaches an agent what to inspect, which failures hide behind plausible plans, and what evidence earns confidence.</p></div></section>
 
 <section class="bg-base-200/60 py-20"><div class="site-shell grid gap-6 md:grid-cols-3"><article class="rounded-2xl border soft-rule bg-base-200 p-7"><span class="font-mono text-primary">01</span><h2 class="mt-4 text-xl font-black">Be specific</h2><p class="mt-3 leading-7 text-base-content/60">Name concrete artifacts, invariants, lifecycle transitions, and failure conditions.</p></article><article class="rounded-2xl border soft-rule bg-base-200 p-7"><span class="font-mono text-primary">02</span><h2 class="mt-4 text-xl font-black">Be falsifiable</h2><p class="mt-3 leading-7 text-base-content/60">Tell the reviewer what evidence changes the conclusion. Avoid universal rules without context.</p></article><article class="rounded-2xl border soft-rule bg-base-200 p-7"><span class="font-mono text-primary">03</span><h2 class="mt-4 text-xl font-black">Be concise</h2><p class="mt-3 leading-7 text-base-content/60">Context is finite. Include knowledge the agent cannot cheaply reconstruct.</p></article></div></section>
 
-<section class="py-20 lg:py-28"><div class="site-shell grid gap-14 lg:grid-cols-[.8fr_1.2fr]"><div><span class="eyebrow">Required shape</span><h2 class="mt-5 text-3xl font-black tracking-tight sm:text-5xl">Two files. Clear trigger. Operational guidance.</h2><p class="mt-5 text-lg leading-8 text-base-content/65">Every specialist catalog skill contains <code>SKILL.md</code> review guidance and a <code>SURVEY.md</code> setup contribution. Core skills use <code>SKILL.md</code> without a survey companion.</p></div><div class="mockup-code border soft-rule bg-neutral text-sm"><pre data-prefix=""><code>postgresql/</code></pre><pre data-prefix=">"><code>SKILL.md</code></pre><pre data-prefix=""><code>  YAML frontmatter and review guidance</code></pre><pre data-prefix=">"><code>SURVEY.md</code></pre><pre data-prefix=""><code>  Project setup questions and recording rules</code></pre></div></div></section>
+<section class="py-20 lg:py-28"><div class="site-shell"><div class="grid gap-14 lg:grid-cols-[.8fr_1.2fr]"><div><span class="eyebrow">Required shape</span><h2 class="mt-5 text-3xl font-black tracking-tight sm:text-5xl">One complete skill. Concise main instructions. Focused detail.</h2><p class="mt-5 text-lg leading-8 text-base-content/65"><code>SKILL.md</code>, <code>SURVEY.md</code>, and every supporting reference all belong to the same specialist skill and are installed together. <code>SKILL.md</code> defines the invocation boundary, project applicability, lean review path, and reference routes. <code>SURVEY.md</code> contributes setup questions, and supporting files hold detail needed only for particular reviews.</p></div><div class="mockup-code border soft-rule bg-neutral text-sm"><pre data-prefix=""><code>postgresql/</code></pre><pre data-prefix=">"><code>SKILL.md</code></pre><pre data-prefix=""><code>  Invocation boundary, applicability, lean review, and routes</code></pre><pre data-prefix=">"><code>SURVEY.md</code></pre><pre data-prefix=""><code>  Project setup questions and recording rules</code></pre><pre data-prefix=">"><code>references/review.md</code></pre><pre data-prefix=""><code>  Standard detail for materially affected reviews</code></pre><pre data-prefix=">"><code>references/queries-and-indexes.md</code></pre><pre data-prefix=""><code>  Used only for query and index effects</code></pre></div></div><p class="mt-10 rounded-2xl border soft-rule bg-base-200 p-6 leading-7 text-base-content/65">These files are one skill, not separate installations. Every installed applicable specialist entrypoint participates in every explicit GrumpyDev review. Precise routing controls when the agent needs the supporting detail.</p></div></section>
 
-<section class="border-y soft-rule bg-base-200/60 py-20"><div class="site-shell"><div class="grid gap-12 lg:grid-cols-2"><div><span class="eyebrow">Acceptance checklist</span><div class="mt-7 space-y-3"><div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Lowercase hyphenated name and valid YAML frontmatter</span></div><div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Specialists include both SKILL.md and SURVEY.md</span></div><div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Description says what it does and when it should trigger</span></div><div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Instructions use imperative language and repository evidence</span></div><div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>No secrets, executable payloads, hidden network calls, or marketing</span></div><div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Material claims are maintainable and sourceable</span></div></div></div><div><span class="eyebrow">Publication path</span><ol class="steps steps-vertical mt-7"><li class="step step-primary">Draft the files and validate them locally</li><li class="step step-primary">Open a pull request with examples</li><li class="step">Maintainer review and adversarial evaluation</li><li class="step">Publish the URLs and publisher in the manifest</li></ol></div></div></div></section>
+<section class="border-y soft-rule bg-base-200/60 py-20"><div class="site-shell"><div class="max-w-3xl"><span class="eyebrow">Reference boundaries</span><h2 class="mt-5 text-3xl font-black tracking-tight sm:text-5xl">Split only when the split saves context.</h2><p class="mt-5 text-lg leading-8 text-base-content/65">Splitting every topic into its own file is a dumb structure. Vague routing and file-per-topic navigation can cost more context than they save.</p></div><div class="mt-10 grid gap-6 lg:grid-cols-2"><article class="rounded-2xl border soft-rule bg-base-200 p-7"><h3 class="text-2xl font-black text-success">Split it when</h3><ul class="mt-5 list-disc space-y-3 pl-5 leading-7 text-base-content/65"><li>The boundary is substantial.</li><li>Legitimate reviews can often skip it completely.</li><li>The entrypoint can state a precise trigger.</li><li>It adds detailed failure modes, evidence, or verification.</li><li>It remains independent without routing to another reference.</li></ul></article><article class="rounded-2xl border soft-rule bg-base-200 p-7"><h3 class="text-2xl font-black text-warning">Keep it in review.md when</h3><ul class="mt-5 list-disc space-y-3 pl-5 leading-7 text-base-content/65"><li>It applies to almost every standard review.</li><li>The split would save little context.</li><li>The trigger would be vague.</li><li>It repeats the entrypoint or another reference.</li><li>It would create file-per-topic navigation overhead.</li></ul></article></div></div></section>
+
+<section class="py-20">
+  <div class="site-shell">
+    <div class="grid gap-12 lg:grid-cols-2">
+      <div>
+        <span class="eyebrow">Acceptance checklist</span>
+        <div class="mt-7 space-y-3">
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Valid name and frontmatter description that decides applicability before download</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Description and body activate only for an explicitly requested GrumpyDev review</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Every installed applicable specialist participates in every explicit review</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Specialists inspect direct and indirect effects without inventing findings</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Specialists include SKILL.md, SURVEY.md, and every routed reference</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Every skill file is listed in the manifest</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>SKILL.md remains useful by itself for lean review</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>review.md adds impact-routed standard detail without copying the entrypoint</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Every focused reference has a precise SKILL.md trigger</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>References never route to more references</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>SURVEY.md never loads during ordinary review</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Standard and deep review skip unrelated supporting references</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>No review-time skill or instruction downloads, hidden dependencies, or executable payloads</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Fixtures define positive and negative focused-reference expectations</span></div>
+          <div class="alert border soft-rule bg-base-200"><span class="text-success">[x]</span><span>Publication includes the complete validated skill or is rejected</span></div>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">Publication path</span>
+        <ol class="steps steps-vertical mt-7">
+          <li class="step step-primary">Draft the files and validate them locally</li>
+          <li class="step step-primary">Open a pull request with examples</li>
+          <li class="step">Maintainer review and adversarial evaluation</li>
+          <li class="step">Publish the complete skill in the manifest</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="py-20 text-center"><div class="site-shell"><h2 class="text-3xl font-black">Read the full authoring contract.</h2><div class="mt-7 flex flex-wrap justify-center gap-3"><a class="btn btn-primary" href="../spec/skill-authoring.md">Skill authoring spec</a><a class="btn btn-ghost border soft-rule" href="https://github.com/myfykris/grumpydev">Open GitHub</a></div></div></section>
 </main>

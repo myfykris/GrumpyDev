@@ -2,11 +2,15 @@
 
 ## Applicability
 
-Apply this contribution when PostgreSQL stores project data, supports tests or
-analytics that constrain implementation, or is a deployment dependency. Combine
-it with SQL, the application framework, the migration tool, backup,
-infrastructure, and managed-service contributions. Deduplicate facts about
-versions, topology, deployment, and data classification.
+Apply this contribution when PostgreSQL stores project data, supports tests or analytics
+that constrain implementation, or is a deployment dependency. Combine it with SQL, the
+application framework, the migration tool, backup, infrastructure, and managed-service
+contributions. Deduplicate facts about versions, topology, deployment, and data
+classification.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

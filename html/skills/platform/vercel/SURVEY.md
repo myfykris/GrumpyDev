@@ -2,8 +2,13 @@
 
 ## Applicability
 
-Apply this contribution when an application builds or runs on vercel. Skip it when Vercel does
-not constrain a supported build, runtime, client, data, deployment, or operating boundary.
+Apply this contribution when an application builds or runs on Vercel. Skip it when
+Vercel does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -49,6 +54,7 @@ duplicate facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey Vercel when its version, target platform, execution model, trust boundary, deployment
-topology, persistent state, update process, or recovery policy materially changes, when evidence
-conflicts with saved doctrine, or when the user requests a context refresh.
+Re-survey Vercel when the framework, build output, function runtime, region placement,
+environment-variable scope, domain routing, cache behavior, preview policy, or rollout
+strategy materially changes. Also re-survey when evidence conflicts with saved doctrine
+or the user requests a context refresh.

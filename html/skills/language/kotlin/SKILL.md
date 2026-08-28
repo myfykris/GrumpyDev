@@ -1,81 +1,48 @@
 ---
 name: kotlin
-description: Review Kotlin engineering plans for nullability, coroutine ownership, Java interoperability, serialization, multiplatform differences, dependency compatibility, and lifecycle risks. Use when a plan changes Kotlin JVM, Android, server, or multiplatform code.
+description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review Kotlin plans and other engineering artifacts for nullability, coroutine ownership, Java interoperability, serialization, multiplatform differences, dependency compatibility, and lifecycle risks. Project applicability: the project contains, builds, deploys, operates, or interoperates with Kotlin code, artifacts, or runtime behavior."
 ---
 
-# Kotlin plan review
+# Kotlin GrumpyDev review
 
-Apply this guidance alongside the core GrumpyDev review.
+## Invocation and participation boundary
 
-## Inspect evidence
+This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
+revision, discussion, implementation, or generic review does not activate it.
+
+For a project where this specialist is installed and not explicitly marked
+inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
+review. Evaluate direct and indirect effects even when the reviewed work does
+not name or modify this domain. Produce no finding when no material effect
+exists.
+
+## Lean review
 
 - Read Gradle configuration, Kotlin and JVM targets, compiler options, coroutine
   usage, serialization settings, platform source sets, and representative tests.
+
 - Trace coroutine scopes, dispatchers, cancellation, flows, Java calls, nullable
   platform types, resources, and application lifecycle.
-
-## Establish the operating model
-
-Establish the project target: Kotlin and plugin versions, backend targets, JDK
-and Android API levels, coroutine stack, multiplatform targets, build tooling,
-serialization, and native dependencies. The changed boundary must define: Kotlin
-type and null semantics, coroutines and structured concurrency, Java interop,
-JVM or Android lifecycle, multiplatform boundaries, serialization, generated
-code, reflection, and native targets.
-
-Define ownership, errors, cancellation, and concurrency for Kotlin type and null
-semantics, coroutines and structured concurrency, Java interop, JVM or Android
-lifecycle, multiplatform boundaries. Verify version, package, native,
-serialization, and artifact compatibility for serialization, generated code,
-reflection, native targets across every declared target and rollback path.
-
-## Challenge the plan
-
-### Recurring traps
 
 Watch especially for nullable Java platform types, coroutine scopes detached
 from their owner, cancellation swallowed as an ordinary exception, blocking
 calls on constrained dispatchers, data-class equality used for mutable identity,
 and JVM interop changing default or overload behavior.
 
-- Require structured concurrency and an explicit owner for every scope, job,
-  flow collection, and long-lived callback.
-- Check cancellation propagation, blocking calls on constrained dispatchers,
-  exception supervision, and cleanup in finally blocks.
-- Treat Java platform types and unchecked casts as runtime risks, not Kotlin
-  null-safety guarantees.
-- Verify serialization defaults, sealed-class evolution, and JVM or
-  multiplatform compatibility across deployed versions.
-- Demand platform-specific and release-build tests where source sets,
-  reflection, native behavior, or Android lifecycle can diverge.
-
-## Verify the claims
-
-- Verify these behaviors through the declared Kotlin compiler and runtime
-  targets: Kotlin type and null semantics, coroutines and structured
-  concurrency, Java interop, JVM or Android lifecycle, multiplatform boundaries.
-  Use the real compiler or interpreter and supported release modes rather than a
-  development substitute.
-- Exercise failure and edge behavior for: serialization, generated code,
-  reflection, native targets. Exercise boundary values, encoding, cancellation,
-  resource exhaustion, concurrency, dependency failure, and termination where
-  they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
-
-## Ask when evidence is missing
-
-- Which Kotlin, target platform, JDK or Android version, compiler mode, and
-  coroutine library versions apply?
-- How do nullability, structured concurrency, cancellation, dispatchers,
-  serialization, and Java interop cross the boundary?
-
-## Calibrate findings
+Lean mode is insufficient when this material severity condition may apply:
 
 - Treat lost cancellation, blocking on a constrained dispatcher, unsafe platform
   types, or incompatible serialization as critical.
-- Downgrade when ownership is bounded and target, coroutine, nullability,
-  interop, and failure tests cover the path.
+
+## Load local references
+
+When this entrypoint identifies a plausible direct or indirect material effect
+during a standard or deep review, or whenever lean evidence or escalation
+conditions leave a material uncertainty, read
+[review.md](references/review.md). It
+contains the complete Kotlin evidence, operating model, failure, verification,
+question, and calibration guidance. Never load `SURVEY.md` during an ordinary
+review.
 
 ## Add to the verdict
 

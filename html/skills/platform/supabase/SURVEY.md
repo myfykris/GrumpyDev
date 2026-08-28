@@ -2,8 +2,16 @@
 
 ## Applicability
 
-Apply this contribution when a plan relies on supabase services. Skip it when Supabase does not
-constrain a supported build, runtime, client, data, deployment, or operating boundary.
+Apply this contribution when the project uses or materially depends on Supabase
+services.
+
+Skip it only when project evidence or an explicit user answer establishes that this
+domain does not constrain a supported build, runtime, client, data, deployment, or
+operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -50,6 +58,8 @@ duplicate facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey Supabase when its version, target platform, execution model, trust boundary,
-deployment topology, persistent state, update process, or recovery policy materially changes,
-when evidence conflicts with saved doctrine, or when the user requests a context refresh.
+Re-survey Supabase when its hosted or self-managed version, project boundaries,
+PostgreSQL schema, Row Level Security, authentication providers, Edge Functions,
+Storage policies, Realtime use, or backup and recovery policy materially changes. Also
+re-survey when evidence conflicts with saved doctrine or the user requests a context
+refresh.

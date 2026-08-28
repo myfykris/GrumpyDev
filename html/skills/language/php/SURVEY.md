@@ -2,10 +2,14 @@
 
 ## Applicability
 
-Apply this contribution when PHP executes application, library, command,
-scheduled, or worker code in the project. Combine it with the applicable PHP
-framework, web server, storage, queue, container, and operating-system survey
-contributions. Deduplicate shared runtime and deployment questions.
+Apply this contribution when PHP executes application, library, command, scheduled, or
+worker code in the project. Combine it with the applicable PHP framework, web server,
+storage, queue, container, and operating-system survey contributions. Deduplicate shared
+runtime and deployment questions.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 

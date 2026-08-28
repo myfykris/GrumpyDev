@@ -2,9 +2,13 @@
 
 ## Applicability
 
-Apply this contribution when applications run on cloudflare workers or related
-developer-platform services. Skip it when Cloudflare developer platform does not constrain a
-supported build, runtime, client, data, deployment, or operating boundary.
+Apply this contribution when applications run on Cloudflare Workers or related
+developer-platform services. Skip it when Cloudflare developer platform does not
+constrain a supported build, runtime, client, data, deployment, or operating boundary.
+
+This is project-level applicability, not a current-plan trigger. Once the package is
+installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
+explicitly invoked GrumpyDev review.
 
 ## Inspect before asking
 
@@ -51,7 +55,7 @@ doctrine. Do not duplicate facts owned by another applicable contribution.
 
 ## Re-survey triggers
 
-Re-survey Cloudflare developer platform when its version, target platform, execution model,
-trust boundary, deployment topology, persistent state, update process, or recovery policy
-materially changes, when evidence conflicts with saved doctrine, or when the user requests a
-context refresh.
+Re-survey the Cloudflare developer platform when the products in use, Workers
+compatibility date or flags, bindings, routes, regions, storage services, deployment
+strategy, or account trust boundaries materially change. Also re-survey when evidence
+conflicts with saved doctrine or the user requests a context refresh.
