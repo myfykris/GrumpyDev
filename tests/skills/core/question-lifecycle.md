@@ -2,8 +2,9 @@
 
 Expected behavior:
 
-- Survey setup questions use the continuous `Q###` sequence and may establish
-  `.grump` policy.
+- Survey setup questions use the continuous `Q###` sequence. Doctrine questions
+  may establish `.grump` policy; the initial-install `.gitignore` preference
+  does not.
 - Live plan-review questions use `RQ###`, beginning at `RQ001` for each
   evaluation.
 - Answered questions resume the review.

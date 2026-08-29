@@ -199,6 +199,14 @@ possible. When converting formats, compare every stable identifier, policy,
 profile relationship, material unknown, and evidence reference before and after
 the conversion. A format conversion must be semantically lossless.
 
+## Installation ignore preference
+
+The initial installation survey may ask whether to add `.grump` and
+`.grumpydev/` to the repository-root `.gitignore`. That answer controls one
+local setup edit and is not project doctrine. Do not record the question,
+answer, or resulting ignore status in `.grump`; the repository-root
+`.gitignore` is authoritative.
+
 ## Evidence quality
 
 Prefer claims supported by repository paths, checked configuration, or explicit
@@ -291,10 +299,13 @@ material questions. `Interactive` permits review-scoped realtime Q&A.
 material questions as evidence gaps. `Unresolved` defaults to interactive. A
 current explicit instruction may override the preference for one evaluation.
 
-Installation-survey questions use a continuous `Q###` sequence and establish
-durable repository policy. Live review questions use `RQ###`, restart at
-`RQ001` for each evaluation, and remain scoped to that target and evaluation.
-They are not `.grump` doctrine merely because the user answered them.
+Installation-survey questions use a continuous `Q###` sequence. Questions that
+define review behavior establish durable repository policy when their
+instructions say to record them. Setup-only questions, including the
+`.gitignore` preference, do not become `.grump` doctrine. Live review questions
+use `RQ###`, restart at `RQ001` for each evaluation, and remain scoped to that
+target and evaluation. They are not `.grump` doctrine merely because the user
+answered them.
 
 ## Doctrine maintenance policy
 

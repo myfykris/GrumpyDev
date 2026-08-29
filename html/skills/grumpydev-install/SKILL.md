@@ -104,7 +104,9 @@ invoke `grumpydev-survey`.
 The setup request authorizes an evidence-based first draft of `.grump`, not
 invented constraints. Inspect repository evidence and project documentation
 before questions. Let the survey ask its required `Q001` format question and
-the remaining deduplicated numbered questions.
+its initial-install `.gitignore` preference before the remaining deduplicated
+numbered questions. An affirmative answer to that preference authorizes only
+the local `.gitignore` change defined by the survey.
 
 Do not read secrets, credential stores, production data, or unrelated personal
 files. Survey answers do not authorize production inspection, deployment,
@@ -151,7 +153,10 @@ Verify that the host discovers `grumpydev`, `grumpydev-survey`, and every
 approved specialist entrypoint. If discovery requires a restart, say so and do
 not claim it already succeeded.
 
-Summarize created, changed, skipped, and unresolved files and packages. Tell the
-user to review `.grump` and decide whether `.grumpydev/state.json` belongs in
-their repository. Recommend a reasoning-capable model at medium effort or
-higher for reviews, while never introspecting the active model during a review.
+Summarize created, changed, skipped, and unresolved files and packages,
+including whether the repository-root `.gitignore` was created, updated,
+already configured, or left unchanged. Tell the user to review `.grump`. When
+the user did not choose to ignore `.grumpydev/`, tell them to decide whether
+`.grumpydev/state.json` belongs in their repository. Recommend a
+reasoning-capable model at medium effort or higher for reviews, while never
+introspecting the active model during a review.

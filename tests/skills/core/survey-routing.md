@@ -7,6 +7,11 @@ Expected behavior:
   the survey.
 - An initial survey asks the doctrine format preference as `Q001`, after the
   evidence pass and before every other presented question.
+- Unless repository evidence or a current explicit answer resolves it, initial
+  installation asks one numbered `.gitignore` preference immediately after
+  `Q001`.
+- Re-survey and ordinary review never ask the initial-install `.gitignore`
+  preference.
 - A re-survey preserves an existing unambiguous format answer unless the user
   asks to revisit it.
 - The survey records the plan interaction preference in `.grump`.

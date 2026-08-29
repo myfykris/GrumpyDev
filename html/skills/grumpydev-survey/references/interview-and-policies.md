@@ -1,6 +1,6 @@
 # Survey interview and policies
 
-## Interview for material gaps
+## Interview for setup choices and material gaps
 
 ### Survey failure patterns
 
@@ -20,10 +20,47 @@ Watch especially for surveys that:
   showing contradictions.
 
 Interview the user only after repository evidence and available agent context
-have been exhausted. Ask only questions whose answers could materially change
-project doctrine or a future plan review. Do not ask the user to repeat facts
-already established by code, configuration, documentation, or earlier explicit
-statements.
+have been exhausted. Apart from explicitly required initial-install choices,
+ask only questions whose answers could materially change project doctrine or a
+future plan review. Do not ask the user to repeat facts already established by
+code, configuration, documentation, or earlier explicit statements.
+
+## Initial-install `.gitignore` preference
+
+During initial installation only, inspect the repository-root `.gitignore`
+after the evidence pass. Do not ask this preference during re-survey or an
+ordinary review. If the user has already given an explicit answer in the
+current context, apply that answer without asking again. If active lines for
+both `.grump` and `.grumpydev/` are already present, do not ask and report that
+GrumpyDev's generated files are already ignored.
+
+Otherwise, place this question immediately after `Q001` in the initial question
+batch, using the next available `Q###` identifier:
+
+```text
+Q###. Do you want GrumpyDev to add itself to `.gitignore`? Reply `yes` to add
+`.grump` and `.grumpydev/`, or `no` to leave `.gitignore` unchanged.
+```
+
+An explicit `yes` authorizes only this local edit. Create the repository-root
+`.gitignore` if it does not exist. Add only the exact missing active lines
+`.grump` and `.grumpydev/`; do not add the installed skill directory or any
+other path. Preserve all unrelated content, avoid duplicate active entries,
+use explicit UTF-8, preserve the established line-ending convention when one
+exists, and leave a final newline. If the existing file cannot be decoded and
+edited safely, is not a regular repository-local file, or resolves through a
+symbolic link outside the repository, do not rewrite it; continue installation
+and explain the problem.
+
+An explicit `no`, a decline, a deferral, or an ambiguous answer does not
+authorize a write. Leave `.gitignore` unchanged and continue installation. If
+only one exact entry is already active, a later `yes` adds only the missing
+entry. Report whether the file was created, updated, already configured, or
+left unchanged.
+
+This is a setup-only repository preference. Do not record the question, answer,
+or status in `.grump` or `.grumpydev/state.json`; the repository-root
+`.gitignore` is the authoritative result.
 
 Attempt to determine the purpose and goals of the main project from repository
 evidence, project documentation, `.grump`, and available agent context. If you
@@ -196,8 +233,9 @@ explicit user answers from agent inference. Preserve relevant question
 identifiers in unresolved items or survey evidence when they make later review
 and re-survey clearer.
 
-The survey's `Q###` sequence is only for repository setup and doctrine. Later
-plan reviews use evaluation-scoped `RQ###` identifiers. Do not treat live review
-questions or answers as survey output or write them to `.grump` unless the user
-separately confirms an answer as project-wide doctrine and the doctrine-update
-policy permits the write.
+The survey's `Q###` sequence is only for repository setup and doctrine. A
+setup-only question does not become doctrine unless its instructions explicitly
+say to record it. Later plan reviews use evaluation-scoped `RQ###` identifiers.
+Do not treat live review questions or answers as survey output or write them to
+`.grump` unless the user separately confirms an answer as project-wide doctrine
+and the doctrine-update policy permits the write.

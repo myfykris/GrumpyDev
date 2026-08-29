@@ -1464,6 +1464,23 @@ def validate() -> list[str]:
         if "Expected behavior:" not in fixture_text:
             fail(errors, fixture.relative_to(ROOT), "missing Expected behavior marker")
 
+    gitignore_fixture = ROOT / "tests" / "skills" / "core" / "gitignore-preference.md"
+    gitignore_fixture_text = read_text(gitignore_fixture, errors)
+    for marker in (
+        "repository-root `.gitignore`",
+        "`.grump`",
+        "`.grumpydev/`",
+        "Do not add the installed skill directory",
+        "Never ask this preference during re-survey",
+        "`.gitignore` itself is authoritative",
+    ):
+        if marker not in gitignore_fixture_text:
+            fail(
+                errors,
+                gitignore_fixture.relative_to(ROOT),
+                f"gitignore preference fixture is missing {marker}",
+            )
+
     project_specialist_fixture = ROOT / "tests" / "skills" / "core" / "project-wide-specialists.md"
     project_specialist_text = read_text(project_specialist_fixture, errors)
     for marker in (

@@ -18,5 +18,11 @@ Expected behavior:
   PostgreSQL or leave the failed package entirely uninstalled.
 - Install all PHP and PostgreSQL focused references, including references whose
   review-time triggers are absent from the current review target.
+- After `Q001`, ask whether to add `.grump` and `.grumpydev/` to the
+  repository-root `.gitignore` when those exact active entries are not already
+  present and no current explicit answer resolves the choice.
+- Treat `yes` as authority only to create or update the repository-root
+  `.gitignore` with the exact missing entries. Preserve unrelated content and
+  do not add the installed skill directory.
 - Record only complete installed packages in `.grumpydev/state.json`.
 - Never fetch a reference during an ordinary review.

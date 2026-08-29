@@ -69,23 +69,26 @@ fetch a reference during survey.
 Specialist review references are not survey inputs. Ordinary reviews never load
 this skill or specialist survey companions.
 
-## Interview only for material gaps
+## Interview for setup choices and material gaps
 
 Pool core and specialist candidates before numbering. Remove questions already
 answered by `.grump`, project documentation, repository evidence, available
 agent context, or an explicit user statement. Deduplicate by the decision or
 unknown being resolved, not by wording.
 
-After `Q001`, assign `Q002` onward only to questions actually asked. Present the
-smallest useful batch and ask the user to answer by identifier. Never impose a
-minimum question count. Accept an unnumbered answer only when its mapping is
-unambiguous. Number later clarifications without renumbering earlier questions.
+After `Q001`, apply the initial-install `.gitignore` preference defined in the
+interview reference. Then assign the remaining identifiers only to questions
+actually asked. Present the smallest useful batch and ask the user to answer by
+identifier. Never impose a minimum question count. Accept an unnumbered answer
+only when its mapping is unambiguous. Number later clarifications without
+renumbering earlier questions.
 
 Track answered, deferred, declined, and unresolved questions. Keep explicit
-answers separate from inference. Survey `Q###` identifiers are durable setup
-provenance. Plan-review `RQ###` answers remain scoped to their evaluation unless
-the user separately confirms project-wide scope and doctrine-writing policy
-permits the update.
+answers separate from inference. Survey `Q###` identifiers stay stable within
+the setup sequence. Preserve doctrine question identifiers as provenance, but
+never record the initial-install `.gitignore` question in `.grump`. Plan-review
+`RQ###` answers remain scoped to their evaluation unless the user separately
+confirms project-wide scope and doctrine-writing policy permits the update.
 
 Attempt to determine project purpose and goals before asking. When unavailable,
 offer one optional brief purpose question. Ask about relevant project documents
@@ -104,8 +107,10 @@ Preserve manual wording and stable `CON-###`, `ACC-###`, `DEC-###`, `UNK-###`,
 promote an inference, erase a source conflict, or renumber an item for neatness.
 
 Write `.grump` only when setup, re-survey, doctrine refresh, or a current
-explicit instruction authorizes it. The survey does not authorize other project
-changes, external writes, deployment, or publication.
+explicit instruction authorizes it. Apart from the exact repository-root
+`.gitignore` edit authorized by an affirmative answer to the initial-install
+preference, the survey does not authorize other project changes, external
+writes, deployment, or publication.
 
 ## Finish
 
