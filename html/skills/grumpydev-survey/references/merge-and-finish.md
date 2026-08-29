@@ -49,8 +49,10 @@ Write `.grump` when setup or re-survey was explicitly requested. Summarize the
 evidence used, important inferences, unresolved user decisions, and proposed
 specialist skills. Identify which installed specialist survey contributions
 are current, incomplete, not surveyed, or explicitly inapplicable. Do not copy
-the package inventory or uninstalled catalog into `.grump`. State whether the
-infrastructure applicability gate
+the package inventory or uninstalled catalog into `.grump`. During initial
+installation, also report whether the repository-root `.gitignore` was created,
+updated, already configured, or left unchanged, without recording that setup
+preference in `.grump`. State whether the infrastructure applicability gate
 applied and whether every material profile has a workload path, operational
 state, support commitment, deployment ownership, confidence, and scoped
 evidence. Call out unresolved profile conflicts and re-survey triggers. Do not
