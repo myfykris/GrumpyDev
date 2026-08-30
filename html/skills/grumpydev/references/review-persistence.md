@@ -25,9 +25,10 @@ When plan addenda are allowed:
    create a duplicate ID. For plain text, use an unambiguous final `GrumpyDev
    addendum` heading.
 3. Append a new entry without changing or deleting earlier entries. Label it
-   with an ISO 8601 UTC evaluation time and include depth, verdict, confidence,
-   warnings, critical findings, what holds up, evidence gaps, revised path, and
-   material `RQ###` answers used by the review.
+   with an ISO 8601 UTC evaluation time and include verdict, warnings, summary,
+   confidence, target-scoped issue IDs, lifecycle status when applicable,
+   findings, verified resolutions, what holds up, evidence gaps, revised path,
+   review scope, and material `RQ###` answers used by the review.
 4. Preserve the plan's format, declared encoding, and line-ending convention.
    Escape inserted content correctly for the file format.
 5. Validate the resulting structure before reporting persistence. If validation
@@ -37,8 +38,14 @@ When plan addenda are allowed:
    review in chat, explain why it was not persisted, and ask one deduplicated,
    numbered question before creating any alternative file.
 
-On a later review, read prior addendum entries and distinguish resolved,
-remaining, regressed, and newly discovered findings. Do not treat an earlier
-verdict or finding as current project doctrine without supporting evidence.
-Report a failed addendum write plainly; never claim persistence unless the file
-was successfully updated and verified.
+On a later review, read prior addendum entries before assigning issue IDs. Match
+the same underlying issue even when its title or severity changed. Reuse its
+`GD-###` ID, allocate new IDs above the highest one previously used for that
+plan, and never recycle resolved IDs. Classify findings as `NEW`, `OPEN`,
+`RESOLVED`, or `REGRESSED`. Require current evidence before claiming resolution.
+If known prior history is unavailable, persist only clearly labeled `TMP-###`
+IDs and the continuity limitation. Never record a temporary ID as canonical or
+give it lifecycle status.
+Do not treat an earlier verdict or finding as current project doctrine without
+supporting evidence. Report a failed addendum write plainly; never claim
+persistence unless the file was successfully updated and verified.

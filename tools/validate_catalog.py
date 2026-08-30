@@ -1481,6 +1481,33 @@ def validate() -> list[str]:
                 f"gitignore preference fixture is missing {marker}",
             )
 
+    presentation_fixture = ROOT / "tests" / "skills" / "core" / "review-presentation.md"
+    presentation_fixture_text = read_text(presentation_fixture, errors)
+    presentation_fixture_normalized = " ".join(presentation_fixture_text.split())
+    for marker in (
+        "preferred finding tables and enabled status icons",
+        "`Finding tables: disabled`",
+        "`Status icons: disabled`",
+        "target-scoped `GD-###` identifier",
+        "same repository-relative artifact",
+        "Never infer target continuity",
+        "evaluation-scoped `TMP-###` IDs without lifecycle status",
+        "`NEW`, `OPEN`, `RESOLVED`, or `REGRESSED`",
+        "Require current evidence before marking an issue `RESOLVED`",
+        "one `Summary:` sentence",
+        "When finding tables are preferred",
+        "ID | Severity | Issue | Why it matters | Required action",
+        "Pair every icon with a text verdict",
+        "evidence -> failure condition -> impact -> required action",
+        "final `Review scope` footer",
+    ):
+        if marker not in presentation_fixture_normalized:
+            fail(
+                errors,
+                presentation_fixture.relative_to(ROOT),
+                f"review presentation fixture is missing {marker}",
+            )
+
     project_specialist_fixture = ROOT / "tests" / "skills" / "core" / "project-wide-specialists.md"
     project_specialist_text = read_text(project_specialist_fixture, errors)
     for marker in (
