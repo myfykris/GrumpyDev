@@ -157,21 +157,21 @@ If it wants to block something, it needs a reason.
 
 A useful objection should look more like this:
 
-```text
-REVISE
+**🛠️ REVISE**
 
-[HIGH] Your retry strategy can create duplicate jobs.
+**Summary:** 2 findings: 1 HIGH and 1 MEDIUM. Invoice retries can create
+duplicate remote jobs, and rollback does not cover queued work.
 
-The plan retries POST requests after a timeout.
+| ID | Severity | Issue | Why it matters | Required action |
+| --- | --- | --- | --- | --- |
+| 🔴 GD-001 | HIGH | `src/jobs/create.ts` retries POST after a timeout without an idempotency boundary. | A lost response can cause the retry to create a duplicate remote job. | Persist an operation key before the first request and reuse it for retries. |
+| 🟠 GD-002 | MEDIUM | Rollback replaces the worker but leaves published jobs in the queue. | Old jobs may be incompatible with the restored worker version. | Define message compatibility and a queued-job recovery procedure. |
 
-The client does not send an idempotency key, and the local system does not
-store the remote job ID until after the request returns.
-
-That means the remote system can successfully create the job, the response
-can get lost, and the retry can create a second one.
-
-Fix the idempotency boundary before implementing this.
-```
+GrumpyDev uses compact tables when they make issues easier to scan and expands
+complex findings under the same issue IDs when more evidence is needed. A user
+instruction or project `.grump` policy can turn off tables or icons. On later
+reviews of the same target, issue IDs persist and findings are marked `NEW`,
+`OPEN`, `RESOLVED`, or `REGRESSED`.
 
 Not this:
 

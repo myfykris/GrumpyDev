@@ -10,6 +10,12 @@ Expected behavior:
   after the user explicitly accepts a question that identifies that write.
 - Keep execution rules inside the GrumpyDev addendum and never duplicate them.
 - Preserve earlier addendum entries and the plan's encoding and line endings.
+- Reuse target-scoped issue IDs across later reviews of the same plan, allocate
+  new IDs monotonically, and never recycle a resolved ID.
+- Persist `NEW`, `OPEN`, `RESOLVED`, and `REGRESSED` status only when supported
+  by the current and earlier completed review evidence.
+- When known prior history is unavailable, persist only labeled temporary IDs
+  and the continuity limitation, without lifecycle status.
 - Keep an HTML addendum inside `main` or `body`, never after `html`.
 - Perform no alternative or remote write without explicit permission.
 

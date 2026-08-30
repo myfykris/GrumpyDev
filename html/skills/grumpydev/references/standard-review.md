@@ -57,7 +57,7 @@ was recovered, continue the review and emit one consolidated warning immediately
 after the verdict using this shape:
 
 ```text
-PLAN CONTEXT WARNING
+⚠️ PLAN CONTEXT WARNING
 The plan does not contain the following requirements or project context:
 <context missing from the plan>.
 I recovered this context from <agent-context sources> and used it for this
@@ -70,7 +70,7 @@ from agent context, continue the review and emit one consolidated warning
 immediately after the verdict using this shape:
 
 ```text
-REVIEW BASIS WARNING
+⚠️ REVIEW BASIS WARNING
 The plan does not contain the following requirements or project context, and I
 could not recover it from the available agent context: <unknown context>.
 I can review implementation coherence, but conclusions about <affected
@@ -160,15 +160,28 @@ Lead with one verdict:
   verdict.
 
 When an implementation plan requires either plan-context warning, print it
-immediately after the verdict. Then report:
+immediately after the verdict. After any warning, print the core one-sentence
+`Summary:`. Then report:
 
 1. **Confidence** - high, medium, or low, with the limiting evidence.
-2. **Critical findings** - ordered by severity. Include evidence, failure,
+2. **Findings** - ordered by severity. Include evidence, failure,
    impact, and required change for each.
-3. **What holds up** - important parts that survived review and why.
-4. **Evidence gaps** - only gaps that can change the verdict or required action.
-5. **Revised path** - the smallest sequence of decisions or edits needed to
+3. **Resolved since the previous review** - only when current evidence verifies
+   resolution of a previously identified issue.
+4. **What holds up** - important parts that survived review and why.
+5. **Evidence gaps** - only gaps that can change the verdict or required action.
+6. **Revised path** - the smallest sequence of decisions or edits needed to
    reach approval.
+7. **Review scope** - the compact target, depth, reference, and coverage footer
+   required by the core skill.
+
+Apply the core presentation policy to the verdict, warnings, and findings.
+Use a findings table for at least two concise active issues when preferred and
+reasonable. Use headed prose for one active issue. For multiple complex issues,
+use the table as an index and expand only the IDs that need more evidence or
+explanation.
+When status icons are disabled, omit the icons shown in the warning examples
+without changing their text or placement.
 
 Use repository paths and stable `.grump` identifiers wherever possible. Do not
 pad the response with a generic checklist. If the reviewed work is good, approve

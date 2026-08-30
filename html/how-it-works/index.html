@@ -93,7 +93,7 @@
     <div>
       <span class="eyebrow">The review contract</span>
       <h2 class="mt-5 text-3xl font-black tracking-tight sm:text-5xl">Specific criticism or it doesn't count.</h2>
-      <p class="mt-5 text-lg leading-8 text-base-content/65">Every material finding must connect an observed fact to a plausible failure and a practical response.</p>
+      <p class="mt-5 text-lg leading-8 text-base-content/65">Every material finding must connect an observed fact to a plausible failure and a practical response. Groups of concise issues use scannable tables and stable IDs. Later reviews keep those IDs and distinguish new, open, resolved, and regressed issues.</p>
       <div class="mt-8 space-y-3">
         <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-primary">EVIDENCE</span><span>What the repository, project documents, reviewed work, or user actually says.</span></div>
         <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-warning">RISK</span><span>What can fail, for whom, and under which condition.</span></div>
@@ -102,11 +102,13 @@
       </div>
     </div>
     <div class="rounded-2xl border soft-rule bg-neutral p-7 text-neutral-content shadow-2xl sm:p-9">
-      <div class="flex items-center justify-between border-b border-neutral-content/10 pb-5 font-mono text-xs"><span>GRUMP REVIEW</span><span class="text-warning">REVISE</span></div>
+      <div class="flex items-center justify-between border-b border-neutral-content/10 pb-5 font-mono text-xs"><span>GRUMP REVIEW</span><span class="text-warning">🛠️ REVISE</span></div>
       <div class="mt-6 space-y-6 text-sm leading-7">
-        <div><p class="font-bold text-error">[HIGH] Retry strategy creates duplicate jobs</p><p class="mt-1 text-neutral-content/60">The plan retries POST requests after timeouts, but the API client has no idempotency key and the persistence layer records remote job IDs only after the response returns.</p></div>
+        <div><p class="font-bold text-warning">Summary</p><p class="mt-1 text-neutral-content/60">1 HIGH finding. Invoice retries can create duplicate remote jobs.</p></div>
+        <div><p class="font-bold text-error">🔴 GD-001 [HIGH] Retry strategy creates duplicate jobs</p><p class="mt-1 text-neutral-content/60">The plan retries POST requests after timeouts, but the API client has no idempotency key and the persistence layer records remote job IDs only after the response returns.</p></div>
         <div><p class="font-bold text-primary">Evidence</p><p class="text-neutral-content/60"><code>src/jobs/create.ts</code> and the proposed "retry three times" step.</p></div>
         <div><p class="font-bold text-success">Required change</p><p class="text-neutral-content/60">Define an idempotency boundary and persist the operation key before the first remote call.</p></div>
+        <div class="border-t border-neutral-content/10 pt-4 font-mono text-xs text-neutral-content/45">Review scope: implementation plan / standard / deployment</div>
       </div>
     </div>
   </div>

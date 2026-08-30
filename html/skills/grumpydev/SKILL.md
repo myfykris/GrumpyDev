@@ -48,6 +48,8 @@ exists. Wait for the user to invoke the review.
 Use plain ASCII punctuation. Never use em dashes, curly quotes, smart
 apostrophes, Unicode ellipses, Unicode arrows, Unicode minus signs, or similar
 typographic substitutions unless the user explicitly approves them.
+The verdict, warning, and finding icons defined below are an expressly allowed
+narrow exception. They are labels, not replacements for ordinary punctuation.
 
 Assume the active agent can perform the review. Do not inspect, infer, report,
 warn about, or ask about model identity, reasoning support, or effort settings.
@@ -213,17 +215,106 @@ reference during review.
 
 ## Produce the verdict
 
-Lead with exactly one verdict:
+Read optional review presentation policy from `.grump`:
 
-- `APPROVE`
-- `APPROVE WITH CONCERNS`
-- `REVISE`
-- `REJECT`
-- `INSUFFICIENT EVIDENCE`
+- `Finding tables: preferred | disabled | unresolved`
+- `Status icons: enabled | disabled | unresolved`
 
-Then give confidence, critical findings, what holds up, material evidence gaps,
-and the smallest revised path when one is needed. Cite repository paths and
-stable `.grump` identifiers where useful. Keep lean output concise.
+A current explicit user instruction takes precedence for that evaluation.
+Missing, malformed, or `unresolved` presentation values default to preferred
+tables and enabled icons. Honor an unambiguous equivalent instruction elsewhere
+in `.grump`; do not require the exact field names. Do not ask about presentation
+during each review.
+
+When icons are enabled, lead with the mapped icon and exactly one verdict label:
+
+- `✅ APPROVE`
+- `⚠️ APPROVE WITH CONCERNS`
+- `🛠️ REVISE`
+- `⛔ REJECT`
+- `❓ INSUFFICIENT EVIDENCE`
+
+When icons are disabled or cannot render reliably, use the verdict label
+without an icon. Never communicate status through an icon or color alone.
+
+After any required plan-context warning, give one `Summary:` sentence with the
+active finding counts by severity and the main reason for the verdict. Do not
+count resolved findings. When there are no active findings, say that plainly.
+
+Then give confidence, findings, resolved findings from an earlier review when
+applicable, what holds up, material evidence gaps, and the smallest revised path
+when one is needed. Cite repository paths and stable `.grump` identifiers where
+useful. Keep lean output concise.
+
+Before assigning issue IDs, inspect completed earlier GrumpyDev reviews for the
+same target in its addendum and available current conversation. Match an issue
+by its underlying failure condition and affected boundary, not merely its title
+or wording.
+
+Use one target ID namespace only for the same repository-relative artifact, or
+when the user explicitly identifies another artifact as its revision, rename,
+or successor. For an artifact without a stable path, require an explicit link
+to the earlier target in available conversation context. Never infer target
+continuity merely from similar titles, content, or project membership.
+
+Use target-scoped IDs in the form `GD-001`, `GD-002`, and so on. Reuse the prior
+ID when the same issue remains or regresses. Give a genuinely new issue the next
+number above the highest ID previously used for that target. Never recycle a
+resolved ID or assign an existing ID to a different issue. When an earlier
+review is known to exist but is unavailable, do not claim continuity; identify
+that limit in the review scope and use evaluation-scoped temporary IDs such as
+`TMP-001`. Label them temporary in chat and any authorized addendum. Do not
+assign lifecycle status, promote them to `GD-###`, or treat them as part of the
+target ID namespace unless the missing history becomes available and supports
+an unambiguous mapping.
+
+On a repeated review, classify every prior and current issue:
+
+- `NEW` appears for the first time in the available review history;
+- `OPEN` was reported before and has not been verified as resolved;
+- `RESOLVED` no longer applies because current evidence verifies the
+  correction; and
+- `REGRESSED` was previously resolved but applies again.
+
+Never mark an issue resolved merely because the new target omits it, renames
+it, or makes its evidence inaccessible. Keep resolved issues out of active
+severity counts and report them separately with the evidence for resolution.
+Sort active issues by severity, then by dependency or execution order when that
+makes remediation clearer.
+
+When finding tables are preferred, use a compact Markdown table when there are
+at least two concise active issues and the table improves scanning. Use these
+columns:
+
+| ID | Severity | Issue | Why it matters | Required action |
+| --- | --- | --- | --- | --- |
+
+Keep cells concise. For multiple issues that need multiline evidence, code,
+qualifications, or longer causal explanations, use the table as an index and
+put those details below it under the same issue IDs. The table is not permission
+to omit evidence, failure condition, impact, or required action.
+
+When there are no active issues, do not render an empty table. State plainly
+that no material findings were identified.
+
+When icons are enabled, place one of these severity icons beside each issue ID
+and retain the text severity label: `⛔ CRITICAL`, `🔴 HIGH`, `🟠 MEDIUM`,
+or `🟡 LOW`. Use `⚠️` with warning labels. `CRITICAL` means an unsafe,
+catastrophic, irreversible, or otherwise blocking flaw. `HIGH` means a major
+failure that requires correction before proceeding. `MEDIUM` means a bounded
+material concern. `LOW` means a concrete nonblocking problem worth fixing. Do
+not inflate severity or invent low-severity items merely to populate the table.
+
+On repeated reviews, also pair lifecycle status with text: `🆕 NEW`, `📌 OPEN`,
+`✅ RESOLVED`, or `♻️ REGRESSED`. In an active findings table, keep status with
+the ID, for example `🔴 GD-004 (🆕 NEW)`. When icons are disabled, retain the ID
+and text labels without icons.
+
+Use headed prose instead of a table when the user or `.grump` disables tables,
+when there is one active issue, or when a table would materially reduce
+readability, such as essential code or multiline evidence or an output surface
+too narrow to render the columns. Keep the same IDs, labels, ordering, and
+causal content.
 
 Always return the completed review in chat. Do not write to a plan, another
 review target, or `.grump` unless current instructions or recognized doctrine
@@ -245,7 +336,10 @@ other non-plan reviews.
 
 ## Add to the verdict
 
+After the substantive review sections, add a compact `Review scope` footer.
 State the target type, selected depth, and which conditional references
-materially affected the review. Identify any recommended depth escalation,
+materially affected the review. Include any recommended depth escalation,
 unresolved evidence limit, failed permitted write, or incomplete specialist
-coverage plainly.
+coverage. Do not put this internal review metadata before the summary or
+findings. Finish this footer before any persistence result or post-review
+execution-rules question.

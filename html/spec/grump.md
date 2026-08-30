@@ -58,6 +58,11 @@ and rename.
 - Plan addenda: allowed | chat only | unresolved
 - Source: Q### or explicit user statement
 
+## Review presentation policy
+- Finding tables: preferred | disabled | unresolved
+- Status icons: enabled | disabled | unresolved
+- Source: manual .grump entry or explicit project-wide user statement
+
 ## Review interaction policy
 - Review questions: interactive | non-interactive | unresolved
 - Source: Q### or explicit user statement
@@ -144,7 +149,8 @@ The format controls serialization only. Both formats preserve:
 
 - purpose and success conditions;
 - project documents and scoped evidence;
-- review, interaction, doctrine, readiness, and research policies;
+- review output, presentation, interaction, doctrine, readiness, and research
+  policies;
 - concise survey status and explicit inapplicability for installed specialists;
 - non-negotiable constraints, accepted tradeoffs, and durable decisions;
 - deployment profiles and shared infrastructure when material;
@@ -290,6 +296,25 @@ on a human-authored policy is a maintenance problem, not proof that the policy
 is unauthorized. Malformed, unknown, or contradictory policy values grant no
 write. A current explicit user instruction overrides the stored policy for the
 current work without silently rewriting it.
+
+## Review presentation policy
+
+Record presentation preferences only when a human writes them into `.grump` or
+explicitly establishes them as project-wide. Do not add another routine survey
+question merely to populate this optional section.
+
+`Finding tables: preferred` asks reviews to use a compact Markdown findings
+table when it improves scanning. `Finding tables: disabled` requires headed
+prose. `Status icons: enabled` permits the core skill's verdict, warning, and
+severity icons. `Status icons: disabled` requires text labels without icons.
+Missing, malformed, or `unresolved` values use the core defaults of preferred
+tables and enabled icons. An unambiguous human-written equivalent elsewhere in
+`.grump` has the same effect; exact field names are recommended, not required.
+
+A current explicit user instruction overrides these values for one evaluation
+without changing `.grump`. Presentation policy changes layout only. It does not
+change severity, evidence requirements, verdicts, persistence authority, or
+permission for any local or external write.
 
 ## Review interaction policy
 

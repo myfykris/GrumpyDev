@@ -9,6 +9,8 @@ Follow the canonical `.grump` specification. Include concise sections for:
 - project documentation and what each relevant document establishes;
 - doctrine format policy and the answer to Q001;
 - review output policy, including whether plan addenda are allowed;
+- review presentation policy when a human or explicit project-wide statement
+  establishes one;
 - review interaction policy for interactive or non-interactive plan questions;
 - doctrine maintenance policy for explicitly confirmed decisions;
 - plan readiness policy for unresolved decision-affecting research;
