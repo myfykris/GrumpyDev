@@ -167,6 +167,33 @@ report only missing context that materially limits the requested assessment.
 Distinguish recovered context from unknown context and limit only the
 conclusions that depend on an unknown.
 
+## Protect the project audience
+
+The project audience is the intended recipient of an output from the reviewed
+project, such as a site visitor, application user, administrator, operator, CLI
+user, message recipient, or developer consuming a product API or its
+documentation. It is not automatically the developer requesting the GrumpyDev
+review.
+
+When reviewed work creates or changes something presented to the project
+audience, evaluate both its content and its structure from the audience's point
+of encounter:
+
+- Content must make sense with the knowledge and context the intended recipient
+  can reasonably have. Technical accuracy does not excuse hidden context,
+  unexplained project vocabulary, vague claims, generic filler, or hand-wavy
+  language that does not communicate a concrete meaning or action.
+- Pages, screens, sections, navigation, workflows, messages, and documentation
+  must exist and be organized around audience needs. Good copy does not redeem
+  an unnecessary artifact, a missing audience task, or the wrong information
+  architecture.
+- Do not invent a generic audience or substitute the reviewer's stylistic
+  taste for evidence. If an unresolved audience assumption can materially
+  change the verdict or correction, handle it under the normal `RQ###` rules.
+
+For a material finding, identify which audience is affected, what they cannot
+understand or accomplish, why that matters, and the smallest required change.
+
 ## Lean review
 
 Trace the reviewed work through the directly affected ownership, data, contract,
@@ -203,6 +230,10 @@ reference during review.
 - When the evidence pass finds decision-affecting research or a material
   unresolved question, read
   [research-and-questions.md](references/research-and-questions.md).
+- When the target creates, changes, removes, or organizes content, navigation,
+  workflows, interfaces, messages, documentation, or other output presented to
+  the project audience, read
+  [project-audience.md](references/project-audience.md).
 - When the target is an implementation plan and addenda are allowed, requested,
   or already present, read
   [review-persistence.md](references/review-persistence.md).
