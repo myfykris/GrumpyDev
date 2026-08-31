@@ -44,6 +44,11 @@ When implementing this plan:
 - Proceed with minor implementation details that do not materially change
   scope, behavior, architecture, interfaces, dependencies, data handling,
   security, operations, or accepted tradeoffs.
+- For output presented to the project audience, preserve the plan's established
+  audience, content, information architecture, navigation, workflow, and
+  accessibility decisions. Do not invent a material audience assumption, an
+  unnecessary page or step, or vague placeholder copy as an implementation
+  detail.
 - Before a material deviation, stop, explain what the plan assumed and what the
   evidence shows, propose the smallest plan amendment, and ask whether to update
   and Grump the amended plan before continuing.

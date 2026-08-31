@@ -1523,6 +1523,28 @@ def validate() -> list[str]:
                 f"project-wide specialist fixture is missing {marker}",
             )
 
+    audience_fixture = ROOT / "tests" / "skills" / "core" / "project-audience.md"
+    audience_fixture_text = read_text(audience_fixture, errors)
+    audience_fixture_normalized = " ".join(audience_fixture_text.split())
+    for marker in (
+        "intended recipients of the reviewed project's output",
+        "not automatically the developer requesting the review",
+        "instead of inventing a generic persona",
+        "hand-wavy language",
+        "mechanical banned-word list",
+        "well-written but unnecessary page as a structural defect",
+        "missing audience task, state, page, or path",
+        "internal org chart, implementation boundary, template, or generated layout",
+        "evidence -> recipient mismatch -> failed task or consequence -> required change",
+        "Execution rules preserve approved project-audience decisions",
+    ):
+        if marker not in audience_fixture_normalized:
+            fail(
+                errors,
+                audience_fixture.relative_to(ROOT),
+                f"project audience fixture is missing {marker}",
+            )
+
     detailed_doctrine_path = DOCTRINE_FIXTURES / "doctrine-detailed.md"
     compact_doctrine_path = DOCTRINE_FIXTURES / "doctrine-compact.md"
     detailed_doctrine = read_text(detailed_doctrine_path, errors)
