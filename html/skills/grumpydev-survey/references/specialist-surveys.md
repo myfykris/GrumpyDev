@@ -15,6 +15,9 @@ user. Do not manufacture questions to justify its installation. Do not create
 status entries for uninstalled catalog specialists merely to record that they
 do not apply.
 
+An active specialist is an installed specialist not explicitly marked
+`inapplicable` in `.grump`.
+
 ## Load survey companions selectively
 
 Read an applicable installed specialist's `SURVEY.md` during initial setup,

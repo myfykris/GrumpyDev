@@ -13,7 +13,6 @@ ROOT = Path(__file__).resolve().parents[1]
 HTML = ROOT / "html"
 SKILLS = HTML / "skills"
 MANIFEST = HTML / "manifest.json"
-DOCTRINE_FIXTURES = ROOT / "tests" / "skills" / "core" / "data"
 
 BASELINE = {
     "selectable_words": 82852,
@@ -21,6 +20,8 @@ BASELINE = {
     "specialist_p90": 851,
     "core_review_words": 4116,
     "survey_words": 3042,
+    "manifest_bytes": 185318,
+    "manifest_words": 16089,
 }
 
 SCENARIOS = {
@@ -276,27 +277,24 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Report deterministic GrumpyDev context word counts."
     )
-    parser.add_argument(
-        "--doctrine",
-        choices=("compact", "detailed", "none"),
-        default="compact",
-        help="Doctrine fixture to include in the external-input breakdown.",
-    )
+    parser.add_argument("--doctrine-words", type=int, default=0)
     parser.add_argument("--plan-words", type=int, default=0)
     parser.add_argument("--project-document-words", type=int, default=0)
     args = parser.parse_args()
-    if args.plan_words < 0 or args.project_document_words < 0:
+    if (
+        args.doctrine_words < 0
+        or args.plan_words < 0
+        or args.project_document_words < 0
+    ):
         parser.error("external context word counts cannot be negative")
     return args
 
 
-manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
+manifest_bytes = MANIFEST.read_bytes()
+manifest_text = manifest_bytes.decode("utf-8")
+manifest = json.loads(manifest_text)
 entries = {entry["name"]: entry for entry in manifest["skills"]}
 args = parse_args()
-
-doctrine_words = 0
-if args.doctrine != "none":
-    doctrine_words = words(DOCTRINE_FIXTURES / f"doctrine-{args.doctrine}.md")
 
 entrypoint_counts = {
     name: sum(words(path) for path in paths_for(entry, {"entrypoint"}))
@@ -314,6 +312,14 @@ print(f"  core review: {entrypoint_counts['grumpydev']} (baseline {BASELINE['cor
 print(f"  survey: {entrypoint_counts['grumpydev-survey']} (baseline {BASELINE['survey_words']})")
 print(f"  specialist median: {int(median(specialist_counts))} (baseline {BASELINE['specialist_median']})")
 print(f"  specialist p90: {percentile_90(specialist_counts)} (baseline {BASELINE['specialist_p90']})")
+print(
+    f"  manifest bytes: {len(manifest_bytes)} "
+    f"(baseline {BASELINE['manifest_bytes']})"
+)
+print(
+    f"  manifest words: {len(manifest_text.split())} "
+    f"(baseline {BASELINE['manifest_words']})"
+)
 
 print("\nRepresentative installed-package loading")
 survey_core_words = sum(
@@ -368,7 +374,7 @@ for scenario, definition in SCENARIOS.items():
         f"    entrypoints={sum(map(words, lean_paths))} "
         f"common_refs={sum(map(words, common_paths))} "
         f"focused_refs={sum(map(words, focused_paths))} "
-        f"doctrine={doctrine_words} plan={args.plan_words} "
+        f"doctrine={args.doctrine_words} plan={args.plan_words} "
         f"project_docs={args.project_document_words}"
     )
     print(
@@ -389,12 +395,3 @@ for scenario, (name, filenames) in BOUNDARY_SCENARIOS.items():
 print("\nLargest entrypoints")
 for name, count in sorted(entrypoint_counts.items(), key=lambda item: item[1], reverse=True)[:15]:
     print(f"  {count:5d} {name}")
-
-detailed_doctrine = words(DOCTRINE_FIXTURES / "doctrine-detailed.md")
-compact_doctrine = words(DOCTRINE_FIXTURES / "doctrine-compact.md")
-reduction = 100 * (detailed_doctrine - compact_doctrine) / detailed_doctrine
-print("\nDoctrine format fixture")
-print(
-    f"  detailed={detailed_doctrine} compact={compact_doctrine} "
-    f"reduction={reduction:.1f}%"
-)

@@ -9,6 +9,8 @@ import re
 import sys
 from pathlib import Path, PurePosixPath
 
+from update_skills_catalog import manifest_catalog_records, render_catalog
+
 
 ROOT = Path(__file__).resolve().parents[1]
 HTML = ROOT / "html"
@@ -20,8 +22,7 @@ HOME = HTML / "index.html"
 HOW_IT_WORKS = HTML / "how-it-works" / "index.html"
 SECURITY = HTML / "security" / "index.html"
 AUTHOR = HTML / "author" / "index.html"
-INFRASTRUCTURE_RUBRIC = ROOT / "tests" / "skills" / "infrastructure-survey-rubric.md"
-DOCTRINE_FIXTURES = ROOT / "tests" / "skills" / "core" / "data"
+README = ROOT / "README.md"
 SPECIALIST_TYPES = {"language", "framework", "paradigm", "storage", "platform"}
 ALLOWED_TYPES = {"core", *SPECIALIST_TYPES}
 REQUIRED_SECTIONS = (
@@ -78,13 +79,10 @@ CORE_INVOCATION_PREFIX = (
     "created, revised, discussed, implemented, or generically reviewed. "
 )
 REVIEW_INVOCATION_PREFIX = (
-    "Use only during an explicitly invoked GrumpyDev review. Do not activate during "
-    "ordinary planning, creation, revision, discussion, implementation, or generic "
-    "review. For a project where this specialist is installed and not explicitly "
-    "marked inapplicable, use it in every GrumpyDev review to evaluate direct and "
-    "indirect effects. "
+    "Use only when the user explicitly asks for a GrumpyDev review. Never start a "
+    "review automatically. If installed and not marked inapplicable, use this skill "
+    "in every GrumpyDev review. "
 )
-PROJECT_APPLICABILITY_MARKER = " Project applicability: "
 SURVEY_INVOCATION_PREFIX = (
     "Use only during GrumpyDev installation or setup, or for an explicitly requested "
     "re-survey or doctrine refresh. Do not activate during ordinary planning, plan "
@@ -101,10 +99,30 @@ STATE_TOP_LEVEL_KEYS = {
 }
 STATE_PACKAGE_KEYS = {"name", "type", "publisher", "files"}
 STATE_FILE_KEYS = {"role", "local_path", "source_url"}
-CATALOG_SUMMARY_OVERRIDES = {
-    "Survey an existing software repository and create or update its human-owned .grump "
-    "project doctrine.": (
-        "Surveys a repository and creates or updates its project review rules in .grump."
+EXPECTED_APPLICABILITY_EXCEPTIONS = {
+    "objective-c": (
+        "the project contains or builds Objective-C or Objective-C++ source, exposes an "
+        "Objective-C ABI, or has generated bindings or a bridge whose correctness depends "
+        "on Objective-C runtime semantics.",
+        "the project uses only Swift and Apple frameworks and has no Objective-C or "
+        "Objective-C++ source, Objective-C ABI, generated binding, or bridge that depends "
+        "on Objective-C runtime semantics.",
+    ),
+    "oauth": (
+        "the project uses OAuth, OpenID Connect, SSO, bearer tokens, JWTs, opaque access "
+        "tokens, API keys, personal access tokens, service tokens, signed tokens, or "
+        "proof-of-possession tokens.",
+        "the project uses only cookie sessions that are not backed by or exchanged for "
+        "OAuth, OpenID Connect, SSO, bearer tokens, JWTs, opaque access tokens, API keys, "
+        "personal access tokens, service tokens, signed tokens, or proof-of-possession "
+        "tokens.",
+    ),
+    "rest-api-design": (
+        "the project exposes or consumes a resource-oriented HTTP API whose contract "
+        "intentionally depends on REST and HTTP semantics.",
+        "the project uses HTTP only for arbitrary endpoints, webhooks, GraphQL endpoints, "
+        "gRPC gateways, or RPC-style JSON APIs and does not intentionally depend on REST "
+        "and HTTP semantics.",
     ),
 }
 CATALOG_DISPLAY_ORDER = {
@@ -261,6 +279,19 @@ EXPECTED_FOCUSED_REFERENCES = {
 
 def fail(errors: list[str], path: Path | str, message: str) -> None:
     errors.append(f"{path}: {message}")
+
+
+def require_markers(
+    path: Path,
+    text: str,
+    markers: tuple[str, ...],
+    errors: list[str],
+    label: str,
+) -> None:
+    normalized = " ".join(text.split())
+    for marker in markers:
+        if marker not in normalized:
+            fail(errors, path.relative_to(ROOT), f"{label} is missing {marker}")
 
 
 def read_text(path: Path, errors: list[str]) -> str:
@@ -429,29 +460,48 @@ def valid_package_path(value: object) -> bool:
     return not path.is_absolute() and all(part not in {"", ".", ".."} for part in path.parts)
 
 
-def catalog_summary(description: str) -> str:
-    for prefix in (CORE_INVOCATION_PREFIX, REVIEW_INVOCATION_PREFIX, SURVEY_INVOCATION_PREFIX):
-        if description.startswith(prefix):
-            description = description[len(prefix) :]
-            break
-    summary = re.split(
-        rf"{re.escape(PROJECT_APPLICABILITY_MARKER)}| Applies (?:when|during) | Use when ",
-        description,
-        maxsplit=1,
-    )[0]
-    summary = summary.replace(
-        " plans and other engineering artifacts", " engineering work"
+def validate_applicability_conditions(
+    name: str,
+    field: str,
+    value: object,
+    errors: list[str],
+    *,
+    allow_empty: bool,
+) -> list[str]:
+    if not isinstance(value, list) or (not value and not allow_empty):
+        requirement = "an array" if allow_empty else "a non-empty array"
+        fail(errors, MANIFEST.relative_to(ROOT), f"{field} for {name} must be {requirement}")
+        return []
+    if not all(isinstance(condition, str) for condition in value):
+        fail(errors, MANIFEST.relative_to(ROOT), f"{field} for {name} must contain strings")
+        return []
+    conditions = list(value)
+    if len(conditions) != len(set(conditions)):
+        fail(errors, MANIFEST.relative_to(ROOT), f"{field} for {name} contains duplicates")
+    plan_phrases = (
+        "this plan",
+        "current plan",
+        "reviewed plan",
+        "this review",
+        "current review",
+        "review target",
     )
-    if summary in CATALOG_SUMMARY_OVERRIDES:
-        return CATALOG_SUMMARY_OVERRIDES[summary]
-    for source, replacement in (
-        ("Review ", "Reviews "),
-        ("Perform ", "Performs "),
-        ("Survey ", "Surveys "),
-    ):
-        if summary.startswith(source):
-            return replacement + summary[len(source) :]
-    return summary
+    for condition in conditions:
+        if not condition or len(condition) > 320:
+            fail(errors, MANIFEST.relative_to(ROOT), f"invalid {field} length for {name}")
+        if condition != condition.strip() or any(char in condition for char in "\t\r\n"):
+            fail(errors, MANIFEST.relative_to(ROOT), f"invalid {field} whitespace for {name}")
+        if (
+            "Project applicability:" in condition
+            or "`" in condition
+            or re.search(r"\[[^\]]+\]\([^\)]+\)", condition)
+            or re.search(r"<[^>]+>", condition)
+        ):
+            fail(errors, MANIFEST.relative_to(ROOT), f"invalid markup in {field} for {name}")
+        lowered = condition.lower()
+        if any(phrase in lowered for phrase in plan_phrases):
+            fail(errors, MANIFEST.relative_to(ROOT), f"plan-scoped {field} for {name}")
+    return conditions
 
 
 def expected_catalog_file_href(entry: dict[str, object], relative: str) -> str:
@@ -503,6 +553,7 @@ def validate() -> list[str]:
     how_it_works_text = public_html_texts[HOW_IT_WORKS]
     security_text = public_html_texts[SECURITY]
     author_text = public_html_texts[AUTHOR]
+    readme_text = read_text(README, errors)
     if "Use when " in index_text:
         fail(
             errors,
@@ -567,8 +618,86 @@ def validate() -> list[str]:
     ):
         if f">{verdict}</span>" not in home_text:
             fail(errors, HOME.relative_to(ROOT), f"homepage is missing verdict {verdict}")
-    if "AGENT-GENERATED / HUMAN-OWNED" not in home_text:
+    if "AGENT-WRITTEN / USER-CONTROLLED" not in home_text:
         fail(errors, HOME.relative_to(ROOT), "homepage .grump ownership label is incomplete")
+    site_contracts = (
+        (
+            HOME,
+            home_text,
+            (
+                "have the agent create a <code>.grump</code> file",
+                "Explicit user instructions and manual edits control the project rules it records",
+                "every specialist participates in every explicit review unless <code>.grump</code> explicitly marks it inapplicable",
+                "Every finding must point to evidence the agent actually inspected",
+                "<span class=\"font-bold text-primary\">Evidence:</span> plan section \"Job submission\".",
+                "retrying without an operation key can create a duplicate job",
+                "Process partner webhooks without duplicate jobs. Source: docs/product.md;",
+                "Format: compact. Source: Q001; confirmed.",
+                "Existing webhook IDs stay stable. Source: api/openapi.yaml;",
+                "Processing latency up to 15 minutes is accepted. Source: Q004;",
+                "A <code>REVISE</code> verdict does not stop the review",
+                "Later reviews explain why each newly reported issue appeared",
+            ),
+        ),
+        (
+            HOW_IT_WORKS,
+            how_it_works_text,
+            (
+                "The agent creates the project doctrine file called <code>.grump</code>",
+                "Explicit user instructions and manual edits control it",
+                "If inspected evidence does not support a claim, it cannot be a finding",
+                "Established fact",
+                "Conditional risk",
+                "src/jobs/create.ts::submitJob()",
+                "A <code>REVISE</code> verdict does not stop the review",
+                "unavailable history",
+            ),
+        ),
+        (
+            INDEX,
+            index_text,
+            (
+                "project evidence matches the manifest conditions and the user approves them",
+                "every specialist participates in every explicit GrumpyDev review unless <code>.grump</code> explicitly marks it inapplicable",
+                "Each specialist checks direct and indirect effects",
+            ),
+        ),
+        (
+            AUTHOR,
+            author_text,
+            (
+                "The manifest defines the conditions used to decide whether the specialist should be installed",
+                "Invocation boundary, lean review, and routes",
+                "manifest inclusion and exclusion conditions that decide applicability before download",
+                "Every installed specialist participates in every explicit review unless <code>.grump</code> explicitly marks it inapplicable",
+            ),
+        ),
+        (
+            SECURITY,
+            security_text,
+            (
+                "Use the manifest's inclusion and exclusion conditions with repository evidence",
+                "Do not download an irrelevant specialist to inspect it",
+            ),
+        ),
+    )
+    for path, text, markers in site_contracts:
+        require_markers(path, text, markers, errors, "site behavior contract")
+    require_markers(
+        README,
+        readme_text,
+        (
+            "keeps checking every relevant part of the target even after the verdict is obvious",
+            "groups related symptoms when they share the same cause and fix",
+            "caused by the revision, supported by new information, found in a broader review, missed earlier",
+            "Every finding must point to evidence the agent actually inspected",
+            "keeps established facts, inferences, and conditional risks distinct",
+            "it says so instead of inventing the answer",
+            "src/jobs/create.ts::submitJob()",
+        ),
+        errors,
+        "README convergence explanation",
+    )
     if "Link every review finding to repository evidence" in home_text:
         fail(errors, HOME.relative_to(ROOT), "homepage doctrine stores a generic review rule")
     for path, text in public_html_texts.items():
@@ -708,6 +837,8 @@ def validate() -> list[str]:
             "publisher",
             "files",
         }
+        if skill_type in SPECIALIST_TYPES:
+            expected_fields.update({"install_when", "do_not_install_when"})
         if set(entry) != expected_fields:
             fail(
                 errors,
@@ -730,6 +861,31 @@ def validate() -> list[str]:
             fail(errors, MANIFEST.relative_to(ROOT), f"publisher for {name} must be grumpydev.ai")
         if not isinstance(description, str) or not description:
             fail(errors, MANIFEST.relative_to(ROOT), f"invalid description for {name}")
+        if skill_type in SPECIALIST_TYPES:
+            install_when = validate_applicability_conditions(
+                name,
+                "install_when",
+                entry.get("install_when"),
+                errors,
+                allow_empty=False,
+            )
+            do_not_install_when = validate_applicability_conditions(
+                name,
+                "do_not_install_when",
+                entry.get("do_not_install_when"),
+                errors,
+                allow_empty=True,
+            )
+            if name in EXPECTED_APPLICABILITY_EXCEPTIONS:
+                expected_include, expected_exclude = EXPECTED_APPLICABILITY_EXCEPTIONS[name]
+                if install_when != [expected_include]:
+                    fail(errors, MANIFEST.relative_to(ROOT), f"incorrect install_when for {name}")
+                if do_not_install_when != [expected_exclude]:
+                    fail(
+                        errors,
+                        MANIFEST.relative_to(ROOT),
+                        f"incorrect do_not_install_when for {name}",
+                    )
         if name in names or name in aliases:
             fail(errors, MANIFEST.relative_to(ROOT), f"name collision for {name}")
         names.add(name)
@@ -802,6 +958,17 @@ def validate() -> list[str]:
         if expected_order != sorted(expected_order):
             fail(errors, MANIFEST.relative_to(ROOT), f"nondeterministic file order for {name}")
         entry_by_name[name] = entry
+
+    try:
+        synchronized_index = render_catalog(
+            index_text,
+            manifest_catalog_records(MANIFEST),
+        )
+    except ValueError as exc:
+        fail(errors, INDEX.relative_to(ROOT), str(exc))
+    else:
+        if synchronized_index != index_text:
+            fail(errors, INDEX.relative_to(ROOT), "catalog summaries do not match their skill cards")
 
     catalog_cards = re.findall(
         r'<article class="card border soft-rule bg-base-200">.*?</article>',
@@ -1012,14 +1179,6 @@ def validate() -> list[str]:
     for package, filenames in EXPECTED_FOCUSED_REFERENCES.items():
         package_path = SKILLS / package
         entrypoint_text = read_text(package_path / "SKILL.md", errors)
-        fixture_path = (
-            ROOT
-            / "tests"
-            / "skills"
-            / "specialists"
-            / f"{package}.md"
-        )
-        fixture_text = read_text(fixture_path, errors)
         lowered_entrypoint = entrypoint_text.lower()
         for prohibited_route in ("read all references", "read references as needed"):
             if prohibited_route in lowered_entrypoint:
@@ -1091,27 +1250,6 @@ def validate() -> list[str]:
                     (package_path / "SKILL.md").relative_to(ROOT),
                     f"focused reference must be routed exactly once: {relative}",
                 )
-            fixture_heading = f"### `{relative}`"
-            if fixture_text.count(fixture_heading) != 1:
-                fail(
-                    errors,
-                    fixture_path.relative_to(ROOT),
-                    f"missing focused fixture heading for {relative}",
-                )
-            fixture_section = fixture_text.split(fixture_heading, 1)[1]
-            fixture_section = fixture_section.split("\n### `references/", 1)[0]
-            for marker in (
-                "Positive trigger:",
-                "Negative trigger:",
-                f"loads `{relative}`",
-                f"does not load `{relative}`",
-            ):
-                if marker not in fixture_section:
-                    fail(
-                        errors,
-                        fixture_path.relative_to(ROOT),
-                        f"focused fixture for {relative} is missing {marker}",
-                    )
 
     for path in sorted(disk_paths):
         text = read_text(path, errors)
@@ -1133,41 +1271,53 @@ def validate() -> list[str]:
                 fail(errors, path.relative_to(ROOT), "core review lacks one explicit invocation boundary")
             if "it does not invoke a review" not in text:
                 fail(errors, path.relative_to(ROOT), "execution-rules-only request is not separated from review")
+            for marker in (
+                "When an active specialist names a companion specialist",
+                "Do not change review depth without explicit user approval",
+            ):
+                if text.count(marker) != 1:
+                    fail(
+                        errors,
+                        path.relative_to(ROOT),
+                        f"core specialist rule must occur exactly once: {marker}",
+                    )
         elif name == "grumpydev-survey":
             if not description.startswith(SURVEY_INVOCATION_PREFIX):
                 fail(errors, path.relative_to(ROOT), "survey description lacks invocation gate")
             if text.count("## Invocation boundary") != 1:
                 fail(errors, path.relative_to(ROOT), "survey lacks one invocation boundary")
-        summary = catalog_summary(description)
-        if summary and summary not in index_text:
-            fail(
-                errors,
-                path.relative_to(ROOT),
-                "human-facing summary is not synchronized to html/skills/index.html",
-            )
         relative = path.relative_to(SKILLS)
         is_specialist = relative.parts[0] in SPECIALIST_TYPES
         if is_specialist:
             if not description.startswith(REVIEW_INVOCATION_PREFIX):
                 fail(errors, path.relative_to(ROOT), "specialist description lacks review invocation gate")
-            if description.count(PROJECT_APPLICABILITY_MARKER) != 1:
-                fail(errors, path.relative_to(ROOT), "specialist description lacks one project-applicability field")
-            else:
-                project_applicability = description.split(PROJECT_APPLICABILITY_MARKER, 1)[1]
-                if re.search(r"\bplan\b", project_applicability, re.IGNORECASE):
-                    fail(errors, path.relative_to(ROOT), "specialist applicability is plan-scoped")
+            if "Project applicability:" in description:
+                fail(errors, path.relative_to(ROOT), "specialist description embeds applicability metadata")
+            review_clause = description[len(REVIEW_INVOCATION_PREFIX) :]
+            if not review_clause.startswith("Review ") or " engineering work" not in review_clause:
+                fail(errors, path.relative_to(ROOT), "specialist description lacks canonical review clause")
             if text.count("## Invocation and participation boundary") != 1:
                 fail(errors, path.relative_to(ROOT), "specialist lacks one participation boundary")
             for marker in (
                 "This specialist cannot start a GrumpyDev review.",
-                "use this entrypoint during every explicitly invoked GrumpyDev",
-                "Evaluate direct and indirect effects even when the reviewed work does",
-                "Produce no finding when no material effect",
+                "Use this skill in every explicitly requested GrumpyDev review when it is",
+                "Check direct and indirect effects even when the reviewed target does not name",
+                "Produce no finding when there is no material effect",
             ):
                 if marker not in text:
                     fail(errors, path.relative_to(ROOT), f"specialist participation boundary is missing {marker}")
             if "When this entrypoint identifies a plausible direct or indirect material effect" not in text:
                 fail(errors, path.relative_to(ROOT), "specialist review reference is not impact-routed")
+            for generic_core_rule in (
+                "When an active specialist names a companion specialist",
+                "Do not change review depth without explicit user approval",
+            ):
+                if generic_core_rule in text:
+                    fail(
+                        errors,
+                        path.relative_to(ROOT),
+                        "specialist duplicates a generic core participation rule",
+                    )
             review_reference = path.parent / "references" / "review.md"
             if not review_reference.exists():
                 fail(
@@ -1320,47 +1470,6 @@ def validate() -> list[str]:
                         survey.relative_to(ROOT),
                         "survey link is not synchronized to html/skills/index.html",
                     )
-            fixture = (
-                ROOT
-                / "tests"
-                / "skills"
-                / "specialists"
-                / relative.parts[0]
-                / f"{name}.md"
-            )
-            if not fixture.exists():
-                fail(errors, fixture.relative_to(ROOT), "missing specialist behavioral fixture")
-            else:
-                fixture_text = read_text(fixture, errors)
-                for heading in (*REQUIRED_FIXTURE_SECTIONS, "Expected behavior:"):
-                    if heading not in fixture_text:
-                        fail(errors, fixture.relative_to(ROOT), f"missing fixture marker {heading}")
-                for marker in (
-                    "Lean mode loads",
-                    "Deep mode loads",
-                    "No ordinary review loads",
-                    "every explicitly invoked GrumpyDev review loads its `SKILL.md`",
-                    "evaluates direct and indirect effects",
-                    "produces no finding",
-                ):
-                    if marker not in fixture_text:
-                        fail(
-                            errors,
-                            fixture.relative_to(ROOT),
-                            f"fixture is missing mode-aware loading marker {marker}",
-                        )
-                normalized_fixture = " ".join(fixture_text.split())
-                standard_loading = (
-                    "Standard mode loads `SKILL.md` and loads "
-                    "`references/review.md` only when the entrypoint identifies a "
-                    "plausible direct or indirect material effect."
-                )
-                if standard_loading not in normalized_fixture:
-                    fail(
-                        errors,
-                        fixture.relative_to(ROOT),
-                        "fixture does not make standard reference loading impact-routed",
-                    )
         elif name in CORE_PATTERN_SECTIONS:
             pattern_section = CORE_PATTERN_SECTIONS[name]
             package_text = text
@@ -1408,6 +1517,25 @@ def validate() -> list[str]:
             fail(errors, INSTALLER.relative_to(ROOT), "installer frontmatter name mismatch")
         if installer_values.get("description") != installer.get("description"):
             fail(errors, INSTALLER.relative_to(ROOT), "installer description does not match manifest")
+        require_markers(
+            INSTALLER,
+            installer_text,
+            (
+                "a non-empty `install_when` string array and a `do_not_install_when` string array",
+                "Compare that evidence with each specialist's `install_when` entries",
+                "Compare it with the specialist's `do_not_install_when` entries",
+                "Exclude the specialist when a complete `do_not_install_when` condition is established",
+                "Ask one numbered applicability question only when concrete project evidence matches part of an `install_when` or `do_not_install_when` condition",
+                "Do not download a specialist merely to decide whether it applies",
+                "Do not propose or ask about a specialist when no concrete project evidence matches any part of either applicability field",
+                "inspect the final local file set for every installed package",
+                "reread `.grumpydev/state.json` as UTF-8 JSON",
+                "`fetched`, `decoded and inspected`, `staged`, `installed`, `verified`, and `discoverable` as separate claims",
+                "Report setup as `complete`, `incomplete`, or `blocked`",
+            ),
+            errors,
+            "installer structured selection contract",
+        )
         state_section_match = re.search(
             r"## Record local state\n(.*?)(?=\n## )",
             installer_text,
@@ -1456,156 +1584,278 @@ def validate() -> list[str]:
         if relative_link not in entrypoint_text and relative_link not in survey_text:
             fail(errors, reference.relative_to(ROOT), "reference is not routed from SKILL.md or SURVEY.md")
 
-    core_fixtures = sorted((ROOT / "tests" / "skills" / "core").glob("*.md"))
-    if not core_fixtures:
-        fail(errors, "tests/skills/core", "missing core behavioral fixtures")
-    for fixture in core_fixtures:
-        fixture_text = read_text(fixture, errors)
-        if "Expected behavior:" not in fixture_text:
-            fail(errors, fixture.relative_to(ROOT), "missing Expected behavior marker")
-
-    gitignore_fixture = ROOT / "tests" / "skills" / "core" / "gitignore-preference.md"
-    gitignore_fixture_text = read_text(gitignore_fixture, errors)
-    for marker in (
-        "repository-root `.gitignore`",
-        "`.grump`",
-        "`.grumpydev/`",
-        "Do not add the installed skill directory",
-        "Never ask this preference during re-survey",
-        "`.gitignore` itself is authoritative",
-    ):
-        if marker not in gitignore_fixture_text:
-            fail(
-                errors,
-                gitignore_fixture.relative_to(ROOT),
-                f"gitignore preference fixture is missing {marker}",
-            )
-
-    presentation_fixture = ROOT / "tests" / "skills" / "core" / "review-presentation.md"
-    presentation_fixture_text = read_text(presentation_fixture, errors)
-    presentation_fixture_normalized = " ".join(presentation_fixture_text.split())
-    for marker in (
-        "preferred finding tables and enabled status icons",
-        "`Finding tables: disabled`",
-        "`Status icons: disabled`",
-        "target-scoped `GD-###` identifier",
-        "same repository-relative artifact",
-        "Never infer target continuity",
-        "evaluation-scoped `TMP-###` IDs without lifecycle status",
-        "`NEW`, `OPEN`, `RESOLVED`, or `REGRESSED`",
-        "Require current evidence before marking an issue `RESOLVED`",
-        "one `Summary:` sentence",
-        "When finding tables are preferred",
-        "ID | Severity | Issue | Why it matters | Required action",
-        "Pair every icon with a text verdict",
-        "evidence -> failure condition -> impact -> required action",
-        "final `Review scope` footer",
-    ):
-        if marker not in presentation_fixture_normalized:
-            fail(
-                errors,
-                presentation_fixture.relative_to(ROOT),
-                f"review presentation fixture is missing {marker}",
-            )
-
-    project_specialist_fixture = ROOT / "tests" / "skills" / "core" / "project-wide-specialists.md"
-    project_specialist_text = read_text(project_specialist_fixture, errors)
-    for marker in (
-        "Every active specialist entrypoint evaluates direct and indirect effects.",
-        "Both specialist entrypoints participate.",
-        "Report incomplete specialist coverage",
-        "Do not fetch the Kubernetes package",
-    ):
-        if marker not in project_specialist_text:
-            fail(
-                errors,
-                project_specialist_fixture.relative_to(ROOT),
-                f"project-wide specialist fixture is missing {marker}",
-            )
-
-    audience_fixture = ROOT / "tests" / "skills" / "core" / "project-audience.md"
-    audience_fixture_text = read_text(audience_fixture, errors)
-    audience_fixture_normalized = " ".join(audience_fixture_text.split())
-    for marker in (
-        "intended recipients of the reviewed project's output",
-        "not automatically the developer requesting the review",
-        "instead of inventing a generic persona",
-        "hand-wavy language",
-        "mechanical banned-word list",
-        "well-written but unnecessary page as a structural defect",
-        "missing audience task, state, page, or path",
-        "internal org chart, implementation boundary, template, or generated layout",
-        "evidence -> recipient mismatch -> failed task or consequence -> required change",
-        "Execution rules preserve approved project-audience decisions",
-    ):
-        if marker not in audience_fixture_normalized:
-            fail(
-                errors,
-                audience_fixture.relative_to(ROOT),
-                f"project audience fixture is missing {marker}",
-            )
-
-    detailed_doctrine_path = DOCTRINE_FIXTURES / "doctrine-detailed.md"
-    compact_doctrine_path = DOCTRINE_FIXTURES / "doctrine-compact.md"
-    detailed_doctrine = read_text(detailed_doctrine_path, errors)
-    compact_doctrine = read_text(compact_doctrine_path, errors)
-    if len(compact_doctrine.split()) >= len(detailed_doctrine.split()):
-        fail(
-            errors,
-            compact_doctrine_path.relative_to(ROOT),
-            "compact doctrine fixture is not smaller than detailed fixture",
-        )
-    detailed_ids = set(re.findall(r"\b[A-Z]{3}-\d{3}\b", detailed_doctrine))
-    compact_ids = set(re.findall(r"\b[A-Z]{3}-\d{3}\b", compact_doctrine))
-    if detailed_ids != compact_ids:
-        fail(
-            errors,
-            compact_doctrine_path.relative_to(ROOT),
-            "compact and detailed doctrine identifiers differ",
-        )
-    normalized_detailed = " ".join(detailed_doctrine.lower().split())
-    normalized_compact = " ".join(compact_doctrine.lower().split())
-    doctrine_markers = (
-        "plan addenda: allowed",
-        "review interaction: interactive",
-        "doctrine promotion: ask first",
-        "open research: blocks readiness",
-        "research execution: grumpydev may perform it",
-        "node.js 22",
-        "linux",
-        "container",
-        "postgresql 17",
-        "managed vendor",
-        "point-in-time restore",
-        "15-minute recovery point objective",
-        "tenant-scoped idempotency key",
-        "15 minutes",
-        "object storage",
-        "mixed-version",
-        "cross-tenant access",
-        "object-storage retention",
+    core_skill_path = SKILLS / "grumpydev" / "SKILL.md"
+    core_skill_text = read_text(core_skill_path, errors)
+    require_markers(
+        core_skill_path,
+        core_skill_text,
+        (
+            "## Evidence integrity for every operation",
+            "## Evidence integrity for reviews",
+            "A `material claim` is a claim that can change the verdict, severity, confidence",
+            "Every material project-specific claim must be traceable to evidence inspected",
+            "Absence of supporting evidence cannot become an inference merely by relabeling it",
+            "factual statement proves that the claim and its provenance were recorded",
+            "Every finding must expose an exact useful evidence locator",
+            "Do not retain unsupported content as a finding or downgrade it to `LOW`",
+            "Every material `Evidence gaps` item must name the missing evidence",
+            "Set confidence to `high` only when every material finding has precise support",
+            "Do not raise severity by assuming production use",
+            "Re-inspect the current supporting evidence before assigning a lifecycle status",
+            "After deletion, inspect the resulting state of every exact target",
+            "ID | Severity | Issue | Evidence | Required action",
+            "`Established fact`, `Inference` when present, `Failure condition`, `Impact`",
+            "## Review terms and completion",
+            "Finding enough defects to determine a verdict does not finish the review",
+            "`TO CHECK`",
+            "`NOT AFFECTED` applies only to this review",
+            "one final completeness check",
+            "`CAUSED BY REVISION`",
+            "`NEW INFORMATION`",
+            "`BROADER REVIEW`",
+            "`MISSED EARLIER`",
+            "`UNKNOWN`",
+            "Do not add `Why new` on the first review or to a temporary ID",
+            "Do not use `APPROVE` or `APPROVE WITH CONCERNS`",
+            "## Read stored modes and permissions",
+            "Revision closure does not authorize a plan edit",
+            "Coverage: complete within <lean|standard|deep> depth",
+            "Never fetch it during the review",
+            "Do not change review depth without explicit user approval",
+        ),
+        errors,
+        "core convergence contract",
     )
-    for marker in doctrine_markers:
-        if marker not in normalized_detailed or marker not in normalized_compact:
-            fail(
-                errors,
-                compact_doctrine_path.relative_to(ROOT),
-                f"doctrine fixture pair is missing shared semantic marker {marker!r}",
-            )
+    if "Cite repository paths and stable .grump identifiers where useful" in core_skill_text:
+        fail(errors, core_skill_path.relative_to(ROOT), "contains optional legacy evidence wording")
+    normalized_core_skill = " ".join(core_skill_text.split())
+    if "review scope, and persistence result" in normalized_core_skill:
+        fail(
+            errors,
+            core_skill_path.relative_to(ROOT),
+            "pre-verdict evidence audit cannot require a later persistence result",
+        )
 
-    rubric_text = read_text(INFRASTRUCTURE_RUBRIC, errors)
-    if "# Infrastructure survey behavioral rubric" not in rubric_text:
-        fail(errors, INFRASTRUCTURE_RUBRIC.relative_to(ROOT), "missing rubric title")
-    for number in range(1, 14):
-        if f"{number}. " not in rubric_text:
-            fail(
-                errors,
-                INFRASTRUCTURE_RUBRIC.relative_to(ROOT),
-                f"missing behavioral criterion {number}",
-            )
+    standard_path = SKILLS / "grumpydev" / "references" / "standard-review.md"
+    standard_text = read_text(standard_path, errors)
+    require_markers(
+        standard_path,
+        standard_text,
+        (
+            "## Complete the review before deciding the verdict",
+            "### Repeat the complete review after revision",
+            "## Prove every material claim",
+            "### Match every source to its real scope",
+            "### Apply the finding evidence gate",
+            "### Handle special claims literally",
+            "### Calibrate confidence and severity from evidence",
+            "### Audit evidence during the final completeness check",
+            "Specialist guidance can establish a general technical invariant",
+            "A specialist finding requires inspected project evidence",
+            "Do not impose a finding limit",
+            "Do not restart the complete review",
+            "Revision closure",
+            "whole-plan check",
+        ),
+        errors,
+        "standard convergence contract",
+    )
+    normalized_standard = " ".join(standard_text.split())
+    if "review scope, and persistence result" in normalized_standard:
+        fail(
+            errors,
+            standard_path.relative_to(ROOT),
+            "pre-verdict evidence audit cannot require a later persistence result",
+        )
 
-    read_text(HTML / "spec" / "grump.md", errors)
-    read_text(HTML / "spec" / "skill-authoring.md", errors)
+    research_path = SKILLS / "grumpydev" / "references" / "research-and-questions.md"
+    research_text = read_text(research_path, errors)
+    require_markers(
+        research_path,
+        research_text,
+        (
+            "Material external claims must come from a source actually opened",
+            "Search-result snippets, model memory, and unvisited URLs are leads, not evidence",
+            "Never claim research was performed when a tool failed",
+            "Do not invent a quotation, document title, URL, author, date, version, or source conclusion",
+            "a project finding still needs inspected project evidence for its triggering condition",
+            "Collect material research needs while checking the complete initial review checklist",
+            "name the decision, evidence required, and stopping condition",
+            "Do not conduct open-ended research merely to find more objections",
+            "A complete review can finish with zero questions",
+        ),
+        errors,
+        "research convergence contract",
+    )
+    if "A complete A complete review" in research_text:
+        fail(errors, research_path.relative_to(ROOT), "duplicated complete-review wording")
+
+    persistence_path = SKILLS / "grumpydev" / "references" / "review-persistence.md"
+    persistence_text = read_text(persistence_path, errors)
+    require_markers(
+        persistence_path,
+        persistence_text,
+        (
+            "Always persist verdict",
+            "Every persisted finding must retain the same evidence locator",
+            "Do not shorten persistence by deleting an evidence or uncertainty distinction",
+            "Persist the current verification evidence for every resolution",
+            "`What holds up` when evidence supports a material, non-obvious strength",
+            "Never persist the post-review execution-rules question",
+            "Persist `UNKNOWN` with the missing comparison evidence",
+            "append a correction",
+            "persist every ID and status under the shared fix",
+            "Revision closure does not authorize a plan edit",
+        ),
+        errors,
+        "review persistence contract",
+    )
+
+    execution_path = SKILLS / "grumpydev" / "references" / "execution-rules.md"
+    execution_text = read_text(execution_path, errors)
+    require_markers(
+        execution_path,
+        execution_text,
+        (
+            "Base every project-specific implementation and completion claim on evidence",
+            "Distinguish work attempted, work completed, validation performed",
+            "Inspect the resulting file or system state before claiming",
+            "Never infer success from starting a command, applying a patch",
+            "`implemented and verified`, `implemented but not verified`, `not implemented`, or `blocked`",
+        ),
+        errors,
+        "execution evidence contract",
+    )
+
+    deep_path = SKILLS / "grumpydev" / "references" / "deep-review.md"
+    deep_text = read_text(deep_path, errors)
+    require_markers(
+        deep_path,
+        deep_text,
+        (
+            "Build the review checklist and give every item its initial check",
+            "Finish every affected deep-review area before the verdict",
+            "During the one final completeness check",
+        ),
+        errors,
+        "deep convergence contract",
+    )
+
+    survey_skill_path = SKILLS / "grumpydev-survey" / "SKILL.md"
+    survey_skill_text = read_text(survey_skill_path, errors)
+    require_markers(
+        survey_skill_path,
+        survey_skill_text,
+        (
+            "An active specialist is an installed specialist not explicitly marked `inapplicable`",
+            "Give every material factual doctrine claim an inspected source",
+            "Do not convert missing evidence into an inference merely by relabeling it",
+            "unsupported material facts as `UNK-###` items",
+            "Before writing, audit every material factual doctrine entry",
+            "A plan-review `RQ###` answer applies only to the current review by default",
+            "the exact `Confirmed doctrine updates` policy permits the `.grump` update",
+            "purpose and success conditions; requirements; constraints; decisions",
+        ),
+        errors,
+        "survey comprehension contract",
+    )
+
+    merge_path = SKILLS / "grumpydev-survey" / "references" / "merge-and-finish.md"
+    merge_text = read_text(merge_path, errors)
+    require_markers(
+        merge_path,
+        merge_text,
+        (
+            "For every material factual entry, retain",
+            "the inspected source and its real scope",
+            "Never invent a source to satisfy the format",
+            "perform one doctrine evidence audit",
+            "recheck an available factual source before calling its contribution current",
+        ),
+        errors,
+        "survey merge evidence contract",
+    )
+
+    doctrine_spec_path = HTML / "spec" / "grump.md"
+    doctrine_spec_text = read_text(doctrine_spec_path, errors)
+    require_markers(
+        doctrine_spec_path,
+        doctrine_spec_text,
+        (
+            "An agent writes it",
+            "Explicit user instructions and manual edits control its content",
+            "## Stored mode and permission parsing",
+            "Exact documented field names and allowed values control",
+            "ordinary prose",
+            "does not grant file-writing, research, network, external-publication",
+            "A current explicit user instruction overrides a stored preference",
+            "## Status groups",
+            "finding status belongs to a review addendum",
+            "Every material factual claim must name an inline `Evidence:` or `Source:` value",
+            "Missing evidence cannot become an inference merely by relabeling it",
+            "A factual statement written by an earlier agent records that claim and its provenance",
+            "Do not add a separate evidence identifier family",
+        ),
+        errors,
+        "project doctrine specification",
+    )
+    if "Prefer claims supported by" in doctrine_spec_text:
+        fail(errors, doctrine_spec_path.relative_to(ROOT), "contains optional legacy evidence wording")
+
+    authoring_spec_path = HTML / "spec" / "skill-authoring.md"
+    authoring_spec_text = read_text(authoring_spec_path, errors)
+    require_markers(
+        authoring_spec_path,
+        authoring_spec_text,
+        (
+            "manifest `install_when` and `do_not_install_when` fields",
+            '"install_when": [',
+            '"do_not_install_when": []',
+            "Exclusions take precedence, partial matches produce at most one necessary question",
+            "Generic companion-loading and depth-escalation rules remain in the core skill",
+            "Never start a review automatically",
+            "It is review guidance, not project evidence",
+            "A specialist may contribute a finding only when inspected project evidence",
+            "Missing project evidence may produce a material item under `Evidence gaps`",
+        ),
+        errors,
+        "skill authoring selection contract",
+    )
+
+    copied_core_markers = (
+        "## Evidence integrity for reviews",
+        "### Apply the finding evidence gate",
+        "### Audit evidence during the final completeness check",
+    )
+    for specialist_type in sorted(SPECIALIST_TYPES):
+        for path in sorted((SKILLS / specialist_type).glob("*/SKILL.md")):
+            text = read_text(path, errors)
+            for marker in copied_core_markers:
+                if marker in text:
+                    fail(
+                        errors,
+                        path.relative_to(ROOT),
+                        f"specialist entrypoint copies core evidence contract marker {marker}",
+                    )
+
+    banned_instruction_terms = (
+        "coverage-closure pass",
+        "whole-surface pass",
+        "review surface",
+        "root-cause remediation cluster",
+        "target-scoped namespace",
+        "second-order effects",
+        "project-audience boundary",
+    )
+    for runtime_path in sorted(SKILLS.rglob("*.md")):
+        runtime_text = read_text(runtime_path, errors).lower()
+        for term in banned_instruction_terms:
+            if term in runtime_text:
+                fail(
+                    errors,
+                    runtime_path.relative_to(ROOT),
+                    f"runtime instructions contain invented term {term}",
+                )
 
     public_text_suffixes = {".css", ".html", ".js", ".json", ".md", ".txt", ".xml"}
     for path in sorted(HTML.rglob("*")):

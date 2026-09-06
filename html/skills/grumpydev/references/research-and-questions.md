@@ -49,6 +49,32 @@ access production or secrets, spend money, install software, execute downloaded
 code, or perform a state-changing experiment. Ask for any separately required
 permission at the point of action.
 
+Material external claims must come from a source actually opened during the
+current evaluation. Search-result snippets, model memory, and unvisited URLs are
+leads, not evidence. Record the exact opened source, relevant section when
+available, publisher, applicable version or date scope, and retrieval date when
+currency matters.
+
+Never claim research was performed when a tool failed, access was unavailable,
+or the source was not opened. Do not invent a quotation, document title, URL,
+author, date, version, or source conclusion. Preserve ambiguity and conflicts
+between authoritative sources and limit the conclusion to what they support. If
+permitted research cannot establish a needed fact, report the evidence gap
+instead of filling it from memory.
+
+Do not force external research for a stable project fact already established by
+adequate project evidence. Installed specialist guidance may establish a stable
+general technical rule without additional research, but a project finding still
+needs inspected project evidence for its triggering condition.
+
+Collect material research needs while checking the complete initial review
+checklist. Deduplicate them by the decision or assumption they resolve. For each
+research item, name the decision, evidence required, and stopping condition.
+Perform permitted research as one coherent part of the same evaluation, update
+the affected checklist items with the result, and finish the remaining review
+before issuing the verdict. Do not conduct open-ended research merely to find
+more objections.
+
 Research cannot substitute for a product, ownership, risk-acceptance, or other
 project decision that only the user can make. After research, return to the
 same evaluation. If the evidence resolves the issue and the resulting path is
@@ -92,7 +118,7 @@ question; finish non-interactively and state the evidence limit.
 
 In non-interactive mode, do not pause. List each material unanswered question
 under `Evidence gaps` and state which conclusion it could change. A complete
-A complete review can finish with zero questions in either mode.
+review can finish with zero questions in either mode.
 
 Survey questions use a separate continuous `Q###` sequence. Review `RQ###`
 identifiers are scoped to one evaluation. Use the evaluation's ISO 8601 UTC time

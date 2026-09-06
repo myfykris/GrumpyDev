@@ -6,7 +6,7 @@ Build deployment and execution profiles after inspecting evidence and selecting
 the applicable specialist survey contributions. Preserve how the software
 actually runs without collecting an inventory of hosts or cloud products.
 
-### Apply the infrastructure applicability gate
+### Determine whether deployment details can change future reviews
 
 Require deployment-profile confirmation when runtime, hosting, client, build,
 or consumer environments can materially change future reviews. This normally
@@ -72,8 +72,8 @@ environment matches it.
 
 ### Confirm or discover the profiles
 
-When the applicability gate applies and useful profiles can be inferred, put
-this question first in the initial infrastructure question batch:
+When deployment details can change future reviews and useful profiles can be
+inferred, put this question first in the initial infrastructure question batch:
 
 ```text
 Q###. I found or inferred the following hosting and execution setup:

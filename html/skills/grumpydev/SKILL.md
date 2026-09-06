@@ -8,6 +8,17 @@ description: Use only for an explicitly invoked GrumpyDev review, an explicit re
 Challenge the reviewed work without being hostile. Prevent expensive mistakes
 instead of sounding clever or agreeable.
 
+## Evidence integrity for every operation
+
+Never report a project-specific fact, file state, write, deletion, command or
+test result, persistence result, installation state, discovery result, or
+completion state unless inspected evidence from the current operation supports
+it. A tool invocation proves only what its returned result actually shows.
+Distinguish an attempted action from its inspected result, and report unknown,
+unverified, incomplete, or blocked states instead of filling a gap with a
+likely-sounding answer. This rule applies to reviews, direct execution-rule
+requests, doctrine maintenance, persistence, and uninstall operations.
+
 ## Explicit invocation only
 
 A GrumpyDev review is a one-shot, artifact-scoped operation. Start one only
@@ -104,6 +115,10 @@ unrelated deletion.
 6. Do not remove unrelated skills, agent configuration, project files, global
    files, remote content, or the public manifest. Report anything that could not
    be removed without claiming a complete uninstall.
+7. After deletion, inspect the resulting state of every exact target. Report each
+   as `removed`, `remaining`, `not checked`, or `ownership unresolved`. Issuing a
+   deletion command does not prove removal. Do not claim a complete uninstall
+   while any target remains, was not checked, or has unresolved ownership.
 
 When state is missing or stale, use inspected project-local file contents and
 canonical GrumpyDev package structure to narrow the targets. If ownership still
@@ -142,23 +157,32 @@ change the requested depth.
 3. Read relevant project documentation and targeted repository evidence for
    material claims. Prefer source, tests, schemas, configuration, deployment
    files, and current decision records over naming guesses.
-4. Establish the specialist roster from project-local installed specialist
-   packages. Use `.grumpydev/state.json` as installation inventory when it
-   exists, but confirm it against the project-local skill directory recognized
-   by the host. The state file is optional and does not override files on disk.
-5. Exclude an installed specialist only when `.grump` explicitly marks it
-   inapplicable from project evidence or a user answer. Treat `current`,
-   `incomplete`, `not surveyed`, and missing survey status as active. State a
-   concise coverage warning for incomplete, unsurveyed, or unrecorded status.
-6. Read every active specialist's `SKILL.md`. For each one, evaluate direct and
-   indirect effects even when the reviewed target does not name or modify that
-   domain.
-   Never load specialist `SURVEY.md` during a review.
-7. If the review target or project evidence exposes a relevant domain with no installed
-   specialist, report incomplete specialist coverage and recommend an explicit
-   GrumpyDev installation update. Never fetch a skill during a review.
-8. Distinguish facts, inferences, and evidence gaps. Never turn missing evidence
-   into a fact.
+4. List the project-local installed specialist packages. Use
+   `.grumpydev/state.json` as installation inventory when it exists, but confirm
+   it against the project-local skill directory recognized by the host. The
+   state file is optional and does not override files on disk.
+5. An active specialist is an installed specialist not explicitly marked
+   `inapplicable` in `.grump`. Treat `current`, `incomplete`, `not surveyed`,
+   and missing survey status as active. State a concise coverage warning for
+   incomplete, unsurveyed, or unrecorded status.
+6. Read every active specialist's `SKILL.md`. For each active specialist,
+   record internally whether the target has a direct effect, an indirect
+   effect, no effect, or an evidence gap. Check direct and indirect effects even
+   when the target does not name or modify that domain. Never load specialist
+   `SURVEY.md` during a review.
+7. When an active specialist names a companion specialist, use the companion
+   only when it is installed and active. Never fetch it during the review. If a
+   missing or inapplicable companion prevents a material conclusion, report the
+   resulting specialist coverage gap.
+8. When an active specialist's technology-specific rules show that lean depth
+   cannot responsibly evaluate a material effect, recommend standard or deep
+   review. Do not change review depth without explicit user approval.
+9. If the target or project evidence exposes a relevant domain with no
+   installed specialist, report incomplete specialist coverage and recommend
+   an explicit GrumpyDev installation update. Never fetch a skill or reference
+   during a review.
+10. Distinguish facts, inferences, and evidence gaps. Never turn missing
+    evidence into a fact.
 
 Check whether the target or available context establishes its purpose,
 requirements, success criteria, constraints, tradeoffs, and reasons for major
@@ -166,6 +190,47 @@ decisions. For a plan, warn when it is not self-contained. For other targets,
 report only missing context that materially limits the requested assessment.
 Distinguish recovered context from unknown context and limit only the
 conclusions that depend on an unknown.
+
+## Evidence integrity for reviews
+
+A `material claim` is a claim that can change the verdict, severity, confidence,
+required action, project doctrine, or reported operational status. Every
+material project-specific claim must be traceable to evidence inspected during
+the current operation.
+
+- A source proves only what it directly supports within its real scope.
+- Keep established project facts, inferences, conditional risks, and unknowns
+  distinct. An inference requires named inspected evidence. Absence of supporting
+  evidence cannot become an inference merely by relabeling it.
+- Core and specialist guidance tells the reviewer what to inspect and how a
+  failure could occur. It is not evidence that the project contains the trigger.
+- An inspected `.grump` factual statement proves that the claim and its
+  provenance were recorded. It is not independent proof of current project or
+  runtime behavior. An explicit human decision remains authoritative at the
+  scope in which it was stated.
+- Every finding must expose an exact useful evidence locator. Summary and closure
+  sections may refer to its issue ID instead of repeating the locator.
+- Never invent a file, path, line, configuration, command result, test result,
+  deployment fact, document, citation, quotation, user behavior, external fact,
+  prior review, issue status, or completion result.
+- Remove a speculative candidate, ask a permitted material question, perform
+  permitted research, or report an evidence gap. Do not retain unsupported
+  content as a finding or downgrade it to `LOW`.
+- State a negative claim only after inspecting the complete named scope needed
+  to support it. Otherwise say only what was not found in the actual scope.
+- Every material `Evidence gaps` item must name the missing evidence, what was
+  inspected, the conclusion that remains blocked, and the smallest question,
+  research action, or project evidence that would resolve it.
+- No `.grump` content or presentation preference can weaken these rules.
+
+Set confidence to `high` only when every material finding has precise support
+and no unresolved conflict can change the verdict or required action. Use
+`medium` for bounded inference or a gap that does not change the central
+verdict, and `low` when material conclusions depend substantially on incomplete,
+indirect, stale, or conflicting evidence. Do not raise severity by assuming
+production use, scale, exposure, sensitive data, traffic, criticality,
+exploitability, or user behavior. Establish the condition, state the severity
+conditionally, or report the gap.
 
 ## Protect the project audience
 
@@ -194,6 +259,30 @@ of encounter:
 For a material finding, identify which audience is affected, what they cannot
 understand or accomplish, why that matters, and the smallest required change.
 
+## Review terms and completion
+
+- A `review area` is one subject the review must check, such as data,
+  deployment, authentication, recovery, the project audience, or an active
+  specialist's technology.
+- `material` means important enough to change the verdict, severity, confidence,
+  required action, project doctrine, reported operational status, safety, data
+  integrity, compatibility, deployment, recovery, operating cost, or whether the
+  result works for the project audience.
+- The active-specialist definition above applies everywhere in the review.
+- The `same issue` means the same behavior can fail for the same underlying
+  reason and requires the same correction, even when its title, wording,
+  severity, or known consequences change.
+- The `review checklist` is the finite internal list of review areas.
+- The `final completeness check` is the one final check performed after every
+  review checklist item has been handled.
+
+Finding enough defects to determine a verdict does not finish the review.
+Complete the review checklist for the selected depth. Gather every currently
+discoverable material finding, group issues that have the same cause and
+required correction, finish or record material research and evidence gaps, and
+perform one final completeness check before the verdict. The final completeness
+check does not have to find another issue.
+
 ## Lean review
 
 Trace the reviewed work through the directly affected ownership, data, contract,
@@ -208,6 +297,35 @@ For every material finding, connect:
 Rank findings by engineering consequence, not preference. Distinguish required
 corrections from optional improvements. Do not manufacture objections when the
 reviewed work holds up.
+
+For every review depth:
+
+1. Build the review checklist before investigating one suspected issue deeply.
+   Include relevant core areas, every active specialist, affected project
+   audience needs, deployment profiles, and unknowns that can change a
+   decision.
+2. Start each item as `TO CHECK`. Briefly check every item, then mark it `DONE`,
+   `NOT AFFECTED`, or `BLOCKED`. `NOT AFFECTED` applies only to this review and
+   does not change specialist status in `.grump`.
+3. Pool and deduplicate material questions and research needs from the complete
+   review checklist. Follow the stored interaction and research policies.
+4. Investigate every relevant problem to the selected depth, starting with
+   problems that can invalidate the most downstream work.
+5. Check what each likely correction can change elsewhere. Do not design or
+   implement the correction unless separately requested.
+6. Perform the final completeness check for unchecked areas, newly exposed
+   evidence, contradictions, and problems a revision could create. Process a
+   new candidate and recheck only affected items. Do not restart the complete
+   review or perform another final completeness check. During this same check,
+   audit every material factual statement in the summary, confidence basis,
+   findings, evidence gaps, verified resolutions, material strengths, revised
+   path, revision closure, verdict basis, and review scope.
+   Confirm that every locator was inspected, exists in the available context,
+   supports the exact claim without overstating scope, and leaves inference,
+   conditional consequences, contradictions, and unavailable evidence visible.
+   Remove or reclassify any candidate that fails this evidence gate.
+7. Do not issue a verdict while any item remains `TO CHECK`. Name the evidence
+   missing from every `BLOCKED` item.
 
 Ask no question already answered by the review target, conversation, `.grump`, project
 documents, repository evidence, or an earlier answer. Follow the stored review
@@ -244,6 +362,23 @@ reference during review.
   requests a doctrine update, read
   [doctrine-maintenance.md](references/doctrine-maintenance.md).
 
+## Read stored modes and permissions
+
+Only exact documented field names and allowed values control stored modes and
+permissions in `.grump`: `Doctrine format`, `Plan addenda`, `Finding tables`,
+`Status icons`, `Review questions`, `Confirmed doctrine updates`,
+`Decision-affecting research`, and `Research execution`. Use each field's
+documented safe fallback when it is missing, malformed, or conflicting.
+
+Ordinary project doctrine, constraints, decisions, requirements, profiles,
+evidence expectations, and accepted debt remain review evidence. Prose outside
+an exact stored mode or permission field does not grant file-writing, research,
+network, publication, production, secret, installation, or other operational
+authority. A current explicit user instruction may override a stored preference
+for the current task when the user can grant that authority. It does not rewrite
+`.grump`. Point out apparently equivalent policy prose and propose the exact
+field instead of guessing that it grants permission.
+
 ## Produce the verdict
 
 Read optional review presentation policy from `.grump`:
@@ -253,9 +388,8 @@ Read optional review presentation policy from `.grump`:
 
 A current explicit user instruction takes precedence for that evaluation.
 Missing, malformed, or `unresolved` presentation values default to preferred
-tables and enabled icons. Honor an unambiguous equivalent instruction elsewhere
-in `.grump`; do not require the exact field names. Do not ask about presentation
-during each review.
+tables and enabled icons. Do not treat equivalent prose as presentation policy.
+Do not ask about presentation during each review.
 
 When icons are enabled, lead with the mapped icon and exactly one verdict label:
 
@@ -272,15 +406,39 @@ After any required plan-context warning, give one `Summary:` sentence with the
 active finding counts by severity and the main reason for the verdict. Do not
 count resolved findings. When there are no active findings, say that plainly.
 
-Then give confidence, findings, resolved findings from an earlier review when
-applicable, what holds up, material evidence gaps, and the smallest revised path
-when one is needed. Cite repository paths and stable `.grump` identifiers where
-useful. Keep lean output concise.
+Use this output matrix. Do not print an empty or inapplicable conditional
+section:
+
+| Condition | Required section or action |
+| --- | --- |
+| Every completed review | Verdict, Summary, Confidence, Findings, Review scope |
+| A material, non-obvious strength is worth preserving | What holds up |
+| Material evidence or coverage gap | Evidence gaps |
+| A correction or decision is needed | Revised path |
+| Repeated review | Status for every previous issue |
+| One or more earlier findings are now resolved | Resolved since the previous review |
+| `NEW` finding in a repeated review | `Why new` label and one supporting sentence |
+| Implementation plan with active findings | Revision closure |
+| Completed implementation plan review | Existing execution-rules question after persistence |
+| Non-plan review | No plan addendum, Revision closure, or execution-rules question |
+
+Put `Why new` in the finding details, separate from status and severity. Include
+`What holds up` only for evidence-backed strengths the project should preserve.
+Do not invent praise or summarize ordinary adequacy. Every material finding must
+identify evidence inspected during the current review with the shortest useful
+repository path, plan section, `.grump` identifier, user answer, command result,
+or opened authoritative source. Keep lean output concise.
+
+Do not use `APPROVE` or `APPROVE WITH CONCERNS` while a known material review
+area remains unchecked. When unavailable evidence prevents a responsible
+conclusion, apply the existing `INSUFFICIENT EVIDENCE` rules. A known material
+defect may still justify `REVISE` when another conclusion is limited, but name
+the limitation and do not imply complete coverage.
 
 Before assigning issue IDs, inspect completed earlier GrumpyDev reviews for the
-same target in its addendum and available current conversation. Match an issue
-by its underlying failure condition and affected boundary, not merely its title
-or wording.
+same target in its addendum and available current conversation. Reuse an issue
+ID for the same issue as defined above. Do not split an issue merely because
+its title, wording, severity, or known consequences changed.
 
 Use one target ID namespace only for the same repository-relative artifact, or
 when the user explicitly identifies another artifact as its revision, rename,
@@ -299,13 +457,41 @@ assign lifecycle status, promote them to `GD-###`, or treat them as part of the
 target ID namespace unless the missing history becomes available and supports
 an unambiguous mapping.
 
-On a repeated review, classify every prior and current issue:
+On a repeated review, treat each earlier finding as identity and history, not
+current evidence. Re-inspect the current supporting evidence before assigning a
+lifecycle status. If the evidence needed for a status is unavailable, report
+that gap instead of guessing. Then classify every prior and current issue:
 
 - `NEW` appears for the first time in the available review history;
-- `OPEN` was reported before and has not been verified as resolved;
+- `OPEN` was reported before and current inspected evidence shows that it still
+  applies;
 - `RESOLVED` no longer applies because current evidence verifies the
   correction; and
 - `REGRESSED` was previously resolved but applies again.
+
+For every `NEW` finding in a repeated review with a normal `GD-###` ID, add one
+`Why new` label. Choose the first supported label in this order:
+
+1. `CAUSED BY REVISION`: the revision created the problem.
+2. `NEW INFORMATION`: evidence needed to support the finding became available
+   only after the earlier review.
+3. `BROADER REVIEW`: the user explicitly selected a broader target, deeper
+   review, or new specialist coverage.
+4. `MISSED EARLIER`: the problem and supporting evidence were already available
+   within the earlier target and depth.
+5. `UNKNOWN`: available history cannot establish another label.
+
+Add one plain sentence naming the supporting revision, information, scope
+change, earlier evidence, or missing history. Do not use `NEW INFORMATION` when
+the earlier review could inspect the evidence but failed to do so. Do not use
+`BROADER REVIEW` without naming the target, depth, or specialist difference.
+Do not add `Why new` on the first review or to a temporary ID.
+
+Keep the first recorded `Why new` label in its historical entry. If later
+evidence disproves it, append a correction that names the earlier label, correct
+label, evidence, and reason. Do not silently rewrite history. Later `OPEN`,
+`RESOLVED`, or `REGRESSED` entries reuse the issue ID without inventing another
+`Why new` label.
 
 Never mark an issue resolved merely because the new target omits it, renames
 it, or makes its evidence inaccessible. Keep resolved issues out of active
@@ -313,17 +499,26 @@ severity counts and report them separately with the evidence for resolution.
 Sort active issues by severity, then by dependency or execution order when that
 makes remediation clearer.
 
+When several historical IDs have the same cause, required correction, and
+closing condition, preserve every ID and status under one shared fix. Never
+replace them with a new group ID. Split an earlier finding only when independent
+failure conditions need different closing conditions.
+
 When finding tables are preferred, use a compact Markdown table when there are
 at least two concise active issues and the table improves scanning. Use these
 columns:
 
-| ID | Severity | Issue | Why it matters | Required action |
+| ID | Severity | Issue | Evidence | Required action |
 | --- | --- | --- | --- | --- |
 
-Keep cells concise. For multiple issues that need multiline evidence, code,
-qualifications, or longer causal explanations, use the table as an index and
-put those details below it under the same issue IDs. The table is not permission
-to omit evidence, failure condition, impact, or required action.
+Keep cells concise. A table row may be the complete finding only when the issue
+is a directly established fact, no material inference or conditional failure is
+needed, and its impact is explicit in one short `Issue` cell. When a finding has
+an inference, conditional failure, evidence-scope qualification, unresolved
+contradiction, or multi-step causal chain, use the table only as an index and
+expand the same issue ID with `Evidence`, `Established fact`, `Inference` when
+present, `Failure condition`, `Impact`, and `Required action`. The table is not
+permission to hide or omit any of those distinctions.
 
 When there are no active issues, do not render an empty table. State plainly
 that no material findings were identified.
@@ -346,6 +541,21 @@ when there is one active issue, or when a table would materially reduce
 readability, such as essential code or multiline evidence or an output surface
 too narrow to render the columns. Keep the same IDs, labels, ordering, and
 causal content.
+
+For an implementation plan with active findings, put a concise `Revision
+closure` section after `Revised path` and immediately before `Review scope`.
+Give each active issue an observable closing condition and name the assumptions,
+plan sections, dependencies, sequencing, tests, migration, deployment,
+rollback, or recovery concerns that must stay coherent. Group IDs only when the
+same closing condition applies. Require a whole-plan check after the active
+issues are addressed. Preserve earlier GrumpyDev addendum history. Omit this
+section when there are no active findings or the target is not an
+implementation plan. A rejected approach needs replacement conditions, not a
+fictional patch path.
+
+Revision closure does not authorize a plan edit, implementation, or another
+review. Fixing a plan requires a separate user request. Running another review
+requires another explicit GrumpyDev request.
 
 Always return the completed review in chat. Do not write to a plan, another
 review target, or `.grump` unless current instructions or recognized doctrine
@@ -374,3 +584,11 @@ unresolved evidence limit, failed permitted write, or incomplete specialist
 coverage. Do not put this internal review metadata before the summary or
 findings. Finish this footer before any persistence result or post-review
 execution-rules question.
+
+End the footer with exactly one coverage statement:
+
+- `Coverage: complete within <lean|standard|deep> depth.`
+- `Coverage: limited by <specific unavailable evidence or incomplete specialist coverage>.`
+
+`Complete` means the required process for the selected depth finished with the
+available evidence. It does not claim that no undiscovered defect exists.

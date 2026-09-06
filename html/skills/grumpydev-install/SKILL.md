@@ -24,7 +24,9 @@ Do not invent a fallback location or claim discovery succeeded when it did not.
 Fetch `https://grumpydev.ai/manifest.json` over HTTPS and parse it explicitly as
 UTF-8 JSON data. Accept schema version 1 only. Require publisher
 `grumpydev.ai`, the expected one-shot installer record, and package records with
-safe relative paths and canonical URLs.
+safe relative paths and canonical URLs. Require every specialist record to have
+a non-empty `install_when` string array and a `do_not_install_when` string array
+that may be empty.
 
 Reject absolute paths, path traversal, backslashes, queries, fragments,
 duplicate paths, duplicate URLs, unknown file roles, executable files,
@@ -54,25 +56,32 @@ Inspect repository evidence, relevant project documentation, and available
 agent context just deeply enough to identify technologies and engineering
 boundaries that can materially affect plan reviews.
 
-Use only manifest `name`, `type`, `aliases`, and `description` metadata to
-evaluate specialist applicability before download. Do not fetch a specialist's
-`SKILL.md`, `SURVEY.md`, or references merely to decide whether it applies.
+Use this ordered selection algorithm:
 
-In each specialist description, the explicit-review invocation gate controls
-when the installed review skill may run. It does not prevent package selection
-during setup. Use the domain-specific `Project applicability:` text and
-repository evidence to decide whether that complete specialist package belongs
-in the project. Decide from durable project technologies and boundaries, not
-from whether one current plan directly changes the specialist's domain.
+1. Inspect repository evidence, project documents, and available agent context.
+2. Compare that evidence with each specialist's `install_when` entries.
+3. Compare it with the specialist's `do_not_install_when` entries.
+4. Exclude the specialist when a complete `do_not_install_when` condition is
+   established.
+5. Propose the specialist when at least one complete `install_when` condition
+   is established and no exclusion is established.
+6. Ask one numbered applicability question only when concrete project evidence
+   matches part of an `install_when` or `do_not_install_when` condition,
+   available evidence cannot establish the complete condition, and the answer
+   can determine whether the inclusion or exclusion applies.
+7. Do not download a specialist merely to decide whether it applies.
+8. Do not propose or ask about a specialist when no concrete project evidence
+   matches any part of either applicability field.
 
-When local evidence establishes that a specialist does not apply, do not
-download it. When applicability remains materially uncertain, ask the user for
-the missing applicability fact before fetching any file in that package.
+Decide from durable project technologies and boundaries, not from whether one
+current plan directly changes the specialist's domain. Pool and deduplicate
+applicability questions before assigning the survey's continuous `Q###`
+identifiers. Exclusion takes precedence over inclusion.
 
 Show the user the proposed specialist packages. For each one, include:
 
 - package name and type;
-- manifest description;
+- manifest description and matched `install_when` evidence;
 - local evidence and reason it applies;
 - publisher;
 - complete manifest-listed file set; and
@@ -149,14 +158,23 @@ failure leaves the previous complete package and state intact.
 
 ## Finish
 
+Before reporting success, inspect the final local file set for every installed
+package and reread `.grumpydev/state.json` as UTF-8 JSON. Confirm that state lists
+only complete packages and that every recorded local path exists in the
+project-local skill directory. A successful fetch, decode, inspection, staging
+step, move, or state write proves only that step. It does not prove another step
+or overall installation success.
+
 Verify that the host discovers `grumpydev`, `grumpydev-survey`, and every
 approved specialist entrypoint. If discovery requires a restart, say so and do
 not claim it already succeeded.
 
-Summarize created, changed, skipped, and unresolved files and packages,
-including whether the repository-root `.gitignore` was created, updated,
-already configured, or left unchanged. Tell the user to review `.grump`. When
-the user did not choose to ignore `.grumpydev/`, tell them to decide whether
-`.grumpydev/state.json` belongs in their repository. Recommend a
-reasoning-capable model at medium effort or higher for reviews, while never
-introspecting the active model during a review.
+Summarize created, changed, skipped, and unresolved files and packages. Keep
+`fetched`, `decoded and inspected`, `staged`, `installed`, `verified`, and
+`discoverable` as separate claims. Report setup as `complete`, `incomplete`, or
+`blocked` from the inspected final state. Include whether the repository-root
+`.gitignore` was created, updated, already configured, or left unchanged. Tell
+the user to review `.grump`. When the user did not choose to ignore
+`.grumpydev/`, tell them to decide whether `.grumpydev/state.json` belongs in
+their repository. Recommend a reasoning-capable model at medium effort or higher
+for reviews, while never introspecting the active model during a review.

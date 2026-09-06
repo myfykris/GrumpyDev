@@ -10,25 +10,33 @@ initial survey:
 
 ```text
 Q001. Should GrumpyDev keep `.grump` as compact as practical? Compact mode
-preserves every decision-affecting fact, constraint, policy, unresolved
-question, and evidence reference while removing duplication, extended
-explanation, and survey history. Reply `compact` or `detailed`.
+preserves purpose and success conditions; requirements; constraints; decisions
+and any rationale needed to apply them; accepted tradeoffs and debt; stored
+policies; project documentation and evidence; system boundaries and invariants;
+technology and runtime facts; deployment and infrastructure profiles;
+installed-specialist status; and material unknowns while removing duplication,
+extended explanation, and survey history. Reply `compact` or `detailed`.
 ```
 
 Record `Doctrine format: compact`, `Doctrine format: detailed`, or `Doctrine
-format: unresolved` with `Q001` as the source. If the user declines, defers, or
-answers ambiguously, record unresolved and serialize compactly without changing
-meaning.
+format: unresolved` with `Q001` as the source. Accept only `compact` or
+`detailed` as replies to this stored choice. If the user declines, defers, or
+answers ambiguously, write `Doctrine format: unresolved`; the serialization
+fallback is compact without changing meaning.
 
-Do not repeat Q001 during re-survey when the existing value is unambiguous.
+Do not repeat Q001 during re-survey when the existing value is an exact allowed
+value.
 
 ## Compact rules
 
 Compact doctrine must:
 
 - store only project-specific facts, decisions, policies, and material unknowns;
-- preserve every decision-affecting constraint, tradeoff, profile, shared
-  component, source scope, and evidence reference;
+- preserve purpose and success conditions; requirements; constraints; decisions
+  and any rationale needed to apply them; accepted tradeoffs and debt; stored
+  policies; project documentation and evidence; system boundaries and
+  invariants; technology and runtime facts; deployment and infrastructure
+  profiles; installed-specialist status; and material unknowns;
 - preserve concise survey status and explicit inapplicability for installed
   specialist packages;
 - use terse structured bullets and stable identifiers;

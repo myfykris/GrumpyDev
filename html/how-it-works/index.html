@@ -73,7 +73,7 @@
       <span class="eyebrow">How it works</span>
       <h1 class="mt-6 max-w-4xl text-5xl leading-none font-black tracking-[-0.05em] sm:text-7xl">A review system made of files you can read.</h1>
     </div>
-    <p class="text-lg leading-8 text-base-content/65">No account, daemon, dashboard, or mystery database. Your agent inspects a one-time installer, installs the two core skills, adds only the approved specialist skills that apply to the project, surveys the repository, and creates an agent-generated, human-owned project doctrine file called <code>.grump</code>.</p>
+    <p class="text-lg leading-8 text-base-content/65">No account, daemon, dashboard, or mystery database. Your agent inspects a one-time installer, installs the two core skills, and adds only the approved specialist skills that apply to the project. The agent creates the project doctrine file called <code>.grump</code>. Explicit user instructions and manual edits control it.</p>
   </div>
 </section>
 
@@ -93,7 +93,7 @@
     <div>
       <span class="eyebrow">The review contract</span>
       <h2 class="mt-5 text-3xl font-black tracking-tight sm:text-5xl">Specific criticism or it doesn't count.</h2>
-      <p class="mt-5 text-lg leading-8 text-base-content/65">Every material finding must connect an observed fact to a plausible failure and a practical response. Groups of concise issues use scannable tables and stable IDs. Later reviews keep those IDs and distinguish new, open, resolved, and regressed issues.</p>
+      <p class="mt-5 text-lg leading-8 text-base-content/65">If inspected evidence does not support a claim, it cannot be a finding. Every material finding must connect an established fact to a conditional failure, its impact, and a practical response. A <code>REVISE</code> verdict does not stop the review. Related symptoms with the same cause and fix are grouped together. Later reviews keep stable IDs and explain whether each newly reported issue came from the revision, new information, broader review scope, an earlier miss, or unavailable history.</p>
       <div class="mt-8 space-y-3">
         <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-primary">EVIDENCE</span><span>What the repository, project documents, reviewed work, or user actually says.</span></div>
         <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-warning">RISK</span><span>What can fail, for whom, and under which condition.</span></div>
@@ -105,8 +105,11 @@
       <div class="flex items-center justify-between border-b border-neutral-content/10 pb-5 font-mono text-xs"><span>GRUMP REVIEW</span><span class="text-warning">🛠️ REVISE</span></div>
       <div class="mt-6 space-y-6 text-sm leading-7">
         <div><p class="font-bold text-warning">Summary</p><p class="mt-1 text-neutral-content/60">1 HIGH finding. Invoice retries can create duplicate remote jobs.</p></div>
-        <div><p class="font-bold text-error">🔴 GD-001 [HIGH] Retry strategy creates duplicate jobs</p><p class="mt-1 text-neutral-content/60">The plan retries POST requests after timeouts, but the API client has no idempotency key and the persistence layer records remote job IDs only after the response returns.</p></div>
-        <div><p class="font-bold text-primary">Evidence</p><p class="text-neutral-content/60"><code>src/jobs/create.ts</code> and the proposed "retry three times" step.</p></div>
+        <div><p class="font-bold text-error">🔴 GD-001 [HIGH] Retry can create duplicate jobs</p></div>
+        <div><p class="font-bold text-primary">Evidence</p><p class="text-neutral-content/60"><code>src/jobs/create.ts::submitJob()</code> and plan section "Job submission".</p></div>
+        <div><p class="font-bold">Established fact</p><p class="text-neutral-content/60">The plan retries after a timeout, the client sends no operation key, and the remote ID is stored only after a response returns.</p></div>
+        <div><p class="font-bold text-warning">Conditional risk</p><p class="text-neutral-content/60">A successful first request with a lost response makes the retry unsafe.</p></div>
+        <div><p class="font-bold text-error">Impact</p><p class="text-neutral-content/60">One local operation can produce two remote jobs.</p></div>
         <div><p class="font-bold text-success">Required change</p><p class="text-neutral-content/60">Define an idempotency boundary and persist the operation key before the first remote call.</p></div>
         <div class="border-t border-neutral-content/10 pt-4 font-mono text-xs text-neutral-content/45">Review scope: implementation plan / standard / deployment</div>
       </div>

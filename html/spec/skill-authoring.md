@@ -36,9 +36,11 @@ no YAML frontmatter and cannot trigger independently.
 ## Complete packages and selective installation
 
 The installer determines specialist applicability before downloading any file
-from that specialist package. It uses the manifest description, repository
-evidence, project documentation, available agent context, and user answers.
-When applicability remains uncertain, ask the user before downloading.
+from that specialist package. It uses the manifest `install_when` and
+`do_not_install_when` fields, repository evidence, project documentation,
+available agent context, and user answers. When a concrete partial match can
+determine applicability, ask one deduplicated numbered question before
+downloading.
 
 Once an applicable specialist is approved, download and install its complete
 manifest-listed package. This includes `SKILL.md`, `SURVEY.md`, and every
@@ -65,20 +67,16 @@ requires it.
 ```yaml
 ---
 name: postgresql
-description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review PostgreSQL plans and other engineering artifacts for migration, locking, transaction, indexing, and data-integrity risks. Project applicability: the project stores or queries data in PostgreSQL or depends on PostgreSQL topology or operations."
+description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review PostgreSQL engineering work for migration, locking, transaction, indexing, and data-integrity risks."
 ---
 ```
 
 Names use lowercase letters, digits, and hyphens, remain under 64 characters,
-and match the folder name. Descriptions state what the skill does and when it
-applies. The manifest repeats the exact description so installation can decide
-applicability without downloading the package.
-
-Every specialist description begins with the explicit-review invocation and
-participation contract shown above and contains exactly one `Project
-applicability:` field. That field decides installation from durable project
-evidence, not from what one plan directly changes. Project applicability does
-not invoke a review.
+and match the folder name. Descriptions begin with the exact explicit-review
+invocation and participation contract shown above, then state the bounded
+technology-specific review subjects. The manifest repeats the exact
+description for discovery. It does not use the description to decide
+installation applicability.
 
 ## Compact entrypoint requirements
 
@@ -95,11 +93,21 @@ is selected:
 6. the domain-specific contribution to the verdict; and
 7. explicit local links and loading conditions for supporting references.
 
-The boundary must say that ordinary planning, creation, revision, discussion,
-implementation, and generic review do not activate GrumpyDev. It must also say
-that an installed specialist evaluates direct and indirect effects during every
-explicit review, even when the reviewed target does not name or modify its domain. No
-material effect means no specialist finding.
+Use this shared opening exactly once:
+
+```text
+This specialist cannot start a GrumpyDev review.
+
+Use this skill in every explicitly requested GrumpyDev review when it is
+installed and `.grump` does not explicitly mark it `inapplicable`.
+
+Check direct and indirect effects even when the reviewed target does not name
+or modify this technology. Produce no finding when there is no material effect.
+```
+
+Name technology-specific companion skills when their judgment applies. Do not
+repeat the core companion-loading rule. State technology-specific conditions
+that make lean depth insufficient. Do not repeat the core depth-escalation rule.
 
 Write imperative instructions. Assume the agent already knows elementary
 syntax and generic engineering practice. Preserve useful domain judgment, but
@@ -178,6 +186,14 @@ applicable substance of:
 These concerns do not require fixed headings in the entrypoint. Use headings in
 the reference when they improve navigation.
 
+Specialist guidance identifies general technical invariants, possible failure
+patterns, and evidence to inspect. It is review guidance, not project evidence.
+A specialist may contribute a finding only when inspected project evidence
+establishes or permits the triggering condition. Missing project evidence may
+produce a material item under `Evidence gaps`, but it does not produce a
+finding. Specialist examples must use conditional language for failures not
+observed in the project.
+
 ## Survey companion requirements
 
 `SURVEY.md` is a progressively disclosed contribution to repository setup. It
@@ -239,6 +255,28 @@ Each installable skill contains:
 - `publisher`; and
 - `files`.
 
+Each specialist also contains:
+
+- `install_when`: a non-empty array of independently sufficient strings that
+  describe observable durable project evidence for installing the package; and
+- `do_not_install_when`: an array of independently sufficient exclusion
+  strings, which may be empty and take precedence over inclusion.
+
+Applicability strings must be non-empty, no longer than 320 Unicode code
+points, single-line, and free of leading or trailing whitespace, Markdown
+links, HTML tags, backticks, and current-plan or current-review scope. Each
+string describes project evidence rather than instructing the installer. Do
+not refer to another entry in the same array to complete a condition.
+
+Example specialist manifest fields:
+
+```json
+"install_when": [
+  "the project stores or queries data in PostgreSQL or depends on PostgreSQL topology or operations."
+],
+"do_not_install_when": []
+```
+
 Each file entry contains:
 
 - safe package-relative `path`;
@@ -277,9 +315,14 @@ per-skill versions, hashes, checksums, digests, or integrity fields. The same
   GrumpyDev review.
 - The installed specialist participates in every explicit review and checks
   both direct and indirect effects.
-- Project applicability text is sufficient to decide whether to download
-  without depending on one current review target.
+- `install_when` and `do_not_install_when` describe observable durable project
+  evidence without depending on one current review target.
+- Exclusions take precedence, partial matches produce at most one necessary
+  question, and unrelated evidence produces no question or proposal.
 - The entrypoint remains useful for lean review and cheap to load.
+- Technology-specific companion names and lean-depth triggers remain in the
+  specialist. Generic companion-loading and depth-escalation rules remain in
+  the core skill and are not duplicated.
 - Reference routing is conditional, direct, and complete.
 - Multi-reference packages keep common guidance in `review.md` and load focused
   files only for affected boundaries.
@@ -289,17 +332,19 @@ per-skill versions, hashes, checksums, digests, or integrity fields. The same
 - Detailed judgment is preserved without duplicating the entrypoint.
 - Survey guidance contains durable domain questions, not review-time detail.
 - Ordinary reviews never load the survey companion.
-- Findings require evidence and distinguish fact from inference.
+- Findings require inspected project evidence for the triggering condition and
+  distinguish established fact, inference, conditional failure, and unknowns.
+- Specialist examples state unobserved failures conditionally and never treat a
+  generic trap as proof that the current project contains it.
 - Guidance accounts for failure, recovery, and verification.
 - No hidden dependency, network fetch, executable payload, or expanded
   authority exists.
-- Behavioral fixtures cover lean, standard, deep, and survey loading.
 - Representative review targets behave materially better with the skill than
   without it.
 
 ## Publication
 
-Validate every package file, manifest entry, local reference, and behavioral
-fixture before publication. Do not publish a partial package. After the first
-actual release, any published package change increments the overall integer
+Validate every package file, manifest entry, and local reference before
+publication. Do not publish a partial package. After the first actual release,
+any published package change increments the overall integer
 `grumpydev_version`. Publication always requires separate explicit authority.

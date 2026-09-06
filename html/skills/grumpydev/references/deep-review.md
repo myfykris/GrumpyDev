@@ -5,6 +5,11 @@ standard review guidance.
 
 ## Widen evidence deliberately
 
+Build the review checklist and give every item its initial check before
+gathering deeper evidence for one suspected issue. Finish every affected
+deep-review area before the verdict. Do not use the extra depth only on the
+first issue found.
+
 Trace every materially affected boundary far enough to test the reviewed work's failure
 claims. Inspect callers, consumers, schemas, generated artifacts, deployment
 configuration, migrations, recovery procedures, and failure-oriented tests
@@ -44,3 +49,9 @@ duplicated work, stale reads, authorization bypass, or failed recovery.
 
 Deep review may produce more findings because it inspects more evidence. It
 must not produce findings merely to justify the selected depth.
+
+During the one final completeness check, test transitions, coexistence,
+degraded operation, recovery, and independent success evidence against the
+likely corrections. Process any newly exposed candidate under the core finite
+stopping rule. Do not restart the review or perform another final completeness
+check.

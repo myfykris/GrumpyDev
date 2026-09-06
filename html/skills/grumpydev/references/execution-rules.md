@@ -49,6 +49,20 @@ When implementing this plan:
   accessibility decisions. Do not invent a material audience assumption, an
   unnecessary page or step, or vague placeholder copy as an implementation
   detail.
+- Base every project-specific implementation and completion claim on evidence
+  inspected during this execution. Distinguish work attempted, work completed,
+  validation performed, validation passed, validation not performed, and work
+  blocked. Do not infer one state from another.
+- Inspect the resulting file or system state before claiming a write, edit,
+  deletion, migration, or configuration change succeeded. Identify each command
+  or test target actually run and its material result. Never infer success from
+  starting a command, applying a patch, finding test code, truncated output, a
+  timeout, or an uninspected generated artifact.
+- When a completion summary needs per-requirement status, use `implemented and
+  verified`, `implemented but not verified`, `not implemented`, or `blocked`.
+  Do not claim overall completion while a required item is unimplemented,
+  blocked, or unknown. Do not claim tests passed when they were not run and
+  observed to complete successfully.
 - Before a material deviation, stop, explain what the plan assumed and what the
   evidence shows, propose the smallest plan amendment, and ask whether to update
   and Grump the amended plan before continuing.

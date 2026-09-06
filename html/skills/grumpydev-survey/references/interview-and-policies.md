@@ -87,11 +87,11 @@ the decision or unknown that the answer resolves, not by wording. Merge
 overlapping language, framework, storage, and platform candidates into one
 question that names the relevant environments and boundaries.
 
-When the infrastructure applicability gate applies, include the deployment
+When deployment details can change future reviews, include the deployment
 profile confirmation or fallback and all already-known material specialist
 infrastructure gaps in this same initial batch. Put the profile question first.
-The gate may legitimately produce no infrastructure question for a package or
-tool whose supported environments are already established or immaterial.
+This may legitimately produce no infrastructure question for a package or tool
+whose supported environments are already established or immaterial.
 
 Treat each specialist survey file as candidate guidance, not a questionnaire
 that must be completed. Ask no specialist question when the evidence is
@@ -129,11 +129,13 @@ the review history, or should it return results only in chat? Reply with
 
 Record the answer in `.grump` as `Plan addenda: allowed` or `Plan addenda: chat
 only`, with the question identifier or explicit user statement as its source.
-If the answer is deferred, declined, or ambiguous, record it as unresolved and
-use chat only. Permission to use plan addenda authorizes only local, append-only
-review history in the plan currently being evaluated. It does not authorize
-rewriting plan content, changing other files, editing remote documents, or
-publishing anything. The user may revoke the permission at any time.
+Accept only `addendum` or `chat only` as replies to this stored choice. If the
+answer is deferred, declined, or ambiguous, write `Plan addenda: unresolved`;
+the runtime fallback is chat only. Permission to use plan addenda authorizes
+only local, append-only review history in the plan currently being evaluated.
+It does not authorize rewriting plan content, changing other files, editing
+remote documents, or publishing anything. The user may revoke the permission
+at any time.
 
 Determine whether the user has explicitly chosen how GrumpyDev should handle
 material questions during a plan review. If the choice is not already known,
@@ -149,8 +151,9 @@ and list those questions as evidence gaps? Reply with `interactive` or
 
 Record the answer in `.grump` as `Review questions: interactive` or `Review
 questions: non-interactive`, with the question identifier or explicit user
-statement as its source. If the answer is deferred, declined, or ambiguous,
-record it as unresolved; the core skill defaults unresolved preferences to
+statement as its source. Accept only `interactive` or `non-interactive` as
+replies to this stored choice. If the answer is deferred, declined, or
+ambiguous, write `Review questions: unresolved`; the runtime fallback is
 interactive. This is a durable review preference, not permission for a file
 write or external action. A current explicit instruction can override it for
 one evaluation without changing the stored preference.
@@ -168,12 +171,14 @@ Reply with `update` or `propose only`.
 
 Record the answer in `.grump` as `Confirmed doctrine updates: allowed` or
 `Confirmed doctrine updates: propose only`, with the question identifier or
-explicit user statement as its source. If the answer is deferred, declined, or
-ambiguous, record it as unresolved and propose changes only. `Allowed` applies
-only after the user explicitly and unambiguously confirms the underlying
-project fact or decision. It never authorizes the agent to promote an inference,
-review recommendation, or unanswered question into doctrine. The user may
-revoke the permission at any time.
+explicit user statement as its source. Accept only `update` or `propose only`
+as replies to this stored choice. If the answer is deferred, declined, or
+ambiguous, write `Confirmed doctrine updates: unresolved`; the runtime fallback
+is propose only. `Allowed` applies only after the user explicitly and
+unambiguously confirms the underlying project fact or decision. It never
+authorizes the agent to promote an inference, review recommendation, or
+unanswered question into doctrine. The user may revoke the permission at any
+time.
 
 During an initial survey, always ask how decision-affecting research should
 affect plan readiness. Do not infer this policy from ordinary project evidence:
@@ -189,10 +194,11 @@ plan and another Grump review.
 
 Record the answer in `.grump` as `Decision-affecting research: resolve first`
 or `Decision-affecting research: gated discovery`, with the question identifier
-as its source. If the answer is deferred, declined, or ambiguous, record it as
-unresolved; the core skill defaults unresolved preferences to gated discovery.
-On a re-survey, retain an existing unambiguous answer unless the user asks to
-revisit it.
+as its source. Accept only `resolve first` or `gated discovery` as replies to
+this stored choice. If the answer is deferred, declined, or ambiguous, write
+`Decision-affecting research: unresolved`; the runtime fallback is gated
+discovery. On a re-survey, retain an existing exact allowed value unless the
+user asks to revisit it.
 
 During an initial survey, always ask whether GrumpyDev should perform research
 that it identifies during a review. Do not infer this permission from the plan
@@ -207,13 +213,14 @@ you? Reply with `automatic`, `ask first`, or `report only`.
 
 Record the answer in `.grump` as `Research execution: automatic`, `Research
 execution: ask first`, or `Research execution: report only`, with the question
-identifier as its source. If the answer is deferred, declined, or ambiguous,
-record it as unresolved; the core skill defaults unresolved preferences to ask
+identifier as its source. Accept only `automatic`, `ask first`, or `report only`
+as replies to this stored choice. If the answer is deferred, declined, or
+ambiguous, write `Research execution: unresolved`; the runtime fallback is ask
 first. `Automatic` authorizes only safe, read-only research within existing
 host permissions. It does not authorize project changes, external writes,
 production access, paid services, secret access, software installation, or
-execution of downloaded code. On a re-survey, retain an existing unambiguous
-answer unless the user asks to revisit it.
+execution of downloaded code. On a re-survey, retain an existing exact allowed
+value unless the user asks to revisit it.
 
 Give every question a stable identifier in one continuous sequence: `Q001`,
 `Q002`, `Q003`, and so on. Never ask an unnumbered project question. Present
@@ -237,5 +244,6 @@ The survey's `Q###` sequence is only for repository setup and doctrine. A
 setup-only question does not become doctrine unless its instructions explicitly
 say to record it. Later plan reviews use evaluation-scoped `RQ###` identifiers.
 Do not treat live review questions or answers as survey output or write them to
-`.grump` unless the user separately confirms an answer as project-wide doctrine
-and the doctrine-update policy permits the write.
+`.grump` unless the user separately confirms an answer as project doctrine used
+by future reviews and the exact `Confirmed doctrine updates` policy permits the
+write.

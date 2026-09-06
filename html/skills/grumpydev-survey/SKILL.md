@@ -25,10 +25,18 @@ while preserving the repository's established line-ending convention.
 1. Read existing `.grump` without treating it as automatically current.
 2. Locate repository instructions, dependency manifests, build and deployment
    configuration, schemas, tests, and relevant project documentation.
-3. Infer purpose, boundaries, technologies, supported targets, execution paths,
-   and material constraints only as far as the evidence supports.
-4. Distinguish confirmed, inferred, contradictory, stale, and unresolved facts.
-5. Do not read secrets, credential stores, production data, or unrelated
+3. Give every material factual doctrine claim an inspected source and preserve
+   that source's real scope. A material claim can change future verdicts,
+   severity, confidence, required actions, project doctrine, or reported
+   operational status.
+4. Infer purpose, boundaries, technologies, supported targets, execution paths,
+   and material constraints only as far as named evidence supports. Label an
+   inference and retain its evidence. Do not convert missing evidence into an
+   inference merely by relabeling it.
+5. Distinguish confirmed, inferred, contradictory, stale, and unresolved facts.
+   Keep unsupported material facts as `UNK-###` items or omit them when
+   immaterial. Never invent a source to make doctrine look complete.
+6. Do not read secrets, credential stores, production data, or unrelated
    personal files. Do not inspect external environments to complete the survey.
 
 The installer selected specialists before download and installed each approved
@@ -38,15 +46,18 @@ applicability remains wrong or incomplete, record the installed specialist as
 `inapplicable`, `incomplete`, or `not surveyed` as supported by evidence, then
 report what an explicit later installation update would need to change.
 
+An active specialist is an installed specialist not explicitly marked
+`inapplicable` in `.grump`.
+
 ## Start the initial question sequence
 
 For every initial survey, read
 [doctrine-format.md](references/doctrine-format.md). After the evidence pass,
 ask its format question as `Q001`, the first question actually presented.
 
-During re-survey, preserve an existing unambiguous format choice unless the user
-asks to change it. Load the format reference only when the policy is missing,
-contradictory, or being reconsidered.
+During re-survey, preserve an existing exact allowed format value unless the
+user asks to change it. Load the format reference only when the policy is
+missing, contradictory, or being reconsidered.
 
 ## Load local references
 
@@ -86,9 +97,11 @@ renumbering earlier questions.
 Track answered, deferred, declined, and unresolved questions. Keep explicit
 answers separate from inference. Survey `Q###` identifiers stay stable within
 the setup sequence. Preserve doctrine question identifiers as provenance, but
-never record the initial-install `.gitignore` question in `.grump`. Plan-review
-`RQ###` answers remain scoped to their evaluation unless the user separately
-confirms project-wide scope and doctrine-writing policy permits the update.
+never record the initial-install `.gitignore` question in `.grump`. A
+plan-review `RQ###` answer applies only to the current review by default. It can
+affect future reviews only when the user explicitly says it should become
+project doctrine and the exact `Confirmed doctrine updates` policy permits the
+`.grump` update.
 
 Attempt to determine project purpose and goals before asking. When unavailable,
 offer one optional brief purpose question. Ask about relevant project documents
@@ -106,6 +119,11 @@ Preserve manual wording and stable `CON-###`, `ACC-###`, `DEC-###`, `UNK-###`,
 `DEP-###`, and `INF-###` identifiers. Do not silently replace a human decision,
 promote an inference, erase a source conflict, or renumber an item for neatness.
 
+Treat explicit user decisions and constraints as authoritative doctrine at the
+scope of the statement, while identifying them as user statements rather than
+repository observations. Do not silently promote an existing `.grump` fact from
+`inferred` or `unresolved` to `confirmed`.
+
 Write `.grump` only when setup, re-survey, doctrine refresh, or a current
 explicit instruction authorizes it. Apart from the exact repository-root
 `.gitignore` edit authorized by an affirmative answer to the initial-install
@@ -114,8 +132,19 @@ writes, deployment, or publication.
 
 ## Finish
 
-Verify that the selected format preserved every decision-affecting fact,
-policy, constraint, tradeoff, profile, unknown, and evidence reference. Summarize
-evidence, important inferences, unanswered decisions, specialist status,
-profile applicability, and re-survey triggers. Do not claim completion when a
-missing system boundary makes the doctrine materially misleading.
+Before writing, audit every material factual doctrine entry. Confirm that its
+source was inspected, its scope supports the claim, its `confirmed`, `inferred`,
+or `unresolved` confidence is honest, contradictions remain visible, and the
+selected compact or detailed form preserves the claim-to-source mapping. An
+entry that fails this gate becomes an unknown or is omitted when immaterial. Do
+not invent a source.
+
+Verify that the selected format preserved purpose and success conditions;
+requirements; constraints; decisions and any rationale needed to apply them;
+accepted tradeoffs and debt; stored policies; project documentation and
+evidence; system boundaries and invariants; technology and runtime facts;
+deployment and infrastructure profiles; installed-specialist status; and
+material unknowns. Summarize evidence, important inferences, unanswered
+decisions, specialist status, profile applicability, and re-survey triggers.
+Do not claim completion when a missing system boundary makes the doctrine
+materially misleading.

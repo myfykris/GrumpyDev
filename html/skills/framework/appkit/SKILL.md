@@ -1,20 +1,19 @@
 ---
 name: appkit
-description: "Use only during an explicitly invoked GrumpyDev review. Do not activate during ordinary planning, creation, revision, discussion, implementation, or generic review. For a project where this specialist is installed and not explicitly marked inapplicable, use it in every GrumpyDev review to evaluate direct and indirect effects. Review AppKit plans and other engineering artifacts for application and window lifecycle, responder routing, controllers, bindings, drawing, threading, accessibility, sandboxing, state restoration, and termination risks. Project applicability: the project uses or materially depends on AppKit."
+description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review AppKit engineering work for application and window lifecycle, responder routing, controllers, bindings, drawing, threading, accessibility, sandboxing, state restoration, and termination risks."
 ---
 
 # AppKit GrumpyDev review
 
 ## Invocation and participation boundary
 
-This specialist cannot start a GrumpyDev review. Ordinary planning, creation,
-revision, discussion, implementation, or generic review does not activate it.
+This specialist cannot start a GrumpyDev review.
 
-For a project where this specialist is installed and not explicitly marked
-inapplicable, use this entrypoint during every explicitly invoked GrumpyDev
-review. Evaluate direct and indirect effects even when the reviewed work does
-not name or modify this domain. Produce no finding when no material effect
-exists.
+Use this skill in every explicitly requested GrumpyDev review when it is
+installed and `.grump` does not explicitly mark it `inapplicable`.
+
+Check direct and indirect effects even when the reviewed target does not name
+or modify this technology. Produce no finding when there is no material effect.
 
 Apply this guidance alongside the core GrumpyDev review and the `swift`,
 `objective-c`, `macos`, `application-security`, and `testing-strategy` skills.

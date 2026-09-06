@@ -162,16 +162,51 @@ A useful objection should look more like this:
 **Summary:** 2 findings: 1 HIGH and 1 MEDIUM. Invoice retries can create
 duplicate remote jobs, and rollback does not cover queued work.
 
-| ID | Severity | Issue | Why it matters | Required action |
+| ID | Severity | Issue | Evidence | Required action |
 | --- | --- | --- | --- | --- |
-| 🔴 GD-001 | HIGH | `src/jobs/create.ts` retries POST after a timeout without an idempotency boundary. | A lost response can cause the retry to create a duplicate remote job. | Persist an operation key before the first request and reuse it for retries. |
-| 🟠 GD-002 | MEDIUM | Rollback replaces the worker but leaves published jobs in the queue. | Old jobs may be incompatible with the restored worker version. | Define message compatibility and a queued-job recovery procedure. |
+| 🔴 GD-001 | HIGH | A timeout retry can create a duplicate remote job. | `src/jobs/create.ts::submitJob()`; plan section `Job submission` | Persist and reuse an operation key. |
+| 🟠 GD-002 | MEDIUM | Rollback can leave incompatible jobs in the queue. | Plan sections `Publish jobs` and `Rollback` | Define message compatibility and queued-job recovery. |
+
+**GD-001 detail**
+
+- **Evidence:** `src/jobs/create.ts::submitJob()`; plan section `Job submission`.
+- **Established fact:** The plan retries a POST after a timeout. The client does
+  not send an operation key, and `src/jobs/create.ts::submitJob()` stores the remote job ID
+  only after a response returns.
+- **Failure condition:** If the remote request succeeds but its response is lost,
+  the retry can create a second job.
+- **Impact:** One local operation can produce two remote jobs.
+- **Required action:** Persist an operation key before the first request and
+  reuse it for every retry.
+
+**GD-002 detail**
+
+- **Evidence:** Plan sections `Publish jobs` and `Rollback`.
+- **Established fact:** The plan publishes the new message format before the
+  worker deployment. Its rollback restores the old worker but defines no action
+  for messages already in the queue.
+- **Failure condition:** If the old worker cannot process the new message format,
+  queued work will fail after rollback.
+- **Impact:** Rollback can restore the code without restoring service.
+- **Required action:** Define message compatibility and a recovery procedure for
+  queued work.
 
 GrumpyDev uses compact tables when they make issues easier to scan and expands
-complex findings under the same issue IDs when more evidence is needed. A user
+complex findings under the same issue IDs when a row cannot show the full
+reasoning clearly. A user
 instruction or project `.grump` policy can turn off tables or icons. On later
 reviews of the same target, issue IDs persist and findings are marked `NEW`,
 `OPEN`, `RESOLVED`, or `REGRESSED`.
+
+Every finding must point to evidence the agent actually inspected. GrumpyDev
+keeps established facts, inferences, and conditional risks distinct. When the
+evidence is missing, it says so instead of inventing the answer.
+
+GrumpyDev keeps checking every relevant part of the target even after the
+verdict is obvious. It groups related symptoms when they share the same cause
+and fix. On a repeated review, it explains whether a new issue was caused by
+the revision, supported by new information, found in a broader review, missed
+earlier, or cannot be classified from the available history.
 
 Not this:
 
@@ -306,7 +341,6 @@ See [https://grumpydev.ai/author/](https://grumpydev.ai/author/)
 
 ```text
 html/       grumpydev.ai and the files it publishes
-tests/      skill behavior tests
 tools/      project/build/validation utilities
 ```
 

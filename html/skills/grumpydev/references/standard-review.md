@@ -102,6 +102,221 @@ stream, and external system boundary that carries text or bytes:
 When a protocol does not declare its encoding, document the verified default
 and the evidence for it. Treat an unexamined encoding default as an evidence
 gap.
+
+## Complete the review before deciding the verdict
+
+1. Establish the target, selected depth, purpose, requirements, project
+   doctrine, relevant documentation, repository evidence, deployment profiles,
+   project audience, and active specialist roster.
+2. Build the finite internal review checklist. Include every relevant core
+   review area, every active specialist, every affected technical boundary,
+   every relevant project-audience need, every relevant deployment profile, and
+   every unknown that can materially change a decision.
+3. Start each checklist item as `TO CHECK`.
+4. Briefly check every item before investigating one suspected issue deeply.
+   Change each item to `DONE`, `NOT AFFECTED`, or `BLOCKED` as evidence permits.
+   `NOT AFFECTED` applies only to the current review. It does not mark an
+   installed specialist `inapplicable` in `.grump`.
+5. Pool and deduplicate material questions and research needs from the complete
+   checklist. Follow the stored interaction and research policies. When an
+   answer or research result exposes a new material dependency, add and check
+   one checklist item for it.
+6. Investigate every relevant problem to the selected depth. Start with
+   problems that can invalidate the most downstream work.
+7. Check what each likely correction can change elsewhere. Do not design or
+   implement a solution unless separately requested.
+8. Group findings only when the same behavior fails for the same reason and the
+   same correction closes them. Keep findings separate when their causes,
+   consequences, owners, or closing conditions differ materially.
+9. Perform one final completeness check for unchecked areas, evidence exposed
+   by the investigation, contradictions among findings, and problems the
+   revised path could create. The check may find nothing. Process a new
+   candidate and recheck only affected checklist items. Do not restart the
+   complete review or perform a second final completeness check.
+10. Issue the verdict only after every item is `DONE`, `NOT AFFECTED`, or
+    `BLOCKED` with the unavailable evidence named.
+
+Finding enough defects to justify `REVISE` or `REJECT` does not complete the
+review. Report every material finding supported by the evidence available at
+the selected depth. Do not impose a finding limit. Stop when the checklist and
+one final completeness check are complete. Do not search indefinitely for more
+objections.
+
+### Repeat the complete review after revision
+
+1. Read every available completed earlier review for the same target and retain
+   its issue IDs.
+2. Compare the targets when a reliable earlier version is available. Otherwise,
+   use current evidence and name the history limitation instead of inventing a
+   diff.
+3. Verify every prior issue as `OPEN`, `RESOLVED`, or `REGRESSED` from current
+   evidence.
+4. Inspect each changed area and the direct and indirect effects of every
+   correction.
+5. Repeat the complete review checklist for the selected depth. Do not limit
+   the review to earlier findings or changed paragraphs.
+6. Reuse an issue ID for the same issue. Give a genuinely new issue the next
+   available ID and apply the core `Why new` test.
+7. Preserve every historical ID when several issues share one fix. Never create
+   a replacement group ID.
+8. Perform the one normal final completeness check after every checklist item
+   has been handled. If that check discovers another candidate, process it and
+   recheck only affected items. Do not run the final completeness check again.
+9. Report whether coverage is complete within the selected depth or limited by
+   named unavailable evidence.
+
+## Prove every material claim
+
+Evidence is content inspected during the current GrumpyDev operation. An
+established fact is what an inspected source directly supports within its real
+scope. An inference is a conclusion reasoned from named evidence but not stated
+directly by it. A conditional risk is a possible failure stated with the
+condition that permits it. An unknown is a material fact the available evidence
+does not establish.
+
+A material claim can change the verdict, severity, confidence, required action,
+project doctrine, or reported operational status. An unsupported claim cannot
+become an inference merely by relabeling it. It must gain named supporting
+evidence, become an unknown or evidence gap, or be omitted when immaterial.
+
+### Match every source to its real scope
+
+- Explicit user statement can establish the user's decision, intent, accepted
+  constraint, or asserted project fact. It cannot establish an uninspected file
+  or observed behavior of an external runtime.
+- The review target can establish what it states, selects, permits, requires, or
+  omits within the inspected scope. It cannot establish implementation or
+  production behavior not shown by the target.
+- Source code can establish inspected text, control flow, data flow, and visible
+  dependencies. It cannot by itself establish runtime reachability, deployed
+  behavior, uninspected configuration, or an effect requiring unstated
+  assumptions.
+- Configuration or a manifest can establish what the checked artifact declares.
+  It cannot establish what a customer, vendor, deployment, or generated runtime
+  actually uses.
+- Test code can establish what the test intends to exercise. It cannot establish
+  that the test ran, passed, or covers untested behavior.
+- Current command or test output can establish what the exact completed
+  invocation reported. It cannot establish another command, environment,
+  revision, or truncated result.
+- Project documentation can establish what it states within its authority,
+  status, date, and scope. It cannot establish current implementation or runtime
+  behavior that was not independently checked.
+- A `.grump` decision or constraint can establish human-owned project doctrine at
+  its stated scope. It cannot establish independently observed implementation or
+  runtime behavior.
+- A `.grump` factual statement can establish the recorded claim and provenance.
+  It cannot establish the truth of an unsupported, stale, inferred, or
+  contradictory claim.
+- An earlier review can establish what it reported. It cannot establish that a
+  finding is currently true, fixed, regressed, or still supported.
+- Specialist guidance can establish a general technical invariant, possible
+  failure pattern, and evidence target. It cannot establish a project-specific
+  trigger, configuration, reachability, dependency behavior, deployment state,
+  or current failure.
+- A retrieved authoritative source can establish what the opened source states
+  for its identified version and date scope. It cannot establish uninspected
+  project configuration or behavior outside that scope.
+- Model memory or general familiarity can identify a possible lead. It cannot
+  establish a material project fact, current vendor behavior, citation, version
+  claim, or verdict basis.
+
+Preserve material contradictions. Do not silently choose the source that makes
+the finding easier to state.
+
+### Apply the finding evidence gate
+
+Before a candidate appears in `Findings`:
+
+1. Identify the exact evidence inspected during this evaluation.
+2. State the established fact supported by that evidence.
+3. Identify any inference separately.
+4. State the failure condition. Use conditional language for future or
+   unobserved failure.
+5. State the impact without assuming unknown scale, reachability, traffic,
+   sensitivity, exposure, deployment, or user behavior.
+6. State the smallest observable action that closes the supported issue.
+7. State what evidence would disprove or materially narrow the finding when that
+   is not already obvious.
+8. Confirm that the evidence supports the severity.
+
+If a required step fails, remove a speculative candidate, ask one permitted
+material `RQ###` question, perform research only under stored policy, or report
+a material evidence gap. A supported plan choice or complete-scope omission may
+support a conditional risk even when the future failure has not occurred. Do
+not retain an unsupported candidate as `LOW`; severity is not uncertainty.
+
+### Handle special claims literally
+
+- A future failure is a finding only when the reviewed work selects or permits
+  its trigger, or the completely inspected relevant target omits a control
+  needed to rule it out. State the consequence conditionally unless current
+  evidence demonstrates it.
+- An omission is evidence only within a completely inspected, named scope. A
+  search with no match supports `I did not find <item> in <named scope using
+  named search>`, not an unrestricted claim that the item does not exist.
+  Truncated, failed, inaccessible, excluded, generated, or ignored content makes
+  the scope incomplete when material.
+- Do not claim a command or test passed unless it ran during the current
+  operation and completed successfully. Distinguish test code existing, a test
+  running, and a test passing. Never infer omitted output after truncation or
+  convert a tool error, timeout, or permission failure into success.
+- Verify every cited local path in the inspected revision. Generate line and
+  section references from current content. Quote only inspected text without
+  changing its meaning. Never invent a document title, heading, URL, author,
+  date, version, test name, review identifier, or precise locator. Use an honest
+  broader locator when precision is unavailable.
+- Treat an explicit user statement as evidence at the scope of that statement.
+  Identify it as a user statement when the distinction matters. A user decision
+  or accepted constraint does not need repository proof, but it does not make
+  repository configuration prove an external deployment.
+- Treat an earlier finding as identity and history, not current proof. Read the
+  available earlier finding, inspect its current evidence again, and assign
+  `OPEN`, `RESOLVED`, or `REGRESSED` only from current support. When required
+  history is unavailable, use the core temporary-ID and coverage-limit rules.
+- Every active specialist participates, but its guidance identifies possible
+  failure conditions and evidence targets only. A specialist finding requires
+  inspected project evidence that establishes or permits the trigger. Put a
+  material missing project fact under `Evidence gaps`, not `Findings`.
+- When the user explicitly requests hypotheses or brainstorming, keep
+  hypotheses outside `Findings`, label them, and state what would test them.
+  They do not affect severity, revision closure, or the verdict until evidence
+  supports them.
+
+### Calibrate confidence and severity from evidence
+
+`high` confidence requires precise support for all material findings and no
+unresolved evidence conflict that could change the verdict or required action.
+`medium` permits bounded, identified inference or a gap that does not change the
+central verdict. `low` applies when material conclusions depend substantially on
+incomplete, indirect, stale, or conflicting evidence.
+
+Do not raise severity based on assumed production use, scale, sensitive data,
+internet exposure, tenant count, traffic, business criticality, exploitability,
+or user behavior. Establish the assumption, state severity conditionally, or
+record the gap.
+
+### Audit evidence during the final completeness check
+
+Within the one final completeness check, audit every material factual statement
+in the summary, confidence basis, findings, evidence gaps, verified resolutions,
+material strengths, revised path, revision closure, verdict basis, review scope,
+and coverage statement:
+
+1. confirm every cited source was actually inspected;
+2. confirm each locator exists in the current target or available context;
+3. confirm the source supports the exact established fact;
+4. confirm the source scope is not overstated;
+5. confirm inference and conditional consequences are labeled;
+6. confirm negative claims identify a complete inspected scope;
+7. confirm severity does not rely on an unnamed assumption;
+8. keep contradictions and inaccessible evidence visible; and
+9. remove or reclassify every candidate that fails the gate.
+
+This is part of the existing final completeness check, not another recursive
+review pass. If it exposes a new candidate, process that candidate and recheck
+only affected checklist items.
+
 ## Attack the reviewed work
 
 ### Recurring review traps
@@ -159,30 +374,58 @@ Lead with one verdict:
 - `INSUFFICIENT EVIDENCE` - available evidence cannot support a responsible
   verdict.
 
+`APPROVE` and `APPROVE WITH CONCERNS` require every relevant review area known
+at the selected depth to be checked. Do not approve while a material review
+area remains unchecked. Use `INSUFFICIENT EVIDENCE` when unavailable evidence
+prevents a responsible conclusion. A known material defect may still justify
+`REVISE` when another conclusion is limited, but name the limitation and do not
+imply complete coverage.
+
 When an implementation plan requires either plan-context warning, print it
 immediately after the verdict. After any warning, print the core one-sentence
 `Summary:`. Then report:
 
 1. **Confidence** - high, medium, or low, with the limiting evidence.
-2. **Findings** - ordered by severity. Include evidence, failure,
-   impact, and required change for each.
+2. **Findings** - ordered by severity. Give every finding an explicit `Evidence`
+   field and preserve the established fact, any inference, failure condition,
+   impact, and required change.
 3. **Resolved since the previous review** - only when current evidence verifies
    resolution of a previously identified issue.
-4. **What holds up** - important parts that survived review and why.
+4. **What holds up** - only when evidence supports a material, non-obvious
+   strength the project should preserve. Do not invent praise or summarize
+   ordinary adequacy.
 5. **Evidence gaps** - only gaps that can change the verdict or required action.
-6. **Revised path** - the smallest sequence of decisions or edits needed to
-   reach approval.
-7. **Review scope** - the compact target, depth, reference, and coverage footer
+6. **Revised path** - only when a correction or decision is needed. Give the
+   smallest sequence of decisions or edits needed to reach approval.
+7. **Revision closure** - only for an implementation plan with active findings.
+   Put it after `Revised path` and immediately before `Review scope`.
+8. **Review scope** - the compact target, depth, reference, and coverage footer
    required by the core skill.
+
+For each active finding in revision closure, state an observable closing
+condition and the assumptions, plan sections, dependencies, sequencing, tests,
+migration, deployment, rollback, or recovery concerns that must stay coherent.
+Group issue IDs only when the same closing condition applies. Require a
+whole-plan check after the active IDs are addressed. Preserve earlier addendum
+history. Do not repeat the full finding or prescribe one implementation when
+several approaches can satisfy the condition.
+
+For `REJECT`, require a replacement plan when no bounded correction exists.
+Revision closure never authorizes a plan edit, implementation, or another
+review.
 
 Apply the core presentation policy to the verdict, warnings, and findings.
 Use a findings table for at least two concise active issues when preferred and
-reasonable. Use headed prose for one active issue. For multiple complex issues,
-use the table as an index and expand only the IDs that need more evidence or
-explanation.
+reasonable. A compact table row is complete only for a direct fact with no
+material inference or conditional failure and a short explicit impact. Use
+headed prose for one active issue. For multiple complex issues, use the table as
+an index and expand every ID whose evidence-to-conclusion chain requires an
+inference, conditional failure, evidence qualification, contradiction, or
+multi-step causality.
 When status icons are disabled, omit the icons shown in the warning examples
 without changing their text or placement.
 
-Use repository paths and stable `.grump` identifiers wherever possible. Do not
-pad the response with a generic checklist. If the reviewed work is good, approve
-it plainly instead of manufacturing objections.
+Use the shortest useful inspected locator. Summary, revised path, revision
+closure, and verdict text may refer to an issue ID instead of repeating the same
+locator. Do not pad the response with a generic checklist. If the reviewed work
+is good, approve it plainly instead of manufacturing objections.

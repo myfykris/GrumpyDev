@@ -1,11 +1,11 @@
 # `.grump` project doctrine specification
 
-`.grump` is an agent-generated, human-owned Markdown file at the repository
-root. The agent creates it from repository evidence, survey answers, and
-explicit user corrections. It records the stable facts and decisions an
-adversarial engineering reviewer must respect. It is not application runtime
-configuration, a transcript, a backlog, or a place to hide unresolved
-assumptions.
+`.grump` is a Markdown file at the repository root. An agent writes it from
+repository evidence, survey answers, and explicit user corrections. Explicit
+user instructions and manual edits control its content and the permissions it
+records. It contains stable facts and decisions an adversarial engineering
+reviewer must respect. It is not application runtime configuration, a
+transcript, a backlog, or a place to hide unresolved assumptions.
 
 ## Ownership rules
 
@@ -16,10 +16,31 @@ assumptions.
 - Agents may propose or apply edits only within the user's granted authority.
 - Preserve manual wording and unknown sections during re-survey.
 - Do not silently turn an inference into a constraint.
-- Prefer repository evidence; identify the source of important claims.
+- Identify the inspected source and its real scope for every material factual
+  claim. Prefer repository evidence for repository behavior.
 - Keep the file compact enough to read for every GrumpyDev review.
 - Treat compact and detailed files as two serializations of the same doctrine.
   Never remove decision-affecting meaning merely to shorten the file.
+
+## Stored mode and permission parsing
+
+1. Exact documented field names and allowed values control these stored modes
+   and permissions: `Doctrine format`, `Plan addenda`, `Finding tables`,
+   `Status icons`, `Review questions`, `Confirmed doctrine updates`,
+   `Decision-affecting research`, and `Research execution`.
+2. Human-authored project doctrine, constraints, decisions, requirements,
+   profiles, evidence expectations, and accepted debt remain review evidence
+   when written as ordinary prose.
+3. Prose outside an exact stored mode or permission field does not grant
+   file-writing, research, network, external-publication, production-access,
+   secret-access, installation, or other operational authority.
+4. A current explicit user instruction overrides a stored preference for the
+   current task when the user has authority to grant it. The instruction does
+   not rewrite `.grump` unless the user separately authorizes that file change.
+5. A missing, malformed, or conflicting stored mode or permission field uses
+   the documented safe fallback for that field.
+6. GrumpyDev may point out apparently equivalent policy prose and propose the
+   exact field. It must not guess that the prose grants permission.
 
 ## Stable identifiers
 
@@ -36,6 +57,17 @@ Never renumber an existing identifier merely for neatness. Retire obsolete
 statements or profiles explicitly so old review references remain
 understandable. Preserve a profile or component identifier through correction
 and rename.
+
+## Status groups
+
+The status groups describe different things:
+
+- specialist status describes survey completeness or inapplicability;
+- deployment state describes whether an environment is current, planned, or
+  retiring;
+- support commitment describes what the project promises to support;
+- confidence describes how well evidence supports a fact; and
+- finding status belongs to a review addendum, not project doctrine.
 
 ## Recommended structure
 
@@ -142,7 +174,7 @@ survey. Use `None identified` when that distinction matters.
 
 Record whether `.grump` uses `compact`, `detailed`, or `unresolved` formatting.
 The initial repository survey asks this as `Q001`. Re-survey preserves an
-existing unambiguous choice unless the user asks to change it. `Unresolved`
+existing exact allowed value unless the user asks to change it. `Unresolved`
 uses compact formatting without inventing, weakening, or discarding doctrine.
 
 The format controls serialization only. Both formats preserve:
@@ -194,10 +226,12 @@ A compact profile may combine fields without collapsing their meaning:
 - [CON-001] Existing API clients must remain compatible. Source: `api/openapi.yaml`.
 
 ## Accepted tradeoffs
-- [ACC-001] One maintenance window is accepted for the initial migration.
+- [ACC-001] One maintenance window is accepted for the initial migration. Source:
+  user Q006.
 
 ## Unknowns
 - [UNK-001] Final worker concurrency limit can change database capacity needs.
+  Missing evidence: an owner decision and measured capacity boundary.
 ```
 
 Do not replace this contract with an instruction to summarize rules as best as
@@ -215,10 +249,32 @@ answer, or resulting ignore status in `.grump`; the repository-root
 
 ## Evidence quality
 
-Prefer claims supported by repository paths, checked configuration, or explicit
-user statements. Mark conclusions based on pattern inference as `Inferred` and
-state what would falsify them. Do not include secrets, credentials, private
-customer data, or copied production payloads.
+Every material factual claim must name an inline `Evidence:` or `Source:` value
+at the smallest useful scope. A material claim can change a verdict, severity,
+confidence, required action, project doctrine, or reported operational status.
+Do not include secrets, credentials, private customer data, or copied production
+payloads.
+
+- `confirmed` means the identified source directly supports the fact within that
+  source's real scope.
+- `inferred` requires a named supporting source and states what would falsify or
+  materially narrow the inference. Missing evidence cannot become an inference
+  merely by relabeling it.
+- `unresolved` names the missing or conflicting evidence when the unknown is
+  material.
+- A user-owned decision, constraint, accepted tradeoff, or policy is project
+  doctrine. Its source may be the explicit user statement, a `Q###` answer, a
+  manual `.grump` entry, or a governing project document.
+- A factual statement written by an earlier agent records that claim and its
+  provenance. Storage in `.grump` does not turn it into independently observed
+  implementation or runtime evidence.
+- Compact format may deduplicate source text, but every material factual claim
+  must retain an unambiguous mapping to its evidence.
+
+Do not add a separate evidence identifier family. Use inline source fields,
+stable doctrine identifiers, and the `Survey evidence` section. An unsupported
+material fact becomes an `UNK-###` item or is omitted when immaterial; never
+invent a source to satisfy the format.
 
 Record relevant project documents with enough detail for a later reviewer to
 find and apply them. Note whether a document is authoritative, advisory, draft,
@@ -308,8 +364,8 @@ table when it improves scanning. `Finding tables: disabled` requires headed
 prose. `Status icons: enabled` permits the core skill's verdict, warning, and
 severity icons. `Status icons: disabled` requires text labels without icons.
 Missing, malformed, or `unresolved` values use the core defaults of preferred
-tables and enabled icons. An unambiguous human-written equivalent elsewhere in
-`.grump` has the same effect; exact field names are recommended, not required.
+tables and enabled icons. Equivalent prose elsewhere in `.grump` does not set a
+presentation mode. Use the exact fields and allowed values.
 
 A current explicit user instruction overrides these values for one evaluation
 without changing `.grump`. Presentation policy changes layout only. It does not
