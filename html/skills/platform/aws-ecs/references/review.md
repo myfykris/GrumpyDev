@@ -1,11 +1,6 @@
-# AWS ECS standard review
+# AWS ECS full-review guidance
 
-## Inspect additional evidence
-
-- Trace image build/tagging, secret delivery, deployment promotion, and
-  rollback.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: ECS launch type, regions and clusters, networking,
 IAM model, registry, secret stores, load balancers, deployment strategy,
@@ -13,16 +8,7 @@ autoscaling, and observability. The changed boundary must define: Task and
 service lifecycle, networking, IAM, secrets, images, health checks, deployment
 controllers, autoscaling, capacity providers, logs, and rollback.
 
-Identify the owners and sources of truth for task definitions, services,
-images, execution and task roles, secrets, networking, target groups, deployment
-controllers, capacity providers, autoscaling, alarms, logs, and rollback. Show
-that placement capacity, health transitions, deregistration, stop timeouts, and
-mixed task revisions permit the selected deployment and a failed deployment's
-recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Calculate whether minimum/maximum healthy percentages and available capacity
   permit the proposed rolling deployment. Account for image pull, startup,
@@ -41,7 +27,7 @@ recovery.
   log retention, and a rollback that works when the new task cannot become
   healthy.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Render and inspect the task definition, service, target groups, IAM policies,
   secrets, networking, alarms, autoscaling and capacity-provider settings that
@@ -51,15 +37,3 @@ recovery.
   deregistration, SIGTERM, forced stop, dependency loss and rollback.
 - Load test scale-out and scale-in against downstream quotas, and verify logs
   and alarms make a stuck or failed deployment actionable.
-
-## Ask when evidence is missing
-
-- Which ECS launch type, platform version, deployment controller, capacity
-  provider, and network mode will run the service?
-- What health, drain, rollback, and IAM behavior applies during a failed or
-  mixed-task deployment?
-
-## Calibrate findings
-
-- Downgrade when the change is isolated, least-privileged, capacity-tested, and
-  has a verified rollback path.

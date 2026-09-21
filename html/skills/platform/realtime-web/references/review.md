@@ -1,6 +1,6 @@
-# Realtime web standard review
+# Realtime web full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Transport choices, connection scale, proxy and
 timeout limits, authentication, message size and ordering, resume policy,
@@ -9,16 +9,7 @@ WebSocket, SSE and polling semantics, connection lifecycle, authentication,
 ordering, heartbeats, backpressure, reconnect, resume, fan-out, proxies, and
 draining.
 
-Identify the connection and session authority, authentication refresh,
-subscription and authorization owner, message ordering and resume token,
-heartbeat and idle policy, buffer limits, fan-out topology, proxy timeouts,
-reconnect behavior, and deployment drain. Prove disconnects, duplicated or
-missed messages, slow clients, expired credentials, proxy resets and mixed
-server versions preserve the documented client contract.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Define authentication refresh, authorization changes, origin checks,
   connection limits, and revocation for long-lived sessions.
@@ -38,7 +29,7 @@ server versions preserve the documented client contract.
 - Prove fan-out, heartbeat, proxy timeouts, load-balancer behavior, rolling
   deploys, and connection storms at expected concurrency.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Exercise handshake, authentication refresh, subscribe, publish, idle,
   heartbeat, reconnect, resume and close through the production proxy and
@@ -51,15 +42,3 @@ server versions preserve the documented client contract.
 - Exercise hostile origins, guessed topics, cross-tenant subscriptions, stale
   roles, oversized and compressed messages, malformed frames, publish floods,
   revocation during a connection, and replay after permissions change.
-
-## Ask when evidence is missing
-
-- What connection identity, authorization refresh, ordering, reconnect, and
-  state-recovery contract applies?
-- How are slow clients, fan-out, presence expiry, deploys, and regional or
-  broker failure bounded?
-
-## Calibrate findings
-
-- Downgrade when connections are low-scale and bounded or replay, auth refresh,
-  and backpressure are demonstrated.

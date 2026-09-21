@@ -1,6 +1,6 @@
-# Next.js standard review
+# Next.js full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Next.js, React and Node versions, router,
 rendering modes, edge or Node runtime, cache and revalidation policy, hosting
@@ -9,32 +9,18 @@ and pages routers, server and client components, rendering and caching modes,
 actions, middleware, route handlers, hydration, runtimes, assets, and
 deployment.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for App
-and pages routers, server and client components, rendering and caching modes,
-actions, middleware. Prove route handlers, hydration, runtimes, assets,
-deployment through startup, invalid or denied work, cancellation, background
-execution, mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require an explicit server or client boundary and prevent secrets, server-only
   modules, or privileged data from entering client bundles.
 - Test production builds, direct URL loads, navigation, hydration,
   authentication transitions, cache invalidation, and rolling releases.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-## Ask when evidence is missing
-
-- Ask which Next.js and React versions, router, execution runtime, hosting
-  target, and production build apply when repository evidence does not establish
-  them.
-
-## Calibrate findings
-
-- Downgrade when exact rendering and cache semantics, auth boundaries, and mixed
-  navigation behavior are tested.
+- Inspect production client bundles and serialized page data for server-only
+  modules, secrets, and privileged fields. Verify affected routes in the
+  selected runtime rather than only in the development server.
+- During a rolling release, exercise direct URLs and client navigation using
+  old browser assets against the new server. Check the fallback for
+  incompatible assets or requests.

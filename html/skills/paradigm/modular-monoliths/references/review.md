@@ -1,6 +1,6 @@
-# Modular monolith standard review
+# Modular monolith full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Module map and owners, allowed dependencies, data
 ownership, transaction model, enforcement tooling, deployment unit, and
@@ -8,15 +8,7 @@ extraction intentions. The changed boundary must define: Module boundaries,
 dependency direction, encapsulation, transactions, shared database rules,
 internal contracts, extraction seams, build enforcement, and deployment.
 
-Name the invariants, authorities, owners, and enforcement for Module boundaries,
-dependency direction, encapsulation, transactions, shared database rules. Prove
-internal contracts, extraction seams, build enforcement, deployment under
-concurrency, partial failure, incompatible versions, operational response,
-rollback, and repair, and justify the added complexity.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require boundaries that tools or tests can enforce; folder names and developer
   discipline are not architecture.
@@ -29,27 +21,11 @@ rollback, and repair, and justify the added complexity.
 - Identify extraction seams without paying distributed-system costs before
   extraction is justified.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the claimed architecture and its enforcement
-  boundaries: Module boundaries, dependency direction, encapsulation,
-  transactions, shared database rules. Use dependency, architecture, contract,
-  schema, or ownership tests that fail when a claimed boundary is violated.
-- Exercise failure and edge behavior for: internal contracts, extraction seams,
-  build enforcement, deployment. Exercise the material invariant under
-  concurrency, delay, duplication, partial failure, incompatible versions,
-  rollback, and repair.
-- Verify that operators can observe, diagnose, and recover the design without
-  bypassing its ownership rules.
-
-## Ask when evidence is missing
-
-- Which module owns each invariant and data set, and what mechanism enforces
-  dependency direction?
-- How do transactions, background work, migrations, tests, and future extraction
-  cross module boundaries?
-
-## Calibrate findings
-
-- Downgrade when boundaries are advisory by choice or dependency checks,
-  ownership, and integration evidence enforce them.
+- Introduce a forbidden import or table access in an isolated check and
+  confirm the project's boundary enforcement detects it. Verify allowed module
+  calls use the owning module's contract.
+- Fail a cross-module operation partway through and check the declared
+  transaction and recovery behavior. Verify shared helpers do not allow
+  callers to bypass module-owned invariants.

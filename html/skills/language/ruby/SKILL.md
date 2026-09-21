@@ -1,21 +1,11 @@
 ---
-name: ruby
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review Ruby engineering work for runtime compatibility, metaprogramming, object mutability, concurrency, dependency resolution, resource lifecycle, serialization, and deployment risks."
+name: gd-ruby
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review Ruby engineering work for runtime compatibility, metaprogramming, object mutability, concurrency, dependency resolution, resource lifecycle, serialization, and deployment risks."
 ---
 
 # Ruby GrumpyDev review
 
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-## Lean review
+## Quick checks
 
 - Read gem metadata, lockfiles, Ruby version files, native extensions, autoload
   configuration, process and worker settings, and representative tests.
@@ -29,22 +19,15 @@ expected, autoload differences between development and production, mutable
 objects used as stable identity, unsafe object loading, dynamic constant or
 method selection, shell interpolation, and thread safety hidden by one runtime.
 
-Lean mode is insufficient when this material severity condition may apply:
+- Assess unsafe shared state, swallowed critical exceptions, unsafe
+  deserialization, or runtime incompatibility under the core severity rules.
 
-- Treat unsafe shared state, swallowed critical exceptions, unsafe
-  deserialization, or runtime incompatibility as critical.
+## References
 
-## Load local references
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the Ruby specialist.
 
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete Ruby evidence, operating model, failure, verification,
-question, and calibration guidance. Never load `SURVEY.md` during an ordinary
-review.
-
-## Add to the verdict
+## Verdict context
 
 State Ruby and process targets, concurrency model, dynamic behavior risks,
 dependency compatibility, lifecycle guarantees, and deployment evidence.

@@ -1,6 +1,6 @@
-# Django standard review
+# Django full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Django and Python versions, WSGI or ASGI, server
 and worker model, databases, caches, queues, storage, authentication, settings
@@ -9,15 +9,7 @@ and app loading, middleware order, ORM and transactions, migrations, signals,
 authentication, forms, async boundaries, caching, static media, jobs, and
 deployment.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Settings and app loading, middleware order, ORM and transactions, migrations,
-signals, authentication. Prove forms, async boundaries, caching, static media,
-jobs, deployment through startup, invalid or denied work, cancellation,
-background execution, mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Analyze migration locks, defaults, backfills, old and new code overlap, and
   rollback instead of trusting generated migrations.
@@ -30,27 +22,11 @@ background execution, mixed versions, shutdown, rollback, and recovery.
 - Test production settings, static and media handling, worker shutdown, cache
   invalidation, and mixed-version deployment.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the actual Django lifecycle and production
-  pipeline: Settings and app loading, middleware order, ORM and transactions,
-  migrations, signals, authentication. Use the actual framework pipeline and
-  production build with representative services and configuration.
-- Exercise failure and edge behavior for: forms, async boundaries, caching,
-  static media, jobs, deployment. Exercise invalid input, denied access,
-  cancellation, dependency failure, concurrent work, shutdown, and mixed-version
-  deployment where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Django, Python, database, application server, and deployment versions
-  apply?
-- How do middleware, transactions, migrations, authentication, async boundaries,
-  caching, and background work interact?
-
-## Calibrate findings
-
-- Downgrade when framework-version-specific middleware, migration, transaction,
-  and permission tests cover the change.
+- Run changed ORM flows against the actual database with concurrent writes and
+  query-count checks. Rehearse migrations on representative data while old and
+  new application versions overlap.
+- Exercise object permissions, CSRF, proxy settings, and uploaded media under
+  production settings. Force signal or transaction failure and verify deferred
+  work does not act on rolled-back state.

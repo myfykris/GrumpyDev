@@ -1,6 +1,6 @@
-# Go standard review
+# Go full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Go and toolchain targets, module mode, OS and
 architecture matrix, CGO policy, build tags, race testing, proxy or
@@ -9,16 +9,7 @@ version semantics, module and toolchain rules, interfaces, nil behavior, error
 contracts, goroutine lifetime, contexts, channels, memory model, races, CGO,
 build tags, and cross-compilation.
 
-Define ownership, errors, cancellation, and concurrency for Go version
-semantics, module and toolchain rules, interfaces, nil behavior, error
-contracts, goroutine lifetime, contexts. Verify version, package, native,
-serialization, and artifact compatibility for channels, memory model, races,
-CGO, build tags, cross-compilation across every declared target and rollback
-path.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require every goroutine to have an owner, stop condition, and observable
   failure path.
@@ -43,30 +34,17 @@ path.
 - Require race tests, leak checks, failure-path tests, and compatibility
   evidence for build tags and supported Go versions.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared Go compiler and runtime targets:
-  Go version semantics, module and toolchain rules, interfaces, nil behavior,
-  error contracts, goroutine lifetime, contexts. Use the real compiler or
-  interpreter and supported release modes rather than a development substitute.
-- Exercise failure and edge behavior for: channels, memory model, races, CGO,
-  build tags, cross-compilation. Exercise boundary values, encoding,
-  cancellation, resource exhaustion, concurrency, dependency failure, and
-  termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
+- Run changed concurrent paths with the race detector where supported; cancel
+  contexts or let deadlines expire while sends, reads, or dependency calls are
+  blocked. Verify goroutines stop, response bodies close, and errors reach
+  their owner.
+- Build the supported module, build-tag, OS, architecture, and CGO
+  combinations. Run the relevant target artifacts and check native
+  dependencies instead of treating successful cross-compilation as runtime
+  evidence.
+
 - Exercise hostile templates, URLs, command options, archive entries, symlinks,
   oversized responses, parser limits, cancellation, and partial reads where
   those boundaries exist.
-
-## Ask when evidence is missing
-
-- Which Go language version in go.mod, toolchain version, target, build tags,
-  and module graph apply?
-- Who owns each goroutine, channel, context, timer, and shared value, including
-  the exact loop form for captures?
-
-## Calibrate findings
-
-- Downgrade when ownership is bounded and race, leak, cancellation, and
-  supported-version tests cover the exact semantics.

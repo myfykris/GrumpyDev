@@ -1,73 +1,28 @@
 # Sinatra survey contribution
 
-## Applicability
+## Applies when
 
 Apply this contribution when the project uses or materially depends on Sinatra.
 
-Skip it only when project evidence or an explicit user answer establishes that this
-domain does not constrain a supported build, runtime, client, data, deployment, or
-operating boundary.
+## Inspect
 
-This is project-level applicability, not a current-plan trigger. Once the package is
-installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
-explicitly invoked GrumpyDev review.
+- Establish the exact Ruby, Sinatra, Rack, server, and deployment versions or
+  modes.
 
-## Inspect before asking
-
-For Sinatra, inspect framework and runtime declarations, dependency locks,
-application bootstrap, generated-code and build settings, routes or UI
-composition, persistence and worker configuration, CI workflows, and deployment
-documentation. Read existing `.grump` doctrine and project documentation before
-treating a durable fact as unresolved.
-
-## Durable project facts
-
-- Target and operating model: Sinatra and Ruby versions, Rack and server
-  versions, thread and worker model, middleware, sessions, proxy setup, and
-  deployment platform.
-- Review doctrine for: Request lifecycle, settings and environments, middleware,
-  thread safety, sessions, errors, streaming, reloading, server behavior, and
-  deployment.
-- Sources of truth and owners for relevant configuration, contracts, builds,
-  deployment, upgrades, incidents, rollback, and recovery.
-- Environment differences that materially change these facts.
-- Deployment-profile facts: Ruby implementation, Rack and server, process and
-  thread model, middleware, proxy, sessions, static files, timeouts, signals,
-  and production deployment.
-
-## Ask only when materially unresolved
+## Ask when unresolved
 
 - Which Ruby, Sinatra, Rack, server, concurrency, and deployment versions or
   modes apply?
+
 - How do middleware, shared state, sessions, authentication, errors, blocking
   work, and shutdown behave?
-- For the affected profiles, which of these facts materially differ across
-  current, planned, and retiring operation, what support commitments apply, and
-  what evidence establishes each fact: Ruby implementation, Rack and server,
-  process and thread model, middleware, proxy, sessions, static files,
-  timeouts, signals, and production deployment? Ask only when evidence and the
-  core profile confirmation do not resolve them.
 
-## Record in .grump
+- Which runtime or deployment differences materially change future reviews:
+  Ruby implementation, Rack and server, process and thread model, middleware,
+  proxy, sessions, static files, timeouts, signals, and production deployment?
 
-Record Sinatra answers in project technology, architecture, runtime, security,
-deployment, and verification doctrine. Preserve source and scope. Record a
-material unknown as unresolved doctrine instead of guessing.
+## Record
 
-Record confirmed Sinatra deployment facts on the affected `DEP-###` profile.
-Use a referenced `INF-###` entry for a material component shared by several
-profiles. Preserve separate state, support, ownership, confidence, source, and
-scope fields.
-
-## Do not ask or record
-
-Keep individual routes, components, temporary feature settings, one-off
-migrations, and plan-only implementation choices out of durable Sinatra
-doctrine. Do not duplicate facts owned by another applicable contribution.
-
-## Re-survey triggers
-
-Re-survey Sinatra when framework or runtime versions, lifecycle or rendering
-model, dependency scopes, persistence, authentication, workers, supported
-clients, or deployment process materially change, when evidence conflicts with
-saved doctrine, or when the user requests a context refresh.
+Map durable Sinatra version and behavior requirements to `Requirements` or
+`Constraints`, lifecycle and deployment facts to `Runtime and deployment`, and
+material gaps to `Unknowns`.

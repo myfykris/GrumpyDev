@@ -27,11 +27,6 @@ serialization.
 
 ## Verify the claims
 
-- Exercise failure and edge behavior for: route handlers, hydration, runtimes,
-  assets, deployment. Exercise invalid input, denied access, cancellation,
-  dependency failure, concurrent work, shutdown, and mixed-version deployment
-  where plausible.
-
 - Call route handlers and server actions directly with missing, stale,
   cross-tenant, malformed, oversized, and duplicate input. Verify denial at the
   authoritative data or effect boundary.
@@ -39,7 +34,6 @@ serialization.
 - Exercise personalized cache reads, revalidation, redirects, remote fetches,
   preview or draft access, production error handling, and client bundle
   inspection with the deployed runtime configuration.
-
 
 ## Ask when evidence is missing
 

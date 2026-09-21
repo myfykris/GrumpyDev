@@ -27,7 +27,6 @@ shutdown, cancellation, or process recycling.
   including HTTPS, host, port, path information, client address, forwarded
   headers, missing variables, and hostile values.
 
-
 ## Ask when evidence is missing
 
 - If request metadata or routing affects correctness or security, ask which

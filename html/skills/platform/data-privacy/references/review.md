@@ -1,6 +1,6 @@
-# Data privacy standard review
+# Data privacy full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Data classes, jurisdictions, retention rules,
 residency, subject-right workflows, subprocessors, encryption, audit needs, and
@@ -8,16 +8,7 @@ responsible owners. The changed boundary must define: Data inventory, purpose
 and minimization, consent, retention, deletion, export, residency,
 subprocessors, logging, backups, and breach response.
 
-For each personal-data class, identify its purpose, lawful or user-granted
-basis, owner, source, recipients, residency, copies, retention clock, deletion
-authority, export path, subprocessors, backup behavior, and breach-response
-owner. Prove subject requests and retention rules reach derived stores, logs,
-indexes, queues, analytics, vendors, and restored backups without creating new
-unauthorized copies.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require a stated purpose and owner for every sensitive field; possible future
   use is not a retention policy.
@@ -30,7 +21,7 @@ unauthorized copies.
 - Record residency, cross-border flow, vendor obligations, breach blast radius,
   and evidence without pretending this skill is legal advice.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Trace representative personal data from collection through every primary,
   derived, cached, logged, analytical, exported, vendor and backup copy. Verify
@@ -41,15 +32,3 @@ unauthorized copies.
 - Rehearse subprocessor failure and removal, retention enforcement, consent
   withdrawal and breach investigation with complete but access-controlled audit
   evidence.
-
-## Ask when evidence is missing
-
-- Which personal or sensitive data categories are collected, for what purpose,
-  and under which retention and residency rules?
-- How do deletion, export, consent changes, vendor transfer, and incident
-  scoping work across every copy?
-
-## Calibrate findings
-
-- Downgrade when the data is demonstrably non-sensitive or minimization,
-  lifecycle, and access controls cover every copy.

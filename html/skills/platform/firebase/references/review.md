@@ -1,26 +1,13 @@
-# Firebase standard review
+# Firebase full-review guidance
 
-## Inspect additional evidence
-
-- Map data models, queries, transactions, offline persistence, last-write-wins behavior,
-  listeners, indexes, and migrations.
-- Inspect Storage paths, callable and HTTP functions, triggers, retries, regions, quotas,
-  billing, logs, and environment separation.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Firebase products and SDKs, projects per environment,
 Authentication providers and tenant model, Security Rules ownership and versions, Admin SDK
 boundaries, Firestore model and indexes, offline policy, functions runtime and region, Storage
 layout, quotas, and deployment process.
 
-Client SDK calls are authorized by deployed Security Rules, while trusted Admin SDK code
-bypasses those rules. Query rules are not post-query filters, so planned queries must satisfy
-their authorization constraints.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Prove deny-by-default rules for each collection, document, Storage path, operation, field
   constraint, and tenant boundary.
@@ -35,7 +22,7 @@ their authorization constraints.
 - Separate projects, service accounts, rules, indexes, secrets, billing alerts, backups, and
   rollback for every environment.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Run emulator rule tests for allowed and denied reads, writes, queries, field changes, tenant
   crossing, and Storage access.
@@ -43,15 +30,3 @@ their authorization constraints.
   accounts, quota pressure, and migrations.
 - Compare emulator results with a controlled representative project for product behavior the
   emulator does not reproduce.
-
-## Ask when evidence is missing
-
-- Which Firebase products, SDKs, projects, identity providers, tenant model, rules, and Admin
-  SDK boundaries apply?
-- How are queries, indexes, offline conflicts, functions retries, Storage, quotas, backups,
-  deployment, and rollback handled?
-
-## Calibrate findings
-
-- Downgrade when rules, queries, offline behavior, privileged paths, retries, quotas, and
-  project separation are tested.

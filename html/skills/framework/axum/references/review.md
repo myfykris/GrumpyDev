@@ -1,11 +1,6 @@
-# Axum standard review
+# Axum full-review guidance
 
-## Inspect additional evidence
-
-- Trace request data, blocking work, spawned tasks, streaming, cancellation,
-  error conversion, timeouts, and shutdown.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Axum, Tokio and tower versions, runtime topology,
 state ownership, proxy and TLS arrangement, request limits, and deployment
@@ -13,18 +8,12 @@ target. The changed boundary must define: Router and extractor behavior, state
 and tower layers, async blocking, errors, body limits, streaming, cancellation,
 graceful shutdown, and proxy trust.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Router and extractor behavior, state and tower layers, async blocking, errors,
-body limits. Prove streaming, cancellation, graceful shutdown, proxy trust
-through startup, invalid or denied work, cancellation, background execution,
-mixed versions, shutdown, rollback, and recovery.
+## Failure patterns
 
-## Challenge the reviewed work
-
-### Recurring traps
-
-- Require thread-safe state with explicit ownership and reject locks held across
-  await points.
+- Identify state ownership and the actual synchronization primitive. Blocking
+  locks across await points can deadlock or block runtime threads; async mutexes
+  can legitimately span awaits. Check lock duration, unnecessary serialization,
+  cancellation, and ownership rather than rejecting every such lock.
 - Check Tower layer order, timeout coverage, concurrency limits, backpressure,
   tracing, and authentication placement.
 - Bound bodies, decompression, extractors, streams, and fan-out before untrusted
@@ -34,26 +23,11 @@ mixed versions, shutdown, rollback, and recovery.
 - Test production serving, proxy headers, graceful drain, dependency failure,
   and runtime saturation.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the actual Axum lifecycle and production
-  pipeline: Router and extractor behavior, state and tower layers, async
-  blocking, errors, body limits. Use the actual framework pipeline and
-  production build with representative services and configuration.
-- Exercise failure and edge behavior for: streaming, cancellation, graceful
-  shutdown, proxy trust. Exercise invalid input, denied access, cancellation,
-  dependency failure, concurrent work, shutdown, and mixed-version deployment
-  where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Axum, Rust, Tokio, Tower, and HTTP stack versions apply?
-- How do router state, extractors, layers, blocking work, cancellation, limits,
-  and shutdown interact?
-
-## Calibrate findings
-
-- Downgrade when version-specific layer order, state ownership, limits, and
-  shutdown behavior are tested.
+- Exercise extractor rejection, authentication, body limits, and timeouts
+  through the actual router and Tower layer order. Saturate shared state to
+  check lock contention and backpressure.
+- Disconnect streams and stop the server during pending work. Verify
+  cancellation, task cleanup, and graceful drain without blocking runtime
+  threads.

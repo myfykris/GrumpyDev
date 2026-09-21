@@ -1,12 +1,6 @@
-# Object storage standard review
+# Object storage full-review guidance
 
-## Inspect additional evidence
-
-- Trace partial upload, overwrite, concurrent update, deletion, retry,
-  replication lag, event delivery, credential expiry, archive retrieval, and
-  restore using the selected provider's actual API.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the exact provider and product, account, bucket or container and
 region boundaries, object or blob types, key rules, API and client versions,
@@ -16,9 +10,7 @@ retention, lifecycle, events, replication, archive behavior, cost ownership,
 and recovery authority. Verify compatibility claims feature by feature rather
 than accepting an `S3-compatible` label as a contract.
 
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Define object identity and overwrite semantics; listing and filenames are not
   a transactional metadata database.
@@ -41,12 +33,17 @@ than accepting an `S3-compatible` label as a contract.
 - Check multipart cleanup, idempotent retries, presigned URL scope and expiry,
   resumable or block-upload recovery, range requests, event deduplication, and
   untrusted content handling.
-- Enforce least privilege, public-access blocking, tenant isolation, audit logs,
-  retention, legal holds, and deletion verification.
+- Keep storage private by default. For explicitly intended public reads, verify
+  the delivery path, exact object scope, separation from private data, and
+  protection against public writes and unintended listing. A public site can
+  still use a private origin; apply provider controls to the actual setup.
+  Review guidance does not authorize making anything public.
+- Enforce least privilege, tenant isolation, appropriate audit logs, retention,
+  legal holds, and deletion verification.
 - Model request, transfer, replication, and retrieval cost, then test version
   recovery and region-loss procedures.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Exercise concurrent creation and overwrite with the provider's actual
   generation, version, ETag, lease, or conditional headers. Verify what the
@@ -59,17 +56,3 @@ than accepting an `S3-compatible` label as a contract.
   retention and legal holds, replication lag, deletion, and archive retrieval.
 - Restore or reconstruct state in isolation and verify data, metadata, security,
   application startup, and recovery objectives.
-
-## Ask when evidence is missing
-
-- Which provider and product, namespace, region, object or blob type, client API,
-  and exact compatibility guarantees apply?
-- Which version, generation, ETag, lease, or conditional-operation rules prevent
-  overwrite races, and how do transfers commit, abort, and recover?
-- How are integrity, signed access, deletion, lifecycle, events, replication,
-  archive retrieval, cost, and recovery handled?
-
-## Calibrate findings
-
-- Downgrade when objects are reproducible or versioning, boundary metadata,
-  access controls, and restore are demonstrated.

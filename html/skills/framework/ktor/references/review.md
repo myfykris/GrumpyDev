@@ -1,6 +1,6 @@
-# Ktor standard review
+# Ktor full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Ktor, Kotlin and JDK versions, engine,
 serialization, authentication, coroutine and dispatcher policy, proxy topology,
@@ -8,15 +8,7 @@ and deployment environment. The changed boundary must define: Plugin order,
 coroutine context, routing, content negotiation, authentication, serialization,
 client and server engines, streaming, shutdown, and deployment.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Plugin order, coroutine context, routing, content negotiation, authentication.
-Prove serialization, client and server engines, streaming, shutdown, deployment
-through startup, invalid or denied work, cancellation, background execution,
-mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Verify plugin order and route coverage for authentication, status handling,
   content negotiation, compression, CORS, and observability.
@@ -29,27 +21,11 @@ mixed versions, shutdown, rollback, and recovery.
 - Test the actual engine and deployment for proxy headers, graceful shutdown,
   connection drain, and mixed-version clients.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the actual Ktor lifecycle and production
-  pipeline: Plugin order, coroutine context, routing, content negotiation,
-  authentication. Use the actual framework pipeline and production build with
-  representative services and configuration.
-- Exercise failure and edge behavior for: serialization, client and server
-  engines, streaming, shutdown, deployment. Exercise invalid input, denied
-  access, cancellation, dependency failure, concurrent work, shutdown, and
-  mixed-version deployment where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Kotlin, Ktor, engine, coroutine, serialization, and deployment versions
-  apply?
-- How do plugin order, authentication, cancellation, blocking work, errors,
-  limits, and shutdown interact?
-
-## Calibrate findings
-
-- Downgrade when engine-specific plugin order, coroutine ownership, limits, and
-  shutdown are integration-tested.
+- Exercise protected routes through the configured plugins and serializers,
+  including unsupported content types, unknown fields, and failed
+  authentication. Check error responses match the API contract.
+- Run the selected server engine with slow dependencies and disconnected
+  streams. Verify coroutine cancellation, bounded client pools, and drain
+  behavior under the deployment proxy.

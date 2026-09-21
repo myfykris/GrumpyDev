@@ -1,6 +1,6 @@
-# Scala standard review
+# Scala full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Scala and JDK versions, build tool, major
 libraries and effect system, binary compatibility target, runtime topology,
@@ -9,15 +9,7 @@ Scala 2 and 3 differences, type and implicit behavior, JVM interop, effect
 systems, futures and streams, concurrency, serialization, macros, binary
 compatibility, and build graph.
 
-Define ownership, errors, cancellation, and concurrency for Scala 2 and 3
-differences, type and implicit behavior, JVM interop, effect systems, futures
-and streams. Verify version, package, native, serialization, and artifact
-compatibility for concurrency, serialization, macros, binary compatibility,
-build graph across every declared target and rollback path.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require one effect and cancellation model; reject uncontrolled mixing of
   futures, blocking calls, actors, and multiple runtimes.
@@ -30,27 +22,11 @@ build graph across every declared target and rollback path.
 - Demand production-like tests for backpressure, partitioning, retries, delivery
   semantics, and cluster upgrades when distributed frameworks apply.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared Scala compiler and runtime
-  targets: Scala 2 and 3 differences, type and implicit behavior, JVM interop,
-  effect systems, futures and streams. Use the real compiler or interpreter and
-  supported release modes rather than a development substitute.
-- Exercise failure and edge behavior for: concurrency, serialization, macros,
-  binary compatibility, build graph. Exercise boundary values, encoding,
-  cancellation, resource exhaustion, concurrency, dependency failure, and
-  termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
-
-## Ask when evidence is missing
-
-- Which Scala version, JVM, build tool, binary version, effect system, and
-  dependency versions apply?
-- How do effects, futures, cancellation, blocking, implicits, serialization, and
-  Java interop cross the boundary?
-
-## Calibrate findings
-
-- Downgrade when runtime and effects are bounded and binary, concurrency,
-  serialization, and failure tests cover the path.
+- Compile and run consumers against the supported Scala and JDK artifact
+  combinations. Exercise changed macros, implicit resolution, Java interop,
+  and serialized data across independently deployed versions.
+- Cancel streams or effects while dependencies block or fail. Check that
+  execution contexts remain responsive, parallelism stays bounded, and
+  resource scopes close on failure and shutdown.

@@ -1,11 +1,6 @@
-# Serverless standard review
+# Serverless full-review guidance
 
-## Inspect additional evidence
-
-- Trace cold start, duplicate event, partial effect, timeout, throttling,
-  dependency slowdown, deployment, and regional failure.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Provider and runtimes, regions, triggers,
 concurrency and timeout limits, network attachment, identity, packaging,
@@ -13,16 +8,7 @@ deployment tool, and local-test limits. The changed boundary must define:
 Invocation lifecycle, concurrency, cold starts, timeouts, retries, events,
 idempotency, state, networking, IAM, packaging, observability, and deployment.
 
-Identify the exact trigger contract, delivery and retry semantics, function
-identity, concurrency and timeout limits, package and runtime, network path,
-ephemeral and durable state, downstream quotas, regional behavior, deployment
-owner and recovery path. Prove duplicates, cold starts, throttling, timeout after
-a partial effect, dependency loss and mixed function revisions preserve
-idempotency and stay within downstream capacity.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Design handlers for duplicate and out-of-order delivery with idempotency at
   the side-effect boundary.
@@ -35,7 +21,7 @@ idempotency and stay within downstream capacity.
 - Model request, duration, transfer, logging, provisioned capacity, and idle
   alternatives before claiming lower cost.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Deploy the real package and configuration to a representative isolated
   environment and measure cold and warm startup, memory, duration, network,
@@ -46,15 +32,3 @@ idempotency and stay within downstream capacity.
 - Run old and new function revisions together and roll back while events are in
   flight, verifying idempotency, payload compatibility, observability and state
   recovery.
-
-## Ask when evidence is missing
-
-- Which provider, service, runtime version, deployment mode, trigger, and
-  regional limits apply?
-- What delivery, concurrency, timeout, retry, state, networking, permission, and
-  cost behavior follows from that platform?
-
-## Calibrate findings
-
-- Downgrade when the exact provider semantics are known and load, idempotency,
-  limits, and recovery are tested.

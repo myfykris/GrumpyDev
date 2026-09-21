@@ -1,25 +1,11 @@
 ---
-name: dynamodb
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review DynamoDB engineering work for access patterns, keys, indexes, consistency, hot partitions, transactions, capacity, streams, and recovery."
+name: gd-dynamodb
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review DynamoDB engineering work for access patterns, keys, indexes, consistency, hot partitions, transactions, capacity, streams, and recovery."
 ---
 
 # DynamoDB GrumpyDev review
 
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-Apply this guidance alongside the core GrumpyDev review, the
-`distributed-systems` skill when cross-region behavior matters, and the
-applicable installed application specialist.
-
-## Lean review
+## Quick checks
 
 - Establish the regions, table class and capacity mode, global-table version,
   backup settings, and client behavior.
@@ -32,22 +18,16 @@ secondary-index consistency assumed to be immediate, conditional writes omitted
 from read-modify-write flows, item-size growth, transaction limits, TTL deletion
 treated as timely, and retries repeating non-idempotent effects.
 
-Lean mode is insufficient when this material severity condition may apply:
+- Assess a hot partition on a critical path, lost-update behavior, or
+  retry-amplified side effects under the core severity rules.
 
-- Treat a hot partition on a critical path, lost-update behavior, or
-  retry-amplified side effects as critical.
+## References
 
-## Load local references
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the DynamoDB
+specialist.
 
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete DynamoDB evidence, operating model, failure, verification,
-question, and calibration guidance. Never load `SURVEY.md` during an ordinary
-review.
-
-## Add to the verdict
+## Verdict context
 
 State access-pattern coverage, key distribution, consistency and transaction
 guarantees, capacity risk, and recovery proof.

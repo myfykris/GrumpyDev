@@ -25,7 +25,6 @@ account recovery, revocation, role changes, or security-sensitive state transiti
   function, and state. Run its denied cases through the real entry point and
   data boundary, not only a mocked policy function.
 
-
 ## Ask when evidence is missing
 
 - Which actors cross each changed trust boundary, and where are object,

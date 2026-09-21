@@ -1,16 +1,6 @@
-# WPF standard review
+# WPF full-review guidance
 
-## Inspect additional evidence
-
-- Establish declared and effective versions in development, CI, test, and every
-  supported deployment environment. Record differences that change behavior.
-- Trace one representative operation through startup, success, cancellation,
-  failure, shutdown, update, and recovery. Include encoding and serialization at
-  every application, process, native, storage, and network boundary.
-- Prefer observable artifacts, focused experiments, and project documentation
-  over assertions based on a framework or product name.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: .NET and WPF versions, Windows targets,
 architecture, packaging, deployment, DPI and localization targets, interop, and
@@ -19,16 +9,7 @@ dispatcher lifecycle, dependency properties, binding, resources, templates,
 commands, threading, async behavior, rendering, DPI, accessibility, interop, and
 deployment.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Application and dispatcher lifecycle, dependency properties, binding, resources,
-templates, commands, threading. Prove async behavior, rendering, DPI,
-accessibility, interop, deployment through startup, invalid or denied work,
-cancellation, background execution, mixed versions, shutdown, rollback, and
-recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Trace application, dispatcher, window, navigation, resource, view-model, and
   shutdown lifetime. Define behavior for multiple windows, hidden last windows,
@@ -51,27 +32,10 @@ recovery.
 - Provide Automation peers, names, roles, states, focus, keyboard navigation,
   error announcements, and patterns for custom controls and templated
   interactions.
-## Verify the claims
+
+## Verification to run or specify in the plan
 
 - Run binding and resource diagnostics and treat required-path errors as
   failures.
 - Test supported Windows, architectures, DPI, themes, high contrast, text
   scaling, localization, keyboard, and screen readers.
-## Ask when evidence is missing
-
-Ask only when evidence cannot establish the durable target: .NET and WPF
-versions, Windows targets, architecture, packaging, deployment, DPI and
-localization targets, interop, and application lifecycle. For the changed
-boundary, ask only about unresolved Application and dispatcher lifecycle,
-dependency properties, binding, resources, templates, commands, threading, async
-behavior, rendering, DPI, accessibility, interop, and deployment when the answer
-can change the verdict or implementation.
-
-## Calibrate findings
-
-- Treat a lifecycle, authorization, persistence, or deployment defect that
-  breaks a core workflow or loses user state as material when the reviewed work depends
-  on it and lacks either a safe design or credible evidence.
-- Downgrade or close findings when target-specific documentation, representative
-  builds, focused tests, failure exercises, and recovery evidence establish the
-  required behavior.

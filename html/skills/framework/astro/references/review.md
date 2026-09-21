@@ -1,26 +1,16 @@
-# Astro standard review
+# Astro full-review guidance
 
-## Inspect additional evidence
-
-- Trace cookies, sessions, secrets, content collections, endpoint code, middleware, assets, and
-  cache behavior.
-- Inspect client directives, server directives, adapter configuration, environment access, and
-  production output.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Astro version, output mode, adapter and host, route rendering
 choices, client frameworks, content sources, environment model, cache policy, and browser
 targets.
 
-The plan must distinguish build-time code, request-time server code, isolated client code, and
-public serialized props. It must name which routes require a server and which remain deployable
-as static files.
+## Failure patterns
 
-## Challenge the reviewed work
-
-### Recurring traps
-
+- Check route rendering separately from component islands. Under static output,
+  on-demand routes need a compatible adapter and the appropriate prerender
+  override; static output alone is not evidence that those routes are invalid.
 - Require an explicit hydration reason and loading directive for every client island.
 - Verify that protected or personalized routes render on a trusted server boundary and
   authorize each request.
@@ -31,7 +21,7 @@ as static files.
 - Test direct navigation, history, no-JavaScript behavior, content build failures, and mixed
   static and dynamic routes.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Build the actual static or server output and inspect emitted client JavaScript, routes,
   assets, and server entrypoints.
@@ -39,14 +29,3 @@ as static files.
   and adapter-specific failures.
 - Run representative production output on the selected adapter rather than treating the
   development server as evidence.
-
-## Ask when evidence is missing
-
-- Which Astro version, output mode, adapter, host, routes, and client integrations apply?
-- Which data is fixed at build time, rendered per request, deferred in a server island, or
-  hydrated in a client island?
-
-## Calibrate findings
-
-- Downgrade when route modes, hydration, adapter behavior, cache scope, and production output
-  are explicit and tested.

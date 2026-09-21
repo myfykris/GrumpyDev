@@ -1,6 +1,6 @@
-# Symfony standard review
+# Symfony full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Symfony and PHP versions, runtime and SAPI,
 Doctrine providers, Messenger transports, cache, authentication, worker
@@ -8,15 +8,7 @@ topology, and deployment process. The changed boundary must define: Container
 compilation, request and kernel events, configuration, Doctrine, validation,
 security voters, messenger, cache, console, workers, and deployment.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Container compilation, request and kernel events, configuration, Doctrine,
-validation, security voters. Prove messenger, cache, console, workers,
-deployment through startup, invalid or denied work, cancellation, background
-execution, mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Check container scope, shared mutable services, lazy proxies, autowiring
   ambiguity, compiler passes, and environment-specific configuration.
@@ -29,27 +21,11 @@ execution, mixed versions, shutdown, rollback, and recovery.
 - Test warmed production containers and caches, proxy headers, migrations,
   workers, assets, and mixed-version rollout.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the actual Symfony lifecycle and production
-  pipeline: Container compilation, request and kernel events, configuration,
-  Doctrine, validation, security voters. Use the actual framework pipeline and
-  production build with representative services and configuration.
-- Exercise failure and edge behavior for: messenger, cache, console, workers,
-  deployment. Exercise invalid input, denied access, cancellation, dependency
-  failure, concurrent work, shutdown, and mixed-version deployment where
-  plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which PHP, Symfony, runtime, container, database, cache, and Messenger
-  versions or transports apply?
-- How do service scopes, security voters, validation, transactions, messages,
-  retries, and migrations interact?
-
-## Calibrate findings
-
-- Downgrade when container scope, security, transport semantics, transactions,
-  and migration behavior are feature-tested.
+- Boot the warmed production container and exercise firewall, access-control,
+  and voter decisions with different identities. Check environment-specific
+  services and shared state across repeated requests.
+- Fail Doctrine transactions and redeliver Messenger messages to long-running
+  workers. Verify idempotency, failure transport handling, cleared worker
+  state, and compatibility during worker restarts.

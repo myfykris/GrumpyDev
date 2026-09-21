@@ -1,6 +1,6 @@
-# PowerShell standard review
+# PowerShell full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: PowerShell editions and versions, operating
 systems, remoting transport, required modules, execution policy, native tools,
@@ -9,15 +9,7 @@ define: Edition and version differences, object pipelines, streams, errors,
 remoting, serialization, modules, scopes, providers, quoting, native-process
 boundaries, encoding, and execution policy.
 
-Define ownership, errors, cancellation, and concurrency for Edition and version
-differences, object pipelines, streams, errors, remoting, serialization,
-modules. Verify version, package, native, serialization, and artifact
-compatibility for scopes, providers, quoting, native-process boundaries,
-encoding, execution policy across every declared target and rollback path.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Distinguish non-terminating errors from exceptions and require explicit
   failure behavior instead of relying on ambient preferences.
@@ -30,27 +22,15 @@ encoding, execution policy across every declared target and rollback path.
 - Test on every supported operating system and PowerShell edition because
   command, path, and encoding behavior differs.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared PowerShell compiler and runtime
-  targets: Edition and version differences, object pipelines, streams, errors,
-  remoting, serialization, modules. Use the real compiler or interpreter and
-  supported release modes rather than a development substitute.
-- Exercise failure and edge behavior for: scopes, providers, quoting,
-  native-process boundaries, encoding, execution policy. Exercise boundary
-  values, encoding, cancellation, resource exhaustion, concurrency, dependency
-  failure, and termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
-
-## Ask when evidence is missing
-
-- Which PowerShell edition and version, operating systems, remoting mode,
-  execution policy, and module versions apply?
-- How do object and text pipelines, quoting, native processes, credentials,
-  errors, and encoding cross boundaries?
-
-## Calibrate findings
-
-- Downgrade when targets are explicit and quoting, encoding, error, remoting,
-  and cross-platform tests cover the script.
+- Run scripts under the supported PowerShell editions, operating systems, and
+  automation host. Trigger a non-terminating cmdlet error, a terminating
+  exception, and a failing native command; verify the intended exit status and
+  cleanup.
+- Round-trip paths and non-ASCII data through native arguments, remoting, JSON
+  or CSV, and files where used. Check that object properties survive
+  serialization and formatting output is not mistaken for data.
+- For mutations, use disposable targets to check exact path selection, repeat
+  execution, interruption, and dry-run behavior when offered. Verify
+  transcripts and error streams do not expose secrets.

@@ -1,75 +1,30 @@
 # Ruby survey contribution
 
-## Applicability
+## Applies when
 
 Apply this contribution when the project contains, builds, deploys, operates, or
 interoperates with Ruby code, artifacts, or runtime behavior.
 
-Skip it only when project evidence or an explicit user answer establishes that this
-domain does not constrain a supported build, runtime, client, data, deployment, or
-operating boundary.
+## Inspect
 
-This is project-level applicability, not a current-plan trigger. Once the package is
-installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
-explicitly invoked GrumpyDev review.
+- Read gem metadata, lockfiles, Ruby version files, native extensions, autoload
+  configuration, process and worker settings, and representative tests.
 
-## Inspect before asking
-
-For Ruby, inspect language and runtime declarations, dependency locks, build
-files, compiler or interpreter flags, generated-code settings, CI matrices,
-native dependencies, packaging, and deployment documentation. Read existing
-`.grump` doctrine and project documentation before treating a durable fact as
-unresolved.
-
-## Durable project facts
-
-- Target and operating model: Ruby implementation and version, web and job
-  servers, concurrency model, Bundler and lock policy, native extensions, OS
-  targets, preload and worker model, and deployment packaging.
-- Review doctrine for: Object model, blocks, exceptions, fibers, threads and
-  Ractors, GVL implications, metaprogramming, autoloading, gems, serialization,
-  GC, web and job lifecycles, and native extensions.
-- Sources of truth and owners for relevant configuration, contracts, builds,
-  deployment, upgrades, incidents, rollback, and recovery.
-- Environment differences that materially change these facts.
-- Deployment-profile facts: Ruby implementation and version, application
-  server, process and thread model, worker runtime, native extensions, OS,
-  packaging, signals, and rolling restart behavior.
-
-## Ask only when materially unresolved
+## Ask when unresolved
 
 - Which Ruby version and implementation, thread and process model, native
   extensions, and gem versions apply?
+
 - How do mutable state, blocks, exceptions, fibers, threads, resources, and
   serialization cross the boundary?
-- For the affected profiles, which of these facts materially differ across
-  current, planned, and retiring operation, what support commitments apply, and
-  what evidence establishes each fact: Ruby implementation and version,
-  application server, process and thread model, worker runtime, native
-  extensions, OS, packaging, signals, and rolling restart behavior? Ask only
-  when evidence and the core profile confirmation do not resolve them.
 
-## Record in .grump
+- Which runtime or deployment differences materially change future reviews:
+  Ruby implementation and version, application server, process and thread
+  model, worker runtime, native extensions, OS, packaging, signals, and rolling
+  restart behavior?
 
-Record Ruby answers in project technology, runtime, build, compatibility, and
-deployment doctrine. Preserve source and scope. Record a material unknown as
-unresolved doctrine instead of guessing.
+## Record
 
-Record confirmed Ruby deployment facts on the affected `DEP-###` profile. Use a
-referenced `INF-###` entry for a material component shared by several profiles.
-Preserve separate state, support, ownership, confidence, source, and scope
-fields.
-
-## Do not ask or record
-
-Keep local tool paths, one-off build flags, transient process details, and
-plan-only implementation choices out of durable Ruby doctrine. Do not duplicate
-facts owned by another applicable contribution.
-
-## Re-survey triggers
-
-Re-survey Ruby when supported language or runtime versions, compiler, standard
-library, package tool, operating systems, architectures, build modes,
-concurrency model, native dependencies, or deployment form materially change,
-when evidence conflicts with saved doctrine, or when the user requests a context
-refresh.
+Map durable Ruby version and compatibility requirements to `Requirements` or
+`Constraints`, runtime facts to `Runtime and deployment`, and material gaps to
+`Unknowns`.

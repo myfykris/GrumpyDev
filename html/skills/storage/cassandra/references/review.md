@@ -1,11 +1,6 @@
-# Cassandra standard review
+# Cassandra full-review guidance
 
-## Inspect additional evidence
-
-- Trace writes and reads through coordinator loss, replica lag, hinted handoff,
-  tombstones, repair, and topology change.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Cassandra version, topology and replication,
 consistency levels, compaction, repair process, workload shape, partition
@@ -14,15 +9,7 @@ Partition and clustering keys, consistency levels, tombstones, compaction,
 repair, replication, LWT, batches, hot partitions, schema evolution, and
 recovery.
 
-Name the schema and data authority, writers, scale, consistency, durability, and
-migration owner for Partition and clustering keys, consistency levels,
-tombstones, compaction, repair, replication. Prove LWT, batches, hot partitions,
-schema evolution, recovery under concurrent access, mixed versions, failover,
-interrupted migration, rollback, and restore.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require tables designed for known queries; server-side filtering and ad hoc
   joins are not a scaling plan.
@@ -37,28 +24,11 @@ interrupted migration, rollback, and restore.
 - Prove multi-datacenter replication, node replacement, backup restore, and
   schema rollout with production-like failure drills.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared Cassandra topology and workload:
-  Partition and clustering keys, consistency levels, tombstones, compaction,
-  repair, replication. Use production-shaped scale and workload while observing
-  latency, resource use, locks or conflicts, replication, and application
-  errors.
-- Exercise failure and edge behavior for: LWT, batches, hot partitions, schema
-  evolution, recovery. Exercise concurrent writers, retries, duplicate
-  operations, failover, interrupted migration, and mixed application versions
-  where applicable.
-- Restore or reconstruct state in isolation and verify data, metadata, security,
-  application startup, and recovery objectives.
-
-## Ask when evidence is missing
-
-- Which Cassandra-compatible product, exact version, topology, replication, and
-  repair model apply?
-- Which query paths require which consistency, partition-size, compaction,
-  tombstone, and failure behavior?
-
-## Calibrate findings
-
-- Downgrade when measured partitions, product-specific semantics, repair, and
-  failure tests support the design.
+- Load representative hot partitions and TTL or delete traffic; measure
+  partition growth, tombstone scans, compaction pressure, and read latency
+  under the selected consistency levels.
+- Interrupt replicas and repair, then verify reads and writes obey the
+  declared availability and consistency policy. Restore backups and rehearse
+  node replacement using the supported product and version.

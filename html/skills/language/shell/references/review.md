@@ -1,6 +1,6 @@
-# Shell standard review
+# Shell full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Shells and versions, operating systems, required
 utilities, POSIX requirement, locale and encoding, privilege context, scheduler
@@ -9,15 +9,7 @@ define: Shell dialects, expansion, quoting, globbing, pipelines, exit status,
 traps, signals, subprocesses, portability, temporary files, concurrency,
 encoding, and destructive boundaries.
 
-Define ownership, errors, cancellation, and concurrency for Shell dialects,
-expansion, quoting, globbing, pipelines, exit status, traps. Verify version,
-package, native, serialization, and artifact compatibility for signals,
-subprocesses, portability, temporary files, concurrency, encoding, destructive
-boundaries across every declared target and rollback path.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require quoting and delimiter-safe handling for paths, whitespace, newlines,
   globs, and untrusted values.
@@ -30,27 +22,14 @@ boundaries across every declared target and rollback path.
 - Test with the actual shell and command implementations on every supported
   platform; Bash behavior is not automatically POSIX.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared Shell compiler and runtime
-  targets: Shell dialects, expansion, quoting, globbing, pipelines, exit status,
-  traps. Use the real compiler or interpreter and supported release modes rather
-  than a development substitute.
-- Exercise failure and edge behavior for: signals, subprocesses, portability,
-  temporary files, concurrency, encoding, destructive boundaries. Exercise
-  boundary values, encoding, cancellation, resource exhaustion, concurrency,
-  dependency failure, and termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
-
-## Ask when evidence is missing
-
-- Which shell implementations, operating systems, utilities, locales, and
-  privilege contexts must the script support?
-- How do quoting, word splitting, globbing, pipelines, temporary files, signals,
-  errors, and encoding cross boundaries?
-
-## Calibrate findings
-
-- Downgrade when inputs and targets are explicit and shell, quoting, failure,
-  cleanup, and portability tests cover the script.
+- Run scripts with the declared shell and utility implementations, including
+  the scheduler or CI environment when relevant. Check empty arguments,
+  whitespace, newlines, leading hyphens, glob characters, and non-ASCII paths.
+- Fail commands in pipelines, substitutions, and subshells; interrupt work
+  with the signals it must handle. Verify exit status, trap behavior,
+  child-process cleanup, and temporary-file removal.
+- Use disposable targets to test destructive path selection, symlink handling,
+  interrupted writes, and repeat execution. Confirm that failures cannot
+  broaden the target or leave a partial result presented as success.

@@ -1,23 +1,11 @@
 ---
-name: blazor
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review Blazor engineering work for rendering mode, circuit or WebAssembly state, dependency lifetimes, JavaScript interop, navigation, security, accessibility, and deployment risks."
+name: gd-blazor
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review Blazor engineering work for rendering mode, circuit or WebAssembly state, dependency lifetimes, JavaScript interop, navigation, security, accessibility, and deployment risks."
 ---
 
 # Blazor GrumpyDev review
 
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-Apply this guidance alongside the core GrumpyDev review and the `csharp` skill.
-
-## Lean review
+## Quick checks
 
 - Establish the exact .NET, Blazor, hosting, rendering, and deployment versions
   or modes.
@@ -31,22 +19,15 @@ WebAssembly and server execution assumptions being mixed, prerendering that runs
 initialization twice, JavaScript interop after component disposal, and UI
 visibility mistaken for authorization.
 
-Lean mode is insufficient when this material severity condition may apply:
+- Assess server-only authorization missing, cross-circuit state leakage, or
+  unrecoverable core interaction loss under the core severity rules.
 
-- Treat server-only authorization missing, cross-circuit state leakage, or
-  unrecoverable core interaction loss as critical.
+## References
 
-## Load local references
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the Blazor specialist.
 
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete Blazor evidence, operating model, failure, verification,
-question, and calibration guidance. Never load `SURVEY.md` during an ordinary
-review.
-
-## Add to the verdict
+## Verdict context
 
 State rendering mode, state and service lifetimes, authorization boundary,
 interop lifecycle, reconnection behavior, and published-browser evidence.

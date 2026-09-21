@@ -20,13 +20,14 @@ Read `Decision-affecting research` from `.grump` when present:
   decision criteria, stopping conditions, and named downstream decisions. It
   must not approve the downstream implementation until the research is
   resolved, the implementation plan is updated, and that plan is Grumped again.
-- absent or `unresolved` defaults to `gated discovery`.
+- missing, invalid, or conflicting defaults to `gated discovery`.
 
 A mixed plan that includes both unresolved discovery and dependent downstream
 implementation is not ready as one implementation plan. Require it to resolve
 the research first or split out the bounded discovery plan. Use `REVISE` when a
 responsible corrected path is clear and `INSUFFICIENT EVIDENCE` when the missing
 research prevents one.
+
 ## Perform needed research
 
 Read `Research execution` from `.grump` when present:
@@ -38,7 +39,7 @@ Read `Research execution` from `.grump` when present:
   non-interactive.
 - `report only` means do not perform the research; identify the exact research,
   why it matters, and the decision it blocks under `Evidence gaps`.
-- absent or `unresolved` defaults to `ask first`.
+- missing, invalid, or conflicting defaults to `ask first`.
 
 Use project evidence and relevant project documentation before external
 research. For current technical or vendor facts, prefer authoritative primary
@@ -81,6 +82,7 @@ same evaluation. If the evidence resolves the issue and the resulting path is
 sufficiently specified, evaluate that path. For implementation plans, otherwise
 apply the plan-readiness policy above and preserve the remaining gap. For other
 targets, report how the unresolved research limits the verdict.
+
 ## Choose the review interaction mode
 
 Read `Review questions` from `.grump` when present:
@@ -89,13 +91,17 @@ Read `Review questions` from `.grump` when present:
   questions.
 - `non-interactive` means complete the review without pausing and report
   unanswered material questions under `Evidence gaps`.
-- absent or `unresolved` defaults to `interactive`.
+- when the field is missing, invalid, or conflicting, ask the first material
+  question with the option to reply `continue without Q&A`. That reply makes
+  only this evaluation non-interactive and moves all remaining substantive
+  questions to `Evidence gaps`.
 
 A current explicit user instruction overrides the stored mode for the current
 evaluation without rewriting `.grump`. This mode controls substantive review
 questions only. It does not suppress required safety confirmations, host
 approvals, clarification needed to identify the review target, or the
 post-review plan-rules offer when the target is an implementation plan.
+
 ## Deduplicate and ask review questions
 
 Collect potential questions from the core review and every active installed
@@ -123,6 +129,7 @@ review can finish with zero questions in either mode.
 Survey questions use a separate continuous `Q###` sequence. Review `RQ###`
 identifiers are scoped to one evaluation. Use the evaluation's ISO 8601 UTC time
 when preserving them in an authorized plan addendum.
+
 ## Offer durable doctrine promotion
 
 Live review questions and answers are scoped to the current evaluation.
@@ -142,7 +149,8 @@ future reviews, or keep it scoped to this evaluation? Reply with
 
 Do not ask this for temporary details, target-specific choices, or facts already
 recorded as doctrine. `Project-wide` explicitly confirms scope but does not by
-itself authorize a file write. Apply the `Confirmed doctrine updates` policy
-below. `This review only`, deferred, or declined keeps the answer scoped to the
-evaluation and any authorized plan addendum. Do not ask again without new
+itself authorize a file write. Before deciding whether to persist that answer,
+apply [doctrine-maintenance.md](doctrine-maintenance.md). `This review only`,
+deferred, or declined keeps the answer scoped to the evaluation and any
+authorized plan addendum. Do not ask again without new
 evidence that materially changes the apparent scope.

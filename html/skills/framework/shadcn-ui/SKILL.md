@@ -1,24 +1,11 @@
 ---
-name: shadcn-ui
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review shadcn/ui engineering work for source ownership, registry trust, component composition, accessibility, theming, upgrades, and local divergence."
+name: gd-shadcn-ui
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review shadcn/ui engineering work for source ownership, registry trust, component composition, accessibility, theming, upgrades, and local divergence."
 ---
 
 # shadcn/ui GrumpyDev review
 
-Apply this guidance alongside the core GrumpyDev review and the `react`, `tailwind-css` and
-`web-accessibility` skills.
-
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-## Lean review
+## Quick checks
 
 - Read the components configuration, registry sources, installed component source, Radix or
   other primitives, and styling setup.
@@ -31,22 +18,16 @@ as production state management, trusting third-party registries as executable
 source, broken dialog or menu focus after composition, and visual variants that
 drop semantics.
 
-Lean mode is insufficient when this material severity condition may apply:
+- Assess unreviewed executable registry content, broken modal focus, or inaccessible critical
+  actions under the core severity rules.
 
-- Treat unreviewed executable registry content, broken modal focus, or inaccessible critical
-  actions as critical.
+## References
 
-## Load local references
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the shadcn/ui
+specialist.
 
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete shadcn/ui evidence, operating model, failure,
-verification, question, and calibration guidance. Never load `SURVEY.md` during
-an ordinary review.
-
-## Add to the verdict
+## Verdict context
 
 State registry sources, owned local code, dependency changes, divergence policy, accessibility
 evidence, and update method.

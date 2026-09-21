@@ -1,6 +1,6 @@
-# MySQL standard review
+# MySQL full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: MySQL or compatible product and version, storage
 engine, SQL modes, character set and collation, topology, isolation, migration
@@ -8,15 +8,7 @@ tooling, and backup or restore process. The changed boundary must define: Engine
 behavior, types, collations, indexes, locking, isolation, replication, online
 DDL, SQL modes, migrations, query plans, and restore.
 
-Name the schema and data authority, writers, scale, consistency, durability, and
-migration owner for Engine behavior, types, collations, indexes, locking,
-isolation. Prove replication, online DDL, SQL modes, migrations, query plans,
-restore under concurrent access, mixed versions, failover, interrupted
-migration, rollback, and restore.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Verify storage engine, SQL mode, charset, collation, timezone, and
   case-sensitivity assumptions explicitly.
@@ -31,27 +23,11 @@ migration, rollback, and restore.
 - Treat replica lag, promotion, binlog format, backup retention, and tested
   point-in-time restore as part of correctness.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared MySQL topology and workload:
-  Engine behavior, types, collations, indexes, locking, isolation. Use
-  production-shaped scale and workload while observing latency, resource use,
-  locks or conflicts, replication, and application errors.
-- Exercise failure and edge behavior for: replication, online DDL, SQL modes,
-  migrations, query plans, restore. Exercise concurrent writers, retries,
-  duplicate operations, failover, interrupted migration, and mixed application
-  versions where applicable.
-- Restore or reconstruct state in isolation and verify data, metadata, security,
-  application startup, and recovery objectives.
-
-## Ask when evidence is missing
-
-- Which MySQL-compatible product, exact version, storage engine, SQL mode,
-  replication, and hosting model apply?
-- What lock, rewrite, collation, transaction, index, and
-  mixed-application-version behavior applies to the change?
-
-## Calibrate findings
-
-- Downgrade when product-specific migration evidence, constraints,
-  representative queries, and restore behavior are proven.
+- Rehearse DDL and backfills on representative tables using the selected
+  engine, SQL modes, and collation. Observe metadata locks, table copies,
+  temporary space, and compatibility with old application code.
+- Run conflicting transactions and deadlock retries, then test replica lag and
+  promotion where replication is used. Restore a backup, apply the intended
+  recovery logs, and verify data, grants, and application queries.

@@ -27,7 +27,6 @@ rate limits, or abuse controls.
   and state, including bulk requests and identifiers obtained from another
   account.
 
-
 ## Ask when evidence is missing
 
 - What idempotency, object and property authorization, business-flow abuse,

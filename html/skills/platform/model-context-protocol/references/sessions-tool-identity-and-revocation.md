@@ -27,7 +27,6 @@ revocation, or compatibility behavior.
 - Inspect network binding, process environment, logs, token storage, negotiated capabilities,
   and user-visible approval behavior.
 
-
 ## Ask when evidence is missing
 
 - Which MCP protocol and SDK versions, roles, capabilities, transports, sessions, and

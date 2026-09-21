@@ -31,7 +31,6 @@ draining, restart, rollback, or recovery.
   the same time. Verify cache invalidation, OPcache refresh or restart,
   migration ordering, drain behavior, rollback limits, and observable health.
 
-
 ## Ask when evidence is missing
 
 - If the plan uses version-specific syntax, runtime behavior, or dependencies,

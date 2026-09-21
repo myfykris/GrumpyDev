@@ -1,6 +1,6 @@
-# Concurrent systems standard review
+# Concurrent systems full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Concurrency model, thread or process limits,
 synchronization primitives, scheduler assumptions, latency targets,
@@ -9,15 +9,7 @@ Memory ordering, races, deadlocks, starvation, cancellation, ownership,
 synchronization, work queues, backpressure, scheduling, and deterministic
 evidence.
 
-Name the invariants, authorities, owners, and enforcement for Memory ordering,
-races, deadlocks, starvation, cancellation, ownership. Prove synchronization,
-work queues, backpressure, scheduling, deterministic evidence under concurrency,
-partial failure, incompatible versions, operational response, rollback, and
-repair, and justify the added complexity.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require an explicit happens-before story for shared state; thread safety by
   reputation is not evidence.
@@ -30,27 +22,11 @@ repair, and justify the added complexity.
 - Demand stress, race, timeout, and deterministic scheduling tests around the
   actual coordination boundaries.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the claimed architecture and its enforcement
-  boundaries: Memory ordering, races, deadlocks, starvation, cancellation,
-  ownership. Use dependency, architecture, contract, schema, or ownership tests
-  that fail when a claimed boundary is violated.
-- Exercise failure and edge behavior for: synchronization, work queues,
-  backpressure, scheduling, deterministic evidence. Exercise the material
-  invariant under concurrency, delay, duplication, partial failure, incompatible
-  versions, rollback, and repair.
-- Verify that operators can observe, diagnose, and recover the design without
-  bypassing its ownership rules.
-
-## Ask when evidence is missing
-
-- Which task owns each mutable resource, and which synchronization or message
-  boundary orders access?
-- What progress, cancellation, fairness, timeout, and failure behavior applies
-  under contention?
-
-## Calibrate findings
-
-- Downgrade when state is isolated or ownership, synchronization, and stress
-  evidence prove safety and progress.
+- Force competing operations to pause around lock acquisition, shared-state
+  reads, and commits. Use race detection or controlled scheduling where
+  available to test the claimed ordering and invariant.
+- Saturate worker pools and queues, then cancel callers and begin shutdown.
+  Check bounded waiting, deadlock recovery, released resources, and whether
+  abandoned work can still commit.

@@ -1,6 +1,6 @@
-# Angular standard review
+# Angular full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Angular, TypeScript, Node and RxJS versions,
 rendering mode, browser targets, build system, state approach, deployment base
@@ -8,15 +8,7 @@ path, and CSP constraints. The changed boundary must define: Standalone and
 module boundaries, dependency injection scopes, change detection, signals, RxJS
 lifecycle, routing, SSR and hydration, forms, security, bundles, and upgrades.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Standalone and module boundaries, dependency injection scopes, change detection,
-signals, RxJS lifecycle, routing. Prove SSR and hydration, forms, security,
-bundles, upgrades through startup, invalid or denied work, cancellation,
-background execution, mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require explicit provider scope and reject accidental shared state caused by
   root or route injector placement.
@@ -29,27 +21,11 @@ background execution, mixed versions, shutdown, rollback, and recovery.
 - Demand production-build and browser tests for lazy chunks, configuration
   replacement, service workers, and deployment base paths.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the actual Angular lifecycle and production
-  pipeline: Standalone and module boundaries, dependency injection scopes,
-  change detection, signals, RxJS lifecycle, routing. Use the actual framework
-  pipeline and production build with representative services and configuration.
-- Exercise failure and edge behavior for: SSR and hydration, forms, security,
-  bundles, upgrades. Exercise invalid input, denied access, cancellation,
-  dependency failure, concurrent work, shutdown, and mixed-version deployment
-  where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Angular, TypeScript, RxJS, rendering, router, and change-detection
-  versions or modes apply?
-- Who owns subscriptions, forms, server state, errors, hydration, and
-  route-level authorization?
-
-## Calibrate findings
-
-- Downgrade when lifecycle, server enforcement, rendering, and user-flow tests
-  cover the supported browser matrix.
+- Navigate repeatedly between affected routes while requests resolve out of
+  order. Check provider state isolation, observable teardown, signal updates,
+  and form errors after component destruction.
+- Serve the production build at the deployment base path. Exercise direct URLs
+  and failed lazy-chunk loads; where SSR or service workers are used, check
+  hydration and stale asset updates.

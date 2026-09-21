@@ -1,25 +1,12 @@
-# Android standard review
+# Android full-review guidance
 
-## Inspect additional evidence
-
-- Inspect permissions, intents, deep links, exported components, network security, storage,
-  backups, keystore, and WebView use.
-- Review background limits, WorkManager, notifications, foreground services, app links,
-  signing, shrinking, and release tracks.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Minimum and target SDK, device and form-factor support, Android
 plugin and build tools, UI toolkit, process and task model, permissions, exported components,
 storage and backup policy, background execution, signing, application ID, and release channels.
 
-Android may destroy and recreate processes without preserving in-memory state. The plan must
-distinguish saved UI state, durable local data, account-scoped data, server authority, and work
-that can safely resume.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require explicit lifecycle behavior for rotation, background, process death, task recreation,
   multi-window, and low memory.
@@ -43,7 +30,7 @@ that can safely resume.
 - Rehearse signing rotation, staged rollout, rollback, database migration, old clients, and
   Play policy changes.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Run release builds on representative API levels, vendors, screen sizes, locales, input modes,
   and low-memory conditions.
@@ -53,15 +40,3 @@ that can safely resume.
   configuration, and packaged artifacts.
 - Inspect release packages and a normal device for credentials, sensitive logs and storage,
   backup contents, exported components, permissive network overrides, and debuggable behavior.
-
-## Ask when evidence is missing
-
-- Which Android SDK levels, devices, UI toolkit, process model, permissions, background work,
-  and storage apply?
-- How are exported components, deep links, backups, accessibility, signing, upgrades, rollback,
-  and policy changes handled?
-
-## Calibrate findings
-
-- Downgrade when lifecycle, permissions, storage, package output, accessibility, and release
-  transitions are tested.

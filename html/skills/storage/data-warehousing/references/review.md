@@ -1,6 +1,6 @@
-# Data warehousing standard review
+# Data warehousing full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Warehouse product and version, modeling
 conventions, ingestion and transformation tools, refresh SLAs, data volumes,
@@ -9,15 +9,7 @@ Dimensional models, facts and dimensions, grain, slowly changing dimensions,
 ingestion, transformations, late data, lineage, quality, cost, and
 reproducibility.
 
-Name the schema and data authority, writers, scale, consistency, durability, and
-migration owner for Dimensional models, facts and dimensions, grain, slowly
-changing dimensions, ingestion, transformations. Prove late data, lineage,
-quality, cost, reproducibility under concurrent access, mixed versions,
-failover, interrupted migration, rollback, and restore.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require one declared grain per fact model and tests that prevent accidental
   fan-out or double counting.
@@ -30,28 +22,11 @@ failover, interrupted migration, rollback, and restore.
 - Treat workload isolation, partition pruning, scan volume, retention, row-level
   access, lineage, and cost limits as architecture.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared Data warehousing topology and
-  workload: Dimensional models, facts and dimensions, grain, slowly changing
-  dimensions, ingestion, transformations. Use production-shaped scale and
-  workload while observing latency, resource use, locks or conflicts,
-  replication, and application errors.
-- Exercise failure and edge behavior for: late data, lineage, quality, cost,
-  reproducibility. Exercise concurrent writers, retries, duplicate operations,
-  failover, interrupted migration, and mixed application versions where
-  applicable.
-- Restore or reconstruct state in isolation and verify data, metadata, security,
-  application startup, and recovery objectives.
-
-## Ask when evidence is missing
-
-- Which warehouse product, ingestion cadence, source-of-truth boundary, and
-  freshness contract apply?
-- How are late data, duplicates, schema drift, backfills, reconciliation, and
-  metric ownership handled?
-
-## Calibrate findings
-
-- Downgrade when data is exploratory and labeled or lineage, reconciliation, and
-  repeatable backfills are demonstrated.
+- Load duplicate keys, late facts, changed dimensions, corrections, and
+  deletions. Compare incremental results with a clean rebuild at the declared
+  fact grain and verify joins do not multiply totals.
+- Run backfills alongside scheduled reporting with representative data. Check
+  pruning, scan cost, freshness, access controls, and the ability to
+  reconstruct results from retained source data.

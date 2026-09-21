@@ -1,6 +1,6 @@
-# Secrets and configuration standard review
+# Secrets and configuration full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Configuration systems, secret stores, environment
 hierarchy, identity and access, rotation cadence, reload behavior, audit
@@ -8,16 +8,7 @@ requirements, and ownership. The changed boundary must define: Source and
 precedence, validation, secret lifecycle, rotation, reload, redaction, least
 privilege, environment drift, emergency access, and failure modes.
 
-Identify the authoritative source, precedence, schema and owner for every
-configuration value, plus the issuer, workload identity, access policy,
-rotation, revocation, reload and incident owner for every secret. Prove invalid,
-missing, stale, partially updated and unavailable configuration cannot activate
-an unsafe state, and that old and new credentials can overlap only as narrowly
-as the rotation requires.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Specify type, encoding, units, allowed values, and required presence; fail
   startup clearly on invalid critical configuration.
@@ -38,7 +29,7 @@ as the rotation requires.
   it active, and keep the last known safe version only when that behavior is
   deliberate and observable.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Render and inspect effective configuration for every supported environment,
   including precedence, types, encoding, required values and workload access.
@@ -50,15 +41,3 @@ as the rotation requires.
 - Scan source history, build context, images, packages, client bundles, source
   maps, logs, traces, crash reports, prompts, and backups for accidental
   exposure, then rehearse revocation and replacement from detection to recovery.
-
-## Ask when evidence is missing
-
-- Who owns each configuration value or secret, where is it sourced, and how is
-  it validated before use?
-- How do rotation, revocation, version skew, startup failure, and accidental
-  exposure behave?
-
-## Calibrate findings
-
-- Downgrade when values are non-sensitive and bounded or secret access,
-  rotation, validation, and failure tests are complete.

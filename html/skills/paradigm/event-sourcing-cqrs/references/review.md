@@ -1,54 +1,42 @@
-# Event sourcing and CQRS standard review
+# Event sourcing and CQRS full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
-Establish the project target: Event store and versions, stream boundaries,
-command and projection topology, consistency expectations, snapshot policy,
-replay scale, and deletion constraints. The changed boundary must define: Event
-immutability, aggregate streams, expected versions, projections, snapshots,
-commands, consistency, rebuilds, corrections, privacy, and migrations.
+Identify CQRS, event sourcing, or their combination. Establish command
+invariants, authoritative storage, read models, transaction boundaries, and
+read freshness requirements. Separate read and write models may share one
+database. Separate stores, asynchronous messages, and eventual consistency are
+design choices, not requirements of CQRS.
 
-Name the invariants, authorities, owners, and enforcement for Event
-immutability, aggregate streams, expected versions, projections, snapshots,
-commands. Prove consistency, rebuilds, corrections, privacy, migrations under
-concurrency, partial failure, incompatible versions, operational response,
-rollback, and repair, and justify the added complexity.
+For event-sourced state, also establish event-store guarantees, stream
+boundaries, event versions, replay scale, and deletion constraints. Inspect
+snapshots only when used; do not prescribe them as mandatory infrastructure.
 
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Demand a concrete need for historical reconstruction or independent read
   models; CRUD with extra steps is a bad trade.
-- Require optimistic concurrency and invariant enforcement at the append
-  boundary.
-- Define how old events remain readable as code, schemas, identifiers, and
-  business meanings change.
-- Prove projections can rebuild deterministically, resume idempotently, and
-  expose their freshness to callers.
-- Address corrections, privacy deletion, snapshot invalidation, storage growth,
-  and operator tooling before committing to immutable history.
+- Enforce command invariants at the actual write boundary, including concurrent
+  commands and retries. Select concurrency controls for the store in use.
+- Check that read models preserve authorization and do not silently change
+  business meanings. State whether a read must observe the preceding write.
+- When models use separate stores, define synchronization, duplicate and missing
+  update handling, freshness, and repair from the authoritative data. A shared
+  database design need not invent this machinery.
+- For event sourcing, verify expected-version checks or equivalent conflict
+  protection at append, and how old events remain readable as code and schemas
+  change. Replay must reconstruct state without repeating live side effects.
+- For event-sourced projections, verify restartable rebuilds and checkpoints.
+  Address corrections, privacy deletion, storage growth, and snapshot
+  invalidation when snapshots are used.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the claimed architecture and its enforcement
-  boundaries: Event immutability, aggregate streams, expected versions,
-  projections, snapshots, commands. Use dependency, architecture, contract,
-  schema, or ownership tests that fail when a claimed boundary is violated.
-- Exercise failure and edge behavior for: consistency, rebuilds, corrections,
-  privacy, migrations. Exercise the material invariant under concurrency, delay,
-  duplication, partial failure, incompatible versions, rollback, and repair.
-- Verify that operators can observe, diagnose, and recover the design without
-  bypassing its ownership rules.
-
-## Ask when evidence is missing
-
-- Which log is authoritative, and which event versions must rebuild every
-  supported projection?
-- How are command concurrency, event evolution, snapshots, projection lag,
-  replay, and correction handled?
-
-## Calibrate findings
-
-- Downgrade when the log is non-authoritative or versioned replay, concurrency
-  control, and reconciliation are proven.
+- Submit competing and repeated commands, then query through the real read
+  model. Check invariants, authorization, and the promised read-after-write
+  behavior.
+- With separate stores, delay, duplicate, and interrupt updates; verify the
+  consumer can resume or repair from the actual source of truth.
+- With event sourcing, replay retained event versions, interrupt a rebuild, and
+  compare reconstructed state with expected results. Verify corrections and
+  deletion policies without sending live external effects during replay.

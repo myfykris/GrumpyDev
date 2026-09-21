@@ -1,6 +1,6 @@
-# Vapor standard review
+# Vapor full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Vapor and Swift versions, event-loop topology,
 database drivers, queues, proxy and TLS, container or host deployment, and
@@ -8,15 +8,7 @@ supported operating systems. The changed boundary must define: Event loops,
 async and blocking work, request lifecycle, content decoding, authentication,
 Fluent transactions, queues, WebSockets, shutdown, and deployment.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Event loops, async and blocking work, request lifecycle, content decoding,
-authentication. Prove Fluent transactions, queues, WebSockets, shutdown,
-deployment through startup, invalid or denied work, cancellation, background
-execution, mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Keep blocking filesystem, SDK, cryptographic, or database work off event-loop
   threads and bound any thread-pool use.
@@ -29,26 +21,11 @@ execution, mixed versions, shutdown, rollback, and recovery.
 - Test the production server and proxy for timeouts, forwarded headers, TLS
   assumptions, graceful drain, migrations, and release builds.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the actual Vapor lifecycle and production
-  pipeline: Event loops, async and blocking work, request lifecycle, content
-  decoding, authentication. Use the actual framework pipeline and production
-  build with representative services and configuration.
-- Exercise failure and edge behavior for: Fluent transactions, queues,
-  WebSockets, shutdown, deployment. Exercise invalid input, denied access,
-  cancellation, dependency failure, concurrent work, shutdown, and mixed-version
-  deployment where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Swift, Vapor, SwiftNIO, database driver, and deployment versions apply?
-- How do event-loop affinity, async work, request state, authentication,
-  transactions, errors, and shutdown interact?
-
-## Calibrate findings
-
-- Downgrade when exact-version concurrency, auth, transaction, and shutdown
-  behavior are integration-tested.
+- Exercise Content decoding and object authorization with malformed and
+  privileged fields. Run concurrent handlers with slow dependencies to check
+  event-loop responsiveness and pool bounds.
+- Disconnect streams and WebSockets during work and stop the server during
+  Fluent transactions. Check cleanup, rollback, and request draining in the
+  release build behind the configured proxy.

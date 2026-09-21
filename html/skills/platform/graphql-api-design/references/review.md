@@ -1,6 +1,6 @@
-# GraphQL API design standard review
+# GraphQL API design full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: GraphQL implementation and version, schema
 ownership, clients, authentication, federation, query limits, persisted
@@ -9,16 +9,7 @@ define: Schema ownership, nullability, evolution, resolvers, authorization,
 batching, query cost, pagination, errors, subscriptions, caching, and persisted
 operations.
 
-Identify the owners of schema evolution, resolver data access, field and object
-authorization, batching, query-cost policy, pagination, persisted operations,
-subscriptions, caches, and client compatibility. Prove authorization and cost
-limits apply after aliases, fragments and variables are resolved, and show how
-old clients, cached operations, and long-lived subscriptions behave while the
-schema and servers change.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Enforce authorization in resolvers or domain boundaries for every returned
   object, field, mutation, subscription event, and state transition. Do not
@@ -43,18 +34,7 @@ schema and servers change.
 - Require additive schema evolution, deprecation telemetry, mixed-client
   evidence, stable identifiers, and cache behavior.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Run denied field, object, mutation, and subscription cases across roles and
   tenants, including aliases, batching, stale tokens, and cached values.
-## Ask when evidence is missing
-
-- Where is authorization enforced for each changed field, object, and resolver
-  path?
-- What query depth, breadth, alias, batching, subscription, result, and
-  downstream-cost limits apply to untrusted clients?
-
-## Calibrate findings
-
-- Downgrade when the schema is internal and trusted or authorization and cost
-  limits are enforced and tested at execution time.

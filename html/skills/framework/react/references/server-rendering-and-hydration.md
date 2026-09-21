@@ -12,11 +12,12 @@ browser and server execution differences.
 
 ## Verify the claims
 
-- Verify these behaviors through the actual React lifecycle and production
-  pipeline: Render purity, state ownership, effects, concurrency, transitions,
-  suspense, server rendering. Use the actual framework pipeline and production
-  build with representative services and configuration.
-
+- Hydrate the server-rendered output with different time zones, delayed data,
+  and browser-only dependencies where relevant. Check mismatches, fallback
+  transitions, and early user input during hydration.
+- Inspect serialized initial data and streamed output for unintended
+  disclosure. Verify interrupted or failed server rendering leaves usable
+  error or retry behavior in the actual framework build.
 
 ## Ask when evidence is missing
 

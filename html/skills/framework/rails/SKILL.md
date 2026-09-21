@@ -1,23 +1,11 @@
 ---
-name: rails
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review Rails engineering work for Active Record behavior, migrations, callbacks, jobs, caching, authorization, request security, and zero-downtime deployment risks."
+name: gd-rails
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review Rails engineering work for Active Record behavior, migrations, callbacks, jobs, caching, authorization, request security, and zero-downtime deployment risks."
 ---
 
 # Ruby on Rails GrumpyDev review
 
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-Apply this guidance alongside the core GrumpyDev review and the `ruby` skill.
-
-## Lean review
+## Quick checks
 
 - Read Rails and Ruby versions, routes, middleware, models and migrations,
   callbacks, jobs, caches, credentials, server and worker configuration, and
@@ -31,22 +19,16 @@ regressions, autoload and eager-load differences, jobs enqueued before commit,
 non-idempotent retries, and migrations whose locks or rewrites are invisible in
 development data.
 
-Lean mode is insufficient when this material severity condition may apply:
+- Assess authorization bypass, callback-driven duplicate effects, or destructive
+  migration behavior under the core severity rules.
 
-- Treat authorization bypass, callback-driven duplicate effects, or destructive
-  migration behavior as critical.
+## References
 
-## Load local references
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the Ruby on Rails
+specialist.
 
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete Ruby on Rails evidence, operating model, failure,
-verification, question, and calibration guidance. Never load `SURVEY.md` during
-an ordinary review.
-
-## Add to the verdict
+## Verdict context
 
 State ORM and callback behavior, migration safety, job guarantees, authorization
 boundaries, runtime configuration, and production deployment evidence.

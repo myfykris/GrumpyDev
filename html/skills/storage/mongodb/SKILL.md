@@ -1,24 +1,11 @@
 ---
-name: mongodb
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review MongoDB engineering work for document boundaries, schema validation, indexes, consistency, transactions, sharding, replication, and recovery."
+name: gd-mongodb
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review MongoDB engineering work for document boundaries, schema validation, indexes, consistency, transactions, sharding, replication, and recovery."
 ---
 
 # MongoDB GrumpyDev review
 
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-Apply this guidance alongside the core GrumpyDev review and the applicable
-installed application specialist for the data-access boundary.
-
-## Lean review
+## Quick checks
 
 - Read document models, validators, indexes, query and aggregation plans, read
   and write concerns, sessions, shard keys, replicas, and backups.
@@ -31,22 +18,15 @@ array growth, multi-document transactions used to recreate relational behavior,
 multikey index surprises, read and write concerns weaker than business needs,
 poor shard keys, and retryable writes repeating external effects.
 
-Lean mode is insufficient when this material severity condition may apply:
+- Assess acknowledged data loss, unsafe concurrent updates, or an unrecoverable
+  schema migration under the core severity rules.
 
-- Treat acknowledged data loss, unsafe concurrent updates, or an unrecoverable
-  schema migration as critical.
+## References
 
-## Load local references
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the MongoDB specialist.
 
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete MongoDB evidence, operating model, failure, verification,
-question, and calibration guidance. Never load `SURVEY.md` during an ordinary
-review.
-
-## Add to the verdict
+## Verdict context
 
 State document and schema boundaries, index evidence, consistency choices,
 distribution risks, and restore proof.

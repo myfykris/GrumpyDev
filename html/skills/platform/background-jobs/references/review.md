@@ -1,6 +1,6 @@
-# Background jobs standard review
+# Background jobs full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Queue implementation, delivery semantics, worker
 topology, retry and timeout policy, concurrency limits, scheduler, dead-letter
@@ -8,15 +8,7 @@ handling, and retention. The changed boundary must define: Enqueue and commit
 boundaries, delivery guarantees, idempotency, retries, timeouts, scheduling,
 uniqueness, concurrency, poison jobs, draining, and replay.
 
-Identify who owns the durable enqueue record, broker state, worker effect,
-scheduler, retry policy, concurrency budget, poison queue, cancellation, replay,
-and operator repair. Trace the transaction gap between business state and
-enqueue, then prove duplicate delivery, lease expiry, worker termination,
-backlog growth, and mixed worker versions preserve the required effects.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require durable enqueue for work that must survive process loss; in-memory
   tasks do not qualify.
@@ -29,7 +21,7 @@ backlog growth, and mixed worker versions preserve the required effects.
 - Provide cancellation, replay, manual repair, progress, and deployment drain
   procedures that operators can actually use.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Exercise failure before and after the enqueue commit and before, during and
   after each external effect. Verify retry or duplicate delivery cannot repeat
@@ -40,15 +32,3 @@ backlog growth, and mixed worker versions preserve the required effects.
 - Run old and new workers together, then drain and roll back while long-running
   jobs are active. Verify payload compatibility, cancellation, visibility and
   operator repair.
-
-## Ask when evidence is missing
-
-- What durable record owns each job, and what makes retry or duplicate execution
-  safe?
-- How are cancellation, lease expiry, poison work, and operator recovery
-  handled?
-
-## Calibrate findings
-
-- Downgrade when work is disposable by requirement or durable state,
-  idempotency, and recovery are proven.

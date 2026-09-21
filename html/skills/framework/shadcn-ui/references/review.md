@@ -1,24 +1,12 @@
-# shadcn/ui standard review
+# shadcn/ui full-review guidance
 
-## Inspect additional evidence
-
-- Trace composition, controlled state, focus, portals, overlays, forms, validation, keyboard
-  behavior, and responsive layout.
-- Inspect registry authentication, fetched dependencies, post-install changes, license data,
-  and review provenance.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: shadcn/ui generation version and configuration, framework,
 registries, primitive libraries, styling and icon systems, component ownership, update policy,
 accessibility targets, and accepted local divergence.
 
-Installed components are application source code, not a centrally upgraded binary library. The
-project owns their behavior, security, accessibility, tests, and future merges.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require source review for every registry item, dependency, configuration change, and script
   before it enters the project.
@@ -31,7 +19,7 @@ project owns their behavior, security, accessibility, tests, and future merges.
 - Test composed application behavior rather than treating primitive-library accessibility
   claims as inherited proof.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Diff generated or updated source, dependencies, and configuration, then review the effective
   code committed to the application.
@@ -39,15 +27,3 @@ project owns their behavior, security, accessibility, tests, and future merges.
   high contrast.
 - Test local variants and wrapper components with keyboard, screen reader, responsive layouts,
   and application data.
-
-## Ask when evidence is missing
-
-- Which shadcn/ui setup, framework, registries, primitives, styling system, and local component
-  modifications apply?
-- Who owns registry trust, source review, upgrades, accessibility, design tokens, and merge
-  behavior?
-
-## Calibrate findings
-
-- Downgrade when source provenance, local ownership, composition, accessibility, and update
-  diffs are tested.

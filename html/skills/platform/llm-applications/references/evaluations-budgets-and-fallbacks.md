@@ -30,7 +30,6 @@ rollback.
 - Inspect production traces for provenance, privacy, cost, model identity, prompt version,
   latency, and safe failure without storing secrets.
 
-
 ## Ask when evidence is missing
 
 - Which models, versions, effort settings, prompts, schemas, retrieval, data classes, and

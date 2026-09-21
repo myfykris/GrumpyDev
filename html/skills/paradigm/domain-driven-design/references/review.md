@@ -1,6 +1,6 @@
-# Domain-driven design standard review
+# Domain-driven design full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Domain boundaries and owners, authoritative
 terminology, aggregate and transaction boundaries, integration relationships,
@@ -9,15 +9,7 @@ define: Bounded contexts, ubiquitous language, aggregates, invariants,
 transactions, domain events, anti-corruption layers, ownership, and model
 evolution.
 
-Name the invariants, authorities, owners, and enforcement for Bounded contexts,
-ubiquitous language, aggregates, invariants, transactions. Prove domain events,
-anti-corruption layers, ownership, model evolution under concurrency, partial
-failure, incompatible versions, operational response, rollback, and repair, and
-justify the added complexity.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Reject entities, services, repositories, or events added only to imitate a
   pattern; require a domain problem each abstraction solves.
@@ -30,27 +22,11 @@ justify the added complexity.
 - Distinguish domain rules from orchestration and infrastructure, then test
   rules without requiring the entire runtime.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the claimed architecture and its enforcement
-  boundaries: Bounded contexts, ubiquitous language, aggregates, invariants,
-  transactions. Use dependency, architecture, contract, schema, or ownership
-  tests that fail when a claimed boundary is violated.
-- Exercise failure and edge behavior for: domain events, anti-corruption layers,
-  ownership, model evolution. Exercise the material invariant under concurrency,
-  delay, duplication, partial failure, incompatible versions, rollback, and
-  repair.
-- Verify that operators can observe, diagnose, and recover the design without
-  bypassing its ownership rules.
-
-## Ask when evidence is missing
-
-- Which business invariant and language define each proposed bounded context and
-  aggregate boundary?
-- Where do translations, ownership, transactions, and eventual consistency cross
-  contexts?
-
-## Calibrate findings
-
-- Downgrade when the distinction is organizational only or domain evidence,
-  ownership, and translation rules are explicit.
+- Test business invariants through aggregate operations, including competing
+  updates and failed transactions. Check that domain events cannot claim a
+  state change that did not commit.
+- Exercise translations between bounded contexts with values whose meanings
+  differ. Verify a model change in one context does not silently alter another
+  context's rules or bypass the owning aggregate.

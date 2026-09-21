@@ -1,6 +1,6 @@
-# Express standard review
+# Express full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Express and Node versions, module system, proxy
 topology, session store, body limits, worker or cluster model, process manager,
@@ -8,15 +8,7 @@ and deployment platform. The changed boundary must define: Middleware and error
 order, request lifecycle, async failures, body parsing, proxy trust, sessions,
 streaming, shutdown, Node event loop, and security boundaries.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Middleware and error order, request lifecycle, async failures, body parsing,
-proxy trust. Prove sessions, streaming, shutdown, Node event loop, security
-boundaries through startup, invalid or denied work, cancellation, background
-execution, mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Verify async errors reach one controlled error handler for the actual Express
   version and wrapper conventions.
@@ -29,27 +21,11 @@ execution, mixed versions, shutdown, rollback, and recovery.
 - Require server timeout, keep-alive, drain, connection, and signal handling
   tests under the production proxy.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the actual Express lifecycle and production
-  pipeline: Middleware and error order, request lifecycle, async failures, body
-  parsing, proxy trust. Use the actual framework pipeline and production build
-  with representative services and configuration.
-- Exercise failure and edge behavior for: sessions, streaming, shutdown, Node
-  event loop, security boundaries. Exercise invalid input, denied access,
-  cancellation, dependency failure, concurrent work, shutdown, and mixed-version
-  deployment where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Node.js and Express versions, module mode, proxy topology, and server
-  runtime apply?
-- How do middleware order, trust proxy, body limits, async errors,
-  authentication, and shutdown behave?
-
-## Calibrate findings
-
-- Downgrade when the deployment boundary, middleware order, error path, limits,
-  and shutdown are integration-tested.
+- Throw synchronous errors and reject asynchronous handlers through the
+  configured Express version and middleware chain. Verify one controlled
+  response, including failures after response streaming begins.
+- Send spoofed proxy headers and oversized or malformed bodies through
+  protected routes. Test keep-alive connections and slow streams during
+  shutdown behind the actual proxy configuration.

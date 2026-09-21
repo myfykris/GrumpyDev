@@ -1,60 +1,24 @@
 # htmx survey contribution
 
-## Applicability
+## Applies when
 
 Apply this contribution when the project uses or materially depends on htmx.
 
-Skip it only when project evidence or an explicit user answer establishes that this
-domain does not constrain a supported build, runtime, client, data, deployment, or
-operating boundary.
+## Inspect
 
-This is project-level applicability, not a current-plan trigger. Once the package is
-installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
-explicitly invoked GrumpyDev review.
+- Read the htmx version, extensions, configuration, server framework, template system, and
+  response conventions.
 
-## Inspect before asking
+## Ask when unresolved
 
-Inspect package and lock files, effective configuration, generated output, build and deployment
-workflows, project documentation, representative code, tests, and existing .grump doctrine for
-htmx. Resolve facts from current evidence before asking.
+- Which htmx version, extensions, server templates, fragment convention, swap
+  targets, and cache behavior apply?
 
-## Durable project facts
+- How are request races, direct navigation, history storage, CSRF, injected
+  HTML, focus, and errors handled?
 
-- Target and operating model: htmx version, server and template stack, extensions, request and
-  response conventions, fragment detection, history policy, cache variation, CSRF transport,
-  CSP, and accessibility behavior.
-- Review doctrine: The URL and server-rendered HTML remain authoritative. Any URL placed in
-  history must return a complete navigable page outside an htmx request.
-- Conditional deployment boundary: server framework, template engine, htmx and
-  extension versions, proxy cache variation, CSP and CSRF settings, origin behavior, static
-  asset source, and direct-navigation routing.
+## Record
 
-## Ask only when materially unresolved
-
-- Which htmx version, extensions, server templates, fragment convention, swap targets, and
-  cache behavior apply?
-- How are request races, direct navigation, history storage, CSRF, injected HTML, focus, and
-  errors handled?
-
-## Record in .grump
-
-Record confirmed htmx answers as project technology, architecture, security, deployment,
-verification, and operational doctrine. Preserve source, scope, confidence, and environment
-differences. Record a material unknown as unresolved instead of inventing a default.
-
-Map execution-specific facts to the affected `DEP-###` profile. Reference a shared `INF-###`
-component rather than copying its common contract. Keep separate ownership, support, confidence,
-source, and scope fields.
-
-## Do not ask or record
-
-Do not record transient host identifiers, current resource readings, temporary rollout values,
-credentials, private endpoints, or plan-only choices as durable htmx doctrine. Do not duplicate
-facts owned by another applicable contribution.
-
-## Re-survey triggers
-
-Re-survey htmx when its version, extension set, server-rendered fragment contract,
-history behavior, event conventions, CSP policy, or client-side state boundary
-materially changes. Also re-survey when evidence conflicts with saved doctrine or the
-user requests a context refresh.
+Map durable htmx version and behavior requirements to `Requirements` or
+`Constraints`, lifecycle and deployment facts to `Runtime and deployment`, and
+material gaps to `Unknowns`.

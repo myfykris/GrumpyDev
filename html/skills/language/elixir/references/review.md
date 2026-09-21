@@ -1,11 +1,6 @@
-# Elixir standard review
+# Elixir full-review guidance
 
-## Inspect additional evidence
-
-- Trace process startup, ownership, mailbox growth, crash propagation, restart
-  behavior, external calls, and node membership changes.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Elixir and OTP versions, release tooling, node
 topology, clustering and discovery, deployment model, scheduler and resource
@@ -14,15 +9,7 @@ processes, supervision, linking and monitoring, mailbox growth, OTP behaviors,
 fault isolation, clustering, distribution, hot upgrades, persistence boundaries,
 and releases.
 
-Define ownership, errors, cancellation, and concurrency for BEAM processes,
-supervision, linking and monitoring, mailbox growth, OTP behaviors, fault
-isolation. Verify version, package, native, serialization, and artifact
-compatibility for clustering, distribution, hot upgrades, persistence
-boundaries, releases across every declared target and rollback path.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require a deliberate supervisor strategy and restart intensity for every
   long-lived process.
@@ -35,27 +22,12 @@ boundaries, releases across every declared target and rollback path.
 - Test rolling releases, configuration at runtime, clustering partitions, and
   dependency outages rather than only happy-path process tests.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared Elixir compiler and runtime
-  targets: BEAM processes, supervision, linking and monitoring, mailbox growth,
-  OTP behaviors, fault isolation. Use the real compiler or interpreter and
-  supported release modes rather than a development substitute.
-- Exercise failure and edge behavior for: clustering, distribution, hot
-  upgrades, persistence boundaries, releases. Exercise boundary values,
-  encoding, cancellation, resource exhaustion, concurrency, dependency failure,
-  and termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
-
-## Ask when evidence is missing
-
-- Which Elixir, Erlang/OTP, release target, and dependency versions define
-  runtime behavior?
-- Which process owns state and work, and how do supervision, messages, timeouts,
-  overload, and upgrades behave?
-
-## Calibrate findings
-
-- Downgrade when process lifecycles are bounded and supervision, overload,
-  failure, and release tests prove recovery.
+- Crash supervised children during in-flight work and verify restart behavior
+  against persisted state. Delay replies and overload mailboxes to check
+  timeout handling, bounded work, and protection against repeated external
+  effects.
+- Boot the packaged release with runtime configuration and interrupt its
+  dependencies. If clustering applies, partition and rejoin nodes while
+  checking recovery, message handling, and rolling-version compatibility.

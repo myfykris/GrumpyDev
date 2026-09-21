@@ -1,6 +1,6 @@
-# Dependency and supply-chain standard review
+# Dependency and supply-chain full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Package ecosystems, approved registries and
 sources, lock policy, update cadence, license policy, private dependencies,
@@ -8,16 +8,7 @@ vulnerability process, and build isolation. The changed boundary must define:
 Source trust, resolution, lockfiles, registries, scopes, transitive risk, build
 scripts, updates, vulnerabilities, licenses, vendoring, and recovery.
 
-Identify the authoritative manifests, lockfiles, registries, namespaces,
-mirrors, build scripts, generated artifacts, update automation, vulnerability
-policy, license policy, vendored sources, and emergency-removal owner. Trace
-what code executes during resolution, install, build, test, and packaging, and
-prove a compromised, yanked, or unavailable dependency can be contained and
-replaced reproducibly.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require a concrete payoff for each dependency relative to its transitive code,
   privileges, maintenance, and replacement cost.
@@ -44,7 +35,7 @@ replaced reproducibly.
   ecosystem supports them. Promote the same reviewed artifact across
   environments instead of rebuilding from mutable inputs.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Resolve and build from a clean environment using only declared registries,
   mirrors, manifests, lockfiles and toolchains. Compare the installed and
@@ -57,16 +48,3 @@ replaced reproducibly.
 - Compare the bill of materials with the installed and deployed output. Exercise
   registry or maintainer compromise, package removal, revoked credentials,
   cache poisoning, urgent replacement, and rollback to a known supported build.
-
-## Ask when evidence is missing
-
-- What canonical source, publisher, exact resolved version, and lockfile
-  identify each new dependency?
-- Which install scripts, build plugins, generated artifacts, licenses, and
-  transitive updates enter the build boundary, inventory, and vulnerability
-  response process?
-
-## Calibrate findings
-
-- Downgrade when provenance, exact resolution, isolation, licensing, and update
-  ownership are established by ecosystem evidence.

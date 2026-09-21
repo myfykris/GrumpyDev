@@ -19,11 +19,12 @@ caching, cache keys, tags, revalidation, personalization, or stale behavior.
 
 ## Verify the claims
 
-- Verify these behaviors through the actual Next.js lifecycle and production
-  pipeline: App and pages routers, server and client components, rendering and
-  caching modes, actions, middleware. Use the actual framework pipeline and
-  production build with representative services and configuration.
-
+- Serve the production build and request the same route as different users,
+  tenants, and anonymous visitors. Verify cache hits, expiration, and
+  revalidation preserve the declared identity boundary.
+- Exercise direct loads and client navigation with slow data and stale
+  content. Check streaming, hydration, and cache behavior under the actual
+  router, runtime, and deployment settings.
 
 ## Ask when evidence is missing
 

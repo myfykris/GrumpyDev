@@ -1,24 +1,11 @@
 ---
-name: laravel
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review Laravel engineering work for service-container scope, Eloquent behavior, migrations, queues, events, authorization, caching, and deployment risks."
+name: gd-laravel
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review Laravel engineering work for service-container scope, Eloquent behavior, migrations, queues, events, authorization, caching, and deployment risks."
 ---
 
 # Laravel GrumpyDev review
 
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-Coordinate findings with the active PHP, database, queue, cache, web-server,
-and deployment specialists for the configured drivers and runtime.
-
-## Lean review
+## Quick checks
 
 - Trace an affected request or job through middleware, validation,
   authorization, container resolution, transactions, Eloquent, events,
@@ -34,45 +21,33 @@ and deployment specialists for the configured drivers and runtime.
 - In Octane or another long-running server, reject singleton or static state
   that can retain request, user, or tenant data.
 
-Lean mode is insufficient for schema or backfill work, authorization changes,
-queue delivery changes, long-running process adoption, multi-connection
-transactions, or a deployment that changes cached artifacts.
+## References
 
-## Load local references
-
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md)
-for the shared detailed review contract.
-
-Load these focused references only when their stated boundary applies:
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the Laravel specialist.
 
 - [Focused rules](references/http-validation-and-authorization.md):
-  Read when the reviewed work directly or indirectly changes routes, middleware, request
+  Read when the work changes routes, middleware, request
   validation, route model
   binding, guards, providers, policies, gates, CSRF, signed URLs, rate limits, trusted
   proxies, API resources, JSON output, pagination, or HTTP error behavior.
 - [Focused rules](references/eloquent-transactions-and-migrations.md):
-  Read when the reviewed work directly or indirectly changes Eloquent models,
+  Read when the work changes Eloquent models,
   relationships, scopes, casts, observers,
   bulk updates, constraints, transactions, locking, database connections, schema,
   indexes, backfills, or mixed-version data behavior.
 - [Focused rules](references/queues-events-and-workers.md):
-  Read when the reviewed work directly or indirectly changes queued jobs, events,
+  Read when the work changes queued jobs, events,
   listeners, notifications, Horizon,
   scheduler behavior, retry, uniqueness, ordering, idempotency, worker termination,
   Octane, or another resident process.
 - [Focused rules](references/caching-configuration-and-deployment.md):
-  Read when the reviewed work directly or indirectly changes cache keys, invalidation,
+  Read when the work changes cache keys, invalidation,
   sessions, generated
   configuration, route or view caches, maintenance mode, release artifacts, storage
   links, OPcache, worker restarts, health checks, rollback, or deployment sequencing.
 
-Do not load every focused reference merely because this specialist is installed.
-Never load `SURVEY.md` during an ordinary review.
-
-## Add to the verdict
+## Verdict context
 
 Identify the affected request or job path, process lifetime, transaction
 boundary, and configured driver assumptions behind each material finding.

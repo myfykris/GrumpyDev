@@ -1,23 +1,11 @@
 ---
-name: sinatra
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review Sinatra engineering work for route and middleware order, application state, request validation, concurrency, sessions, errors, and deployment risks."
+name: gd-sinatra
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review Sinatra engineering work for route and middleware order, application state, request validation, concurrency, sessions, errors, and deployment risks."
 ---
 
 # Sinatra GrumpyDev review
 
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-Apply this guidance alongside the core GrumpyDev review and the `ruby` skill.
-
-## Lean review
+## Quick checks
 
 - Establish the exact Ruby, Sinatra, Rack, server, and deployment versions or
   modes.
@@ -30,22 +18,15 @@ threaded servers, middleware-dependent session or proxy behavior, blocking
 request handlers, error handlers that write after a response starts, and
 development-server behavior assumed in production.
 
-Lean mode is insufficient when this material severity condition may apply:
+- Assess mutable cross-request state, auth-order bypass, or unsafe multi-threaded
+  behavior under the core severity rules.
 
-- Treat mutable cross-request state, auth-order bypass, or unsafe multi-threaded
-  behavior as critical.
+## References
 
-## Load local references
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the Sinatra specialist.
 
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete Sinatra evidence, operating model, failure, verification,
-question, and calibration guidance. Never load `SURVEY.md` during an ordinary
-review.
-
-## Add to the verdict
+## Verdict context
 
 State application and state model, middleware and route behavior, request trust
 boundaries, concurrency assumptions, and production-server evidence.

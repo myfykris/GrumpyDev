@@ -1,11 +1,6 @@
-# SwiftUI standard review
+# SwiftUI full-review guidance
 
-## Inspect additional evidence
-
-- Trace state ownership, bindings, view identity, tasks, cancellation, scene
-  transitions, navigation restoration, and data errors.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Swift and Xcode versions, target platforms and
 minimum OS versions, observation and navigation model, concurrency mode,
@@ -13,15 +8,7 @@ persistence, and distribution targets. The changed boundary must define: View
 identity, state wrappers, observation, rendering, navigation, tasks, actors,
 persistence, platform lifecycle, accessibility, previews, and OS availability.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-View identity, state wrappers, observation, rendering, navigation, tasks. Prove
-actors, persistence, platform lifecycle, accessibility, previews, OS
-availability through startup, invalid or denied work, cancellation, background
-execution, mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Choose the correct owner for each state value and reject duplicated or
   recreated observable state caused by view identity changes.
@@ -34,27 +21,11 @@ execution, mixed versions, shutdown, rollback, and recovery.
 - Use device and release evidence for rendering cost, list identity, memory,
   persistence migration, and lifecycle transitions.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the actual SwiftUI lifecycle and production
-  pipeline: View identity, state wrappers, observation, rendering, navigation,
-  tasks. Use the actual framework pipeline and production build with
-  representative services and configuration.
-- Exercise failure and edge behavior for: actors, persistence, platform
-  lifecycle, accessibility, previews, OS availability. Exercise invalid input,
-  denied access, cancellation, dependency failure, concurrent work, shutdown,
-  and mixed-version deployment where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Swift, SwiftUI, OS versions, device classes, and concurrency model
-  apply?
-- Who owns observable state, navigation, task cancellation, persistence,
-  accessibility, and scene restoration?
-
-## Calibrate findings
-
-- Downgrade when version-specific state, navigation, concurrency, restoration,
-  and accessibility are tested on supported devices.
+- Change view identity, navigate rapidly, and dismiss views while tasks
+  finish. Verify observable state retains its intended owner and canceled or
+  stale work cannot update the wrong screen.
+- Test deep links and restoration after process termination on supported OS
+  targets. Exercise affected flows with Dynamic Type and VoiceOver, and use
+  device release builds for rendering and memory claims.

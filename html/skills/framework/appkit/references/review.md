@@ -1,16 +1,6 @@
-# AppKit standard review
+# AppKit full-review guidance
 
-## Inspect additional evidence
-
-- Establish declared and effective versions in development, CI, test, and every
-  supported deployment environment. Record differences that change behavior.
-- Trace one representative operation through startup, success, cancellation,
-  failure, shutdown, update, and recovery. Include encoding and serialization at
-  every application, process, native, storage, and network boundary.
-- Prefer observable artifacts, focused experiments, and project documentation
-  over assertions based on a framework or product name.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: AppKit and macOS deployment targets, Swift or
 Objective-C use, lifecycle model, document model, sandbox and entitlements,
@@ -19,16 +9,7 @@ define: Application and window lifecycle, responder chain, controllers,
 bindings, document architecture, drawing, concurrency, accessibility, state
 restoration, SwiftUI interop, sandboxing, and termination.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Application and window lifecycle, responder chain, controllers, bindings,
-document architecture, drawing. Prove concurrency, accessibility, state
-restoration, SwiftUI interop, sandboxing, termination through startup, invalid
-or denied work, cancellation, background execution, mixed versions, shutdown,
-rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Trace launch, activation, reopening, window creation, window close,
   application termination, sudden termination, and state restoration. Do not
@@ -49,29 +30,10 @@ rollback, and recovery.
 - Keep AppKit and SwiftUI state ownership unambiguous at hosting boundaries.
   Verify object lifetime, environment propagation, navigation, focus, commands,
   and observation in both directions.
-## Verify the claims
+
+## Verification to run or specify in the plan
 
 - Run UI and accessibility tests with keyboard-only input, VoiceOver, scaling,
   localization, dark mode, reduced motion, and multiple displays.
 - Profile main-thread stalls, drawing, memory, retain cycles, and cancellation
   through window teardown.
-
-## Ask when evidence is missing
-
-Ask only when evidence cannot establish the durable target: AppKit and macOS
-deployment targets, Swift or Objective-C use, lifecycle model, document model,
-sandbox and entitlements, persistence, accessibility targets, and distribution.
-For the changed boundary, ask only about unresolved Application and window
-lifecycle, responder chain, controllers, bindings, document architecture,
-drawing, concurrency, accessibility, state restoration, SwiftUI interop,
-sandboxing, and termination when the answer can change the verdict or
-implementation.
-
-## Calibrate findings
-
-- Treat a lifecycle, authorization, persistence, or deployment defect that
-  breaks a core workflow or loses user state as material when the reviewed work depends
-  on it and lacks either a safe design or credible evidence.
-- Downgrade or close findings when target-specific documentation, representative
-  builds, focused tests, failure exercises, and recovery evidence establish the
-  required behavior.

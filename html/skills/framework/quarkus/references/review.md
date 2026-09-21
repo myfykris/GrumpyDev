@@ -1,6 +1,6 @@
-# Quarkus standard review
+# Quarkus full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Quarkus and Java versions, JVM or native mode,
 extensions, reactive stack, build tool, configuration sources, container
@@ -8,15 +8,7 @@ platform, and database drivers. The changed boundary must define: CDI scopes,
 build-time augmentation, reactive and imperative boundaries, transactions,
 configuration, native image, extensions, dev services, startup, and deployment.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for CDI
-scopes, build-time augmentation, reactive and imperative boundaries,
-transactions, configuration. Prove native image, extensions, dev services,
-startup, deployment through startup, invalid or denied work, cancellation,
-background execution, mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Distinguish build-time from runtime configuration and reject plans that expect
   runtime changes to alter build-fixed behavior.
@@ -29,27 +21,11 @@ background execution, mixed versions, shutdown, rollback, and recovery.
 - Test JVM and native artifacts under production configuration, health checks,
   rolling deployment, and dependency failure.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the actual Quarkus lifecycle and production
-  pipeline: CDI scopes, build-time augmentation, reactive and imperative
-  boundaries, transactions, configuration. Use the actual framework pipeline and
-  production build with representative services and configuration.
-- Exercise failure and edge behavior for: native image, extensions, dev
-  services, startup, deployment. Exercise invalid input, denied access,
-  cancellation, dependency failure, concurrent work, shutdown, and mixed-version
-  deployment where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Java, Quarkus, build mode, native-image toolchain, extension, and
-  deployment versions apply?
-- How do dependency injection scopes, reactive and blocking work, configuration,
-  transactions, and startup differ by mode?
-
-## Calibrate findings
-
-- Downgrade when JVM and native modes, extension versions, transactions, and
-  lifecycle are both tested where supported.
+- Boot the packaged application without dev services and verify which settings
+  were fixed at build time. Exercise CDI initialization, transaction context,
+  and blocking work under concurrent requests.
+- If native output is shipped, run that artifact through reflection,
+  serialization, resource loading, and TLS paths. Check health and shutdown
+  behavior with unavailable dependencies.

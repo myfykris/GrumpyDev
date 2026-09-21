@@ -1,24 +1,11 @@
 ---
-name: expo
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review Expo engineering work for SDK and React Native compatibility, native configuration, EAS builds, updates, permissions, plugins, routing, and release safety."
+name: gd-expo
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review Expo engineering work for SDK and React Native compatibility, native configuration, EAS builds, updates, permissions, plugins, routing, and release safety."
 ---
 
 # Expo GrumpyDev review
 
-Apply this guidance alongside the core GrumpyDev review and the `react-native`, `javascript` and
-`typescript` skills.
-
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-## Lean review
+## Quick checks
 
 - Read Expo SDK, React Native, React, router, module, config-plugin, and native project
   versions.
@@ -31,22 +18,15 @@ mutate native projects unpredictably, over-the-air updates crossing native
 compatibility, secrets placed in public app config, and permissions tested on
 only one platform.
 
-Lean mode is insufficient when this material severity condition may apply:
+- Assess signing compromise, secret exposure, incompatible updates that brick a core flow, or
+  unsafe permission use under the core severity rules.
 
-- Treat signing compromise, secret exposure, incompatible updates that brick a core flow, or
-  unsafe permission use as critical.
+## References
 
-## Load local references
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the Expo specialist.
 
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete Expo evidence, operating model, failure, verification,
-question, and calibration guidance. Never load `SURVEY.md` during an ordinary
-review.
-
-## Add to the verdict
+## Verdict context
 
 State the SDK and native matrix, workflow, generated changes, update compatibility, permission
 behavior, signing owner, and release evidence.

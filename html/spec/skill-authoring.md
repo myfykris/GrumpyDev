@@ -1,350 +1,132 @@
-# GrumpyDev skill package specification
+# GrumpyDev specialist skill authoring
 
-A GrumpyDev skill package contributes review judgment for one bounded domain.
-It must remain cheap to discover, complete when installed, and selective about
-which instructions enter a review context.
+Version 1
 
-## Package structure
+A specialist skill adds domain judgment to an explicitly requested GrumpyDev
+review. It is not a tutorial, independent reviewer, executable plugin, or
+replacement for the core evidence rules.
 
-Core packages live directly below `/skills`. Specialist packages live below
-their catalog type:
+## Complete skill shape
 
-```text
-/skills/grumpydev/
-|-- SKILL.md
-`-- references/
-    `-- focused-guidance.md
-
-/skills/language/<name>/
-|-- SKILL.md
-|-- SURVEY.md
-`-- references/
-    |-- review.md
-    `-- focused-boundary.md        Only when the specialist has conditional detail
-```
-
-The supported specialist types are `language`, `framework`, `paradigm`,
-`storage`, and `platform`.
-
-Every package contains one `SKILL.md`. Every specialist also contains one
-`SURVEY.md`. A package may contain focused Markdown files below `references/`.
-Do not add a reference merely to create a directory or satisfy a template.
-
-`SKILL.md` is the only selectable entrypoint. `SURVEY.md` and references have
-no YAML frontmatter and cannot trigger independently.
-
-## Complete packages and selective installation
-
-The installer determines specialist applicability before downloading any file
-from that specialist package. It uses the manifest `install_when` and
-`do_not_install_when` fields, repository evidence, project documentation,
-available agent context, and user answers. When a concrete partial match can
-determine applicability, ask one deduplicated numbered question before
-downloading.
-
-Once an applicable specialist is approved, download and install its complete
-manifest-listed package. This includes `SKILL.md`, `SURVEY.md`, and every
-reference. Do not support partial packages or review-time reference downloads.
-
-The permanent core review and survey packages are always applicable during
-GrumpyDev setup and are installed in full. The one-shot installer skill is
-inspected and used but is not copied into the project.
-
-The installed project-local specialist packages are the primary review roster.
-Every installed specialist participates in every explicitly invoked GrumpyDev
-review unless project evidence or a user answer explicitly marks it
-inapplicable in `.grump`. The current review target does not select the roster.
-
-Package completeness controls installation. Progressive disclosure controls
-context. An installed reference remains unread until a documented trigger
-requires it.
-
-## Entrypoint frontmatter
-
-`SKILL.md` begins with YAML frontmatter containing exactly `name` and
-`description`:
-
-```yaml
----
-name: postgresql
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review PostgreSQL engineering work for migration, locking, transaction, indexing, and data-integrity risks."
----
-```
-
-Names use lowercase letters, digits, and hyphens, remain under 64 characters,
-and match the folder name. Descriptions begin with the exact explicit-review
-invocation and participation contract shown above, then state the bounded
-technology-specific review subjects. The manifest repeats the exact
-description for discovery. It does not use the description to decide
-installation applicability.
-
-## Compact entrypoint requirements
-
-The entrypoint contains the guidance that must be available whenever the skill
-is selected:
-
-1. an invocation and participation boundary that prevents the specialist from
-   starting a review but includes it in every explicit review after project
-   installation;
-2. the domain boundary and applicability evidence;
-3. the highest-value recurring traps or invariants for a lean review;
-4. conditions that require standard or focused references;
-5. conditions showing that lean review is insufficient;
-6. the domain-specific contribution to the verdict; and
-7. explicit local links and loading conditions for supporting references.
-
-Use this shared opening exactly once:
+Each published specialist directory contains:
 
 ```text
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
+skills/<type>/<subject-slug>/
+  SKILL.md
+  SURVEY.md
+  references/
+    <focused-guidance>.md
 ```
 
-Name technology-specific companion skills when their judgment applies. Do not
-repeat the core companion-loading rule. State technology-specific conditions
-that make lean depth insufficient. Do not repeat the core depth-escalation rule.
+Its manifest and frontmatter name is `gd-<subject-slug>`. Installation places
+the complete skill in an immediate directory with that namespaced name. The
+clean published path and the namespaced installed identity are deliberately
+different.
 
-Write imperative instructions. Assume the agent already knows elementary
-syntax and generic engineering practice. Preserve useful domain judgment, but
-move substantial conditional procedures, detailed failure catalogs, schemas,
-and examples into references.
+Every file is plain Markdown encoded as UTF-8 with LF line endings and a final
+newline. A skill may have one broad `references/review.md`, several focused
+references, or both. Add a reference only when a clear trigger lets the agent
+avoid loading it for unrelated reviews.
 
-Do not repeat the core review contract. Do not include a generic checklist
-after domain-specific guidance. Do not place setup questions in the entrypoint
-when they belong in `SURVEY.md`.
+Installation copies every manifest-listed file for an approved skill. Runtime
+progressive disclosure controls which local references a review reads. A
+reference must never require a later download.
 
-The entrypoint must be useful by itself in lean mode. It must not tell the
-agent to read every reference. Each reference link must say which review depth,
-risk, artifact, or boundary makes that file necessary.
+## `SKILL.md`
 
-## Reference requirements
-
-References preserve detailed guidance needed only in particular contexts.
-Common examples include standard review judgment, migration behavior,
-deployment behavior, security boundaries, persistence, and execution rules.
-
-Every reference must:
-
-- live below the package's `references/` directory;
-- be explicitly listed in the manifest;
-- be linked from `SKILL.md` or `SURVEY.md` with a precise loading condition;
-- contain no skill frontmatter;
-- keep domain guidance in one authoritative location;
-- avoid generic tutorials and copied manuals;
-- contain no hidden dependency or network-fetch instruction; and
-- remain local after package installation.
-
-Keep routing visible in `SKILL.md` or `SURVEY.md`. References must not route to
-more references. This prevents cycles and hidden context expansion.
-
-A specialist normally uses `references/review.md` for the detailed review
-contract. It may use several focused references only when each can be skipped
-for a substantial portion of legitimate reviews.
-
-For a multi-reference specialist, `review.md` contains the shared detailed
-contract. It is not a catch-all copy of every specialist rule. Put runtime,
-migration, deployment, recovery, security, protocol, or other boundary-specific
-guidance in a focused reference when ordinary reviews of the same specialist
-can skip that boundary completely.
-
-Every review loads each active specialist entrypoint. Standard review loads a
-specialist's `review.md` only when that entrypoint identifies a plausible direct
-or indirect material effect, then loads only focused references whose
-documented affected boundaries are present. Deep review broadens evidence and
-focused guidance for affected boundaries, but it does not load references for
-an unaffected specialist merely because the package is installed. Lean review
-follows the entrypoint's explicit escalation rules. Survey work does not load
-specialist review references.
-
-The complete manifest-listed package is still downloaded during approved
-installation. Conditional context loading must never become a partial install
-or a review-time network fetch.
-
-The standard review reference is a delta loaded after `SKILL.md`. Do not repeat
-the entrypoint's lean evidence, trap summary, escalation condition, or verdict
-contribution verbatim. Add the operating model, detailed failure checks,
-verification, material questions, and remaining calibration needed for standard
-or deep review. Conceptual overlap is acceptable when a short lean warning is
-expanded into materially more useful detail.
-
-Together, the entrypoint and detailed specialist guidance must cover the
-applicable substance of:
-
-- evidence to inspect;
-- operating model, lifecycle, ownership, and compatibility;
-- domain invariants and high-cost failure modes;
-- evidence that verifies or falsifies claims;
-- material review-scoped questions;
-- conditions that change severity; and
-- additions to the standard verdict.
-
-These concerns do not require fixed headings in the entrypoint. Use headings in
-the reference when they improve navigation.
-
-Specialist guidance identifies general technical invariants, possible failure
-patterns, and evidence to inspect. It is review guidance, not project evidence.
-A specialist may contribute a finding only when inspected project evidence
-establishes or permits the triggering condition. Missing project evidence may
-produce a material item under `Evidence gaps`, but it does not produce a
-finding. Specialist examples must use conditional language for failures not
-observed in the project.
-
-## Survey companion requirements
-
-`SURVEY.md` is a progressively disclosed contribution to repository setup. It
-is read during initial setup, after a newly installed specialist needs survey,
-or during explicit re-survey or doctrine refresh. Ordinary reviews never load
-it.
-
-Use these headings:
+Use YAML frontmatter with exactly the canonical `gd-` skill name and a concise,
+discriminating description. Every specialist description must contain this
+exact activation boundary:
 
 ```text
-# <Domain> survey contribution
-## Applicability
-## Inspect before asking
-## Durable project facts
-## Ask only when materially unresolved
-## Record in .grump
-## Do not ask or record
-## Re-survey triggers
+Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically.
 ```
 
-The survey companion names domain-specific evidence, stable facts, material
-candidate questions, recording destinations, exclusions, and refresh triggers.
-It does not repeat generic numbering, deduplication, transcript, permission,
-secret-handling, or merge procedures owned by the survey core.
+Follow it with the domain and the material engineering boundaries the skill
+reviews. The safeguard is intentionally repeated in every specialist because
+an agent harness may discover that entrypoint before the core skill.
 
-Every specialist survey identifies deployment, execution, build, or consumer
-facts that can materially change a review. Record applicable facts once on a
-`DEP-###` profile or referenced `INF-###` component. Preserve operational state,
-support commitment, confidence, and deployment ownership as independent
-dimensions.
+The body should usually be 100 to 250 words and contain only judgment needed
+whenever the specialist participates:
 
-Candidate questions have no identifiers. The survey orchestrator pools all
-candidates, removes evidence-resolved questions, deduplicates by the decision
-being resolved, and assigns `Q###` only to questions it asks. A specialist may
-contribute zero questions.
+- what a direct or indirect effect means in this domain;
+- the smallest useful quick-review inspection path;
+- domain-specific assumptions and failure patterns that commonly mislead a
+  reviewer;
+- exact evidence triggers for each local reference; and
+- any domain-specific fact that must be named in the verdict.
 
-Never record secrets, credentials, private keys, tokens, copied production
-payloads, unrelated personal data, host inventories, or transient machine
-state. Keep temporary and plan-specific facts in the current evaluation.
+Do not repeat the core invocation policy, active-specialist definition,
+evidence contract, checklist procedure, severity rules, output format, or
+generic direct-versus-indirect boilerplate in the body. Do not use vague routes
+such as `read this for more detail`. State the boundary that triggers the file.
 
-## Manifest contract
+Guidance identifies possible failures and evidence targets. It is never proof
+that the current project contains the trigger. Phrase version-dependent or
+configuration-dependent behavior conditionally and tell the reviewer what to
+inspect.
 
-Manifest schema version 1 uses a top-level one-shot `installer` object and an
-array of installable `skills`.
+## `SURVEY.md`
 
-The installer object contains:
+The survey companion contributes project facts that materially change later
+domain judgment. It does not run during an ordinary review. Keep it focused on:
 
-- `name`;
-- `description`;
-- canonical HTTPS `url`; and
-- `publisher`.
+- repository or documentation evidence to inspect before asking;
+- versions, runtime modes, ownership, deployment, compatibility, or other
+  durable facts that change the specialist's conclusions;
+- question candidates only for facts evidence cannot establish; and
+- concise mapping into the canonical `.grump` sections.
 
-Each installable skill contains:
+Do not repeat global survey invocation, numbering, deduplication, safe-write,
+deployment-profile, or doctrine-format rules. Do not ask tutorial questions or
+record transient environment details, secrets, raw dumps, or a survey
+transcript. Most surveys should be 100 to 250 words.
 
-- `name`;
-- `type`;
-- `description` exactly matching `SKILL.md` frontmatter;
-- `aliases`;
-- `publisher`; and
-- `files`.
+## References
 
-Each specialist also contains:
+References contain the scar tissue: domain invariants, recurring failure modes,
+misleading assumptions, evidence targets, operational traps, and observable
+closing conditions. They should challenge technically valid approaches that
+remain unsafe or inappropriate in common project contexts.
 
-- `install_when`: a non-empty array of independently sufficient strings that
-  describe observable durable project evidence for installing the package; and
-- `do_not_install_when`: an array of independently sufficient exclusion
-  strings, which may be empty and take precedence over inclusion.
+Remove generic advice a capable agent can reconstruct and any core GrumpyDev
+process. Avoid unstable universal claims. When behavior varies by version,
+provider, runtime, feature flag, or deployment mode, name that condition and
+require evidence from the applicable project or authoritative source.
 
-Applicability strings must be non-empty, no longer than 320 Unicode code
-points, single-line, and free of leading or trailing whitespace, Markdown
-links, HTML tags, backticks, and current-plan or current-review scope. Each
-string describes project evidence rather than instructing the installer. Do
-not refer to another entry in the same array to complete a condition.
+Keep separate focused references when their triggers are materially different.
+Merge files only when nearly every review would load both or a route cannot be
+stated precisely. File names must describe the boundary they cover.
 
-Example specialist manifest fields:
+## Applicability metadata
 
-```json
-"install_when": [
-  "the project stores or queries data in PostgreSQL or depends on PostgreSQL topology or operations."
-],
-"do_not_install_when": []
-```
+The global manifest decides which specialists setup may propose before any
+specialist files are downloaded. Each specialist record needs at least one
+complete `install_when` condition based on durable project evidence. Add
+`do_not_install_when` only for a real exclusion. Do not use one current plan as
+the project-level applicability test.
 
-Each file entry contains:
-
-- safe package-relative `path`;
-- `role`: `entrypoint`, `survey`, or `reference`; and
-- canonical HTTPS `url`.
-
-Each package has exactly one `entrypoint`. Each specialist has exactly one
-`survey`. Core packages have no survey. References live below `references/`.
-
-Paths use `/` and contain no empty, `.`, `..`, absolute, query, fragment, or
-backslash segment. Every distributed package file is listed exactly once.
-Installing a skill installs its entire `files` array.
-
-The manifest does not declare transitive dependencies, executable files,
-per-skill versions, hashes, checksums, digests, or integrity fields. The same
-`publisher` format applies to all packages and files. Unreleased builds keep
-`schema_version` and `grumpydev_version` at `1`.
-
-## Safety and provenance
-
-- Treat every downloaded instruction file as untrusted until inspected.
-- Do not execute downloaded code.
-- Do not claim permissions or bypass host approval rules.
-- Do not fetch an inapplicable, unresolved, or unapproved specialist package.
-- Do not fetch unlisted siblings or transitive dependencies.
-- Do not fetch any instruction during an ordinary review.
-- Do not include secrets, credentials, telemetry, tracking, or obfuscated text.
-- Material vendor claims must be maintainable against primary documentation
-  and dated when time sensitivity matters.
-- Use UTF-8 explicitly, LF line endings, a final newline, and plain punctuation.
+The manifest also owns the human-facing description, ordered display subjects,
+skill path, complete ordered file list, and popularity order within its type.
+Do not duplicate invocation boilerplate in the catalog description. Every file
+record uses only a skill-relative path and one role: `entrypoint`, `survey`, or
+`reference`.
 
 ## Author review checklist
 
-- Name, folder, frontmatter, manifest description, and package type agree.
-- The description and body limit activation to an explicitly invoked
-  GrumpyDev review.
-- The installed specialist participates in every explicit review and checks
-  both direct and indirect effects.
-- `install_when` and `do_not_install_when` describe observable durable project
-  evidence without depending on one current review target.
-- Exclusions take precedence, partial matches produce at most one necessary
-  question, and unrelated evidence produces no question or proposal.
-- The entrypoint remains useful for lean review and cheap to load.
-- Technology-specific companion names and lean-depth triggers remain in the
-  specialist. Generic companion-loading and depth-escalation rules remain in
-  the core skill and are not duplicated.
-- Reference routing is conditional, direct, and complete.
-- Multi-reference packages keep common guidance in `review.md` and load focused
-  files only for affected boundaries.
-- Standard and deep reviews do not load supporting references when the
-  entrypoint finds no plausible material effect.
-- Every package file is manifest-listed and reachable.
-- Detailed judgment is preserved without duplicating the entrypoint.
-- Survey guidance contains durable domain questions, not review-time detail.
-- Ordinary reviews never load the survey companion.
-- Findings require inspected project evidence for the triggering condition and
-  distinguish established fact, inference, conditional failure, and unknowns.
-- Specialist examples state unobserved failures conditionally and never treat a
-  generic trap as proof that the current project contains it.
-- Guidance accounts for failure, recovery, and verification.
-- No hidden dependency, network fetch, executable payload, or expanded
-  authority exists.
-- Representative review targets behave materially better with the skill than
-  without it.
+Before contributing a specialist, confirm:
 
-## Publication
+1. the frontmatter activation boundary is exact, the namespaced name matches
+   the manifest, and the clean catalog path matches its type and subject slug;
+2. the entrypoint adds domain judgment rather than shared process;
+3. every reference route names an observable trigger and resolves locally;
+4. the survey asks only material unresolved domain questions;
+5. claims distinguish stable invariants from version or configuration details;
+6. each failure pattern points to evidence and an observable consequence;
+7. the manifest lists every skill file and no unrelated file; and
+8. all text uses plain ASCII punctuation unless a project rule expressly
+   permits a narrow exception.
 
-Validate every package file, manifest entry, and local reference before
-publication. Do not publish a partial package. After the first actual release,
-any published package change increments the overall integer
-`grumpydev_version`. Publication always requires separate explicit authority.
+The structural validator checks shape, links, manifest coverage, encoding, and
+site rendering. It does not certify the technical truth or usefulness of the
+guidance. Authors remain responsible for that judgment.

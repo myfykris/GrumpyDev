@@ -1,24 +1,12 @@
-# Tailwind CSS standard review
+# Tailwind CSS full-review guidance
 
-## Inspect additional evidence
-
-- Inspect responsive, dark, forced-color, motion, print, hover, focus, disabled, loading,
-  error, and high-contrast states.
-- Review arbitrary values, important rules, resets, third-party CSS ordering, asset paths, and
-  final generated CSS.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Tailwind version, framework and build integration, source roots,
 monorepo working directory, theme tokens, plugins, class-generation conventions, browser
 targets, CSS ordering, and performance budgets.
 
-Tailwind scans source text, not runtime values. Every class needed in production must appear in
-detectable source or an explicit source or safelist rule.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require complete static class tokens for variants or map dynamic inputs to a finite,
   inspectable class table.
@@ -31,7 +19,7 @@ detectable source or an explicit source or safelist rule.
 - Inspect final CSS ordering, size, unused growth, plugin output, asset URLs, and conflicts
   with component or vendor styles.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Run the production build from the actual workspace root and inspect expected utilities and
   final CSS size.
@@ -39,15 +27,3 @@ detectable source or an explicit source or safelist rule.
   forced colors, and responsive breakpoints.
 - Test CSS ordering and resets with embedded components, portals, third-party widgets, and
   lazy-loaded routes.
-
-## Ask when evidence is missing
-
-- Which Tailwind version, framework integration, source roots, theme tokens, plugins, and
-  browser targets apply?
-- How are dynamic variants, shared packages, production scanning, accessibility states, CSS
-  ordering, and size verified?
-
-## Calibrate findings
-
-- Downgrade when source detection, tokens, state coverage, accessibility, ordering, and
-  production CSS are verified.

@@ -1,6 +1,6 @@
-# MongoDB standard review
+# MongoDB full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: MongoDB version, replica or shard topology, read
 and write concerns, drivers, schema and index ownership, transaction use,
@@ -8,15 +8,7 @@ backup, and data-volume profile. The changed boundary must define: Document
 boundaries, schema validation, indexes, transactions, read and write concerns,
 replication, sharding, change streams, migrations, and backup.
 
-Name the schema and data authority, writers, scale, consistency, durability, and
-migration owner for Document boundaries, schema validation, indexes,
-transactions, read and write concerns. Prove replication, sharding, change
-streams, migrations, backup under concurrent access, mixed versions, failover,
-interrupted migration, rollback, and restore.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require embedding or referencing decisions to follow access and consistency
   boundaries, not fear of joins.
@@ -29,27 +21,12 @@ interrupted migration, rollback, and restore.
 - Prove shard-key distribution, resharding path, replica failover, backup
   consistency, and restore behavior before scale depends on them.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared MongoDB topology and workload:
-  Document boundaries, schema validation, indexes, transactions, read and write
-  concerns. Use production-shaped scale and workload while observing latency,
-  resource use, locks or conflicts, replication, and application errors.
-- Exercise failure and edge behavior for: replication, sharding, change streams,
-  migrations, backup. Exercise concurrent writers, retries, duplicate
-  operations, failover, interrupted migration, and mixed application versions
-  where applicable.
-- Restore or reconstruct state in isolation and verify data, metadata, security,
-  application startup, and recovery objectives.
-
-## Ask when evidence is missing
-
-- Which MongoDB version, topology, storage mode, read concern, write concern,
-  and transaction use apply?
-- How are schema variation, indexes, retries, migrations, replication lag, and
-  restore handled?
-
-## Calibrate findings
-
-- Downgrade when document ownership is bounded and concerns, atomic operations,
-  validation, and restore tests match the topology.
+- Run actual query and aggregation shapes with representative document sizes
+  and array growth. Inspect explain output, sort or spill behavior, validator
+  failures, and index write cost.
+- Exercise concurrent updates and transaction retries through failover with
+  the selected read and write concerns. Where sharding or change streams
+  apply, test their recovery paths; restore a backup and verify indexes,
+  validators, and application startup.

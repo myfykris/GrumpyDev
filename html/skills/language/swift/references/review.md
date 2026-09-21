@@ -1,6 +1,6 @@
-# Swift standard review
+# Swift full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Swift and toolchain versions, Apple or server
 targets, deployment versions, strict concurrency mode, package manager,
@@ -9,16 +9,7 @@ must define: Swift version semantics, ownership and value behavior, optionals,
 errors, structured concurrency, actors and isolation, Sendable, ABI, packages,
 Objective-C and C interop, and platform lifecycle.
 
-Define ownership, errors, cancellation, and concurrency for Swift version
-semantics, ownership and value behavior, optionals, errors, structured
-concurrency, actors and isolation. Verify version, package, native,
-serialization, and artifact compatibility for Sendable, ABI, packages,
-Objective-C and C interop, platform lifecycle across every declared target and
-rollback path.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require structured task ownership, cancellation, actor isolation, and a
   defined boundary for main-thread work.
@@ -31,27 +22,11 @@ rollback path.
 - Demand device and release-build tests for concurrency, persistence migration,
   low-memory behavior, and background transitions.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared Swift compiler and runtime
-  targets: Swift version semantics, ownership and value behavior, optionals,
-  errors, structured concurrency, actors and isolation. Use the real compiler or
-  interpreter and supported release modes rather than a development substitute.
-- Exercise failure and edge behavior for: Sendable, ABI, packages, Objective-C
-  and C interop, platform lifecycle. Exercise boundary values, encoding,
-  cancellation, resource exhaustion, concurrency, dependency failure, and
-  termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
-
-## Ask when evidence is missing
-
-- Which Swift language, compiler, OS, deployment target, package, and
-  concurrency versions apply?
-- How do actors, tasks, cancellation, sendability, ownership, errors, and
-  Objective-C interop cross the boundary?
-
-## Calibrate findings
-
-- Downgrade when isolation is local and compiler checks, target-version,
-  concurrency, interop, and failure tests cover it.
+- Run affected tasks through cancellation and actor hops; exercise
+  continuations on both success and failure. Check state isolation and that
+  callbacks cannot retain or update an owner beyond its intended lifetime.
+- Build the supported deployment targets with the selected concurrency
+  settings. Test release artifacts on the actual device or server targets,
+  including changed Objective-C or C ownership and nullability boundaries.

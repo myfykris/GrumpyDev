@@ -1,70 +1,30 @@
 # Microservices survey contribution
 
-## Applicability
+## Applies when
 
 Apply this contribution when a system is split into independently deployed network
-services. Skip it when Microservices do not constrain a supported build, runtime,
-client, data, deployment, or operating boundary.
+services.
 
-This is project-level applicability, not a current-plan trigger. Once the package is
-installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
-explicitly invoked GrumpyDev review.
+## Inspect
 
-## Inspect before asking
+- Read service responsibilities, data stores, APIs and events, dependency graph,
+  deployment units, ownership, observability, and incident history.
 
-For Microservices, inspect architecture records, module or service maps,
-dependency rules, schemas and contracts, enforcement tests, deployment
-definitions, ownership documents, service objectives, and recovery runbooks.
-Read existing `.grump` doctrine and project documentation before treating a
-durable fact as unresolved.
-
-## Durable project facts
-
-- Target and operating model: Service and team ownership, data stores,
-  protocols, deployment units, consistency expectations, platform capabilities,
-  SLOs, and incident ownership.
-- Review doctrine for: Service boundaries, ownership, data separation,
-  contracts, partial failure, deployment independence, observability,
-  versioning, testing, and operational cost.
-- Sources of truth and owners for relevant configuration, contracts, builds,
-  deployment, upgrades, incidents, rollback, and recovery.
-- Environment differences that materially change these facts.
-- Deployment-profile guidance: Service placement, discovery, network, ingress,
-  identity, data ownership, regions, service mesh, deployment independence,
-  observability, and incident ownership.
-
-## Ask only when materially unresolved
+## Ask when unresolved
 
 - What independent ownership, scaling, deployment, or failure requirement
   justifies each service boundary?
-- How are data ownership, cross-service workflows, compatibility, observability,
-  and operator recovery handled?
-- Align existing domain questions with this deployment guidance when it is
-  material: Service placement, discovery, network, ingress, identity, data
-  ownership, regions, service mesh, deployment independence, observability, and
-  incident ownership. Do not repeat the core profile confirmation.
 
-## Record in .grump
+- How are data ownership, cross-service workflows, compatibility,
+  observability, and operator recovery handled?
 
-Record Microservices answers in project architecture, data ownership,
-integration, deployment, and operational doctrine. Preserve source and scope.
-Record a material unknown as unresolved doctrine instead of guessing.
+- Which runtime or deployment differences are material for future reviews:
+  Service placement, discovery, network, ingress, identity, data ownership,
+  regions, service mesh, deployment independence, observability, and incident
+  ownership?
 
-Map existing Microservices survey answers to the affected `DEP-###` profile.
-Reference a shared `INF-###` component rather than copying its common contract.
-Preserve separate state, support, ownership, confidence, source, and scope
-fields.
+## Record
 
-## Do not ask or record
-
-Keep unaccepted proposed boundaries, temporary team assignments, one incident
-snapshot, and plan-only design choices out of durable Microservices doctrine. Do
-not duplicate facts owned by another applicable contribution.
-
-## Re-survey triggers
-
-Re-survey Microservices when business invariants, ownership boundaries, data
-authority, module or service map, integration model, deployment units,
-consistency requirements, or operational responsibility materially change, when
-evidence conflicts with saved doctrine, or when the user requests a context
-refresh.
+Map accepted Microservices architecture choices to `Accepted decisions`,
+binding boundaries to `Requirements` or `Constraints`, and material gaps to
+`Unknowns`.

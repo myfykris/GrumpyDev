@@ -1,6 +1,6 @@
-# gRPC and Protocol Buffers standard review
+# gRPC and Protocol Buffers full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Protobuf and gRPC versions, language runtimes,
 code-generation ownership, transport and proxy topology, retry policy, schema
@@ -8,16 +8,7 @@ registry, and compatibility window. The changed boundary must define: Field
 evolution, presence, unknown fields, services, deadlines, cancellation, retries,
 streaming, status mapping, metadata, load balancing, and generated code.
 
-Identify the authoritative proto definitions, generated-code versions, client
-and server owners, field-presence rules, metadata and identity boundaries,
-deadline and cancellation propagation, retry policy, status mapping, streaming
-limits, and load-balancing behavior. Prove old and new clients, servers and
-stored messages interoperate while fields and methods evolve, including stream
-termination and retry after ambiguous failures.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Never reuse removed field numbers or names, and require intentional presence,
   default, enum, oneof, and unknown-field behavior.
@@ -30,7 +21,7 @@ termination and retry after ambiguous failures.
 - Standardize status codes and structured error details, secure transport and
   service identity, and test mixed generated clients and servers.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Generate every supported client and server from the reviewed proto set and
   run old-new combinations through serialization, unknown fields, presence,
@@ -40,14 +31,3 @@ termination and retry after ambiguous failures.
   endpoint movement through the actual proxy and load balancer.
 - Roll out and roll back client and server versions while calls and streams are
   active, verifying removed fields or methods are not reused incompatibly.
-
-## Ask when evidence is missing
-
-- Which client, server, and schema versions overlap during rollout or replay?
-- What deadlines, retry rules, message limits, streaming termination, and status
-  details apply at each call boundary?
-
-## Calibrate findings
-
-- Downgrade when compatibility tests, bounded calls, and idempotent retry
-  behavior cover the supported version matrix.

@@ -1,11 +1,6 @@
-# Elasticsearch and OpenSearch standard review
+# Elasticsearch and OpenSearch full-review guidance
 
-## Inspect additional evidence
-
-- Trace document creation, update, refresh, search, reindex, rollover, node
-  loss, and snapshot restore.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Product and version, cluster topology, shard
 policy, mappings and analyzers, index lifecycle, ingestion rate, query SLAs,
@@ -13,15 +8,7 @@ security, and snapshot process. The changed boundary must define: Mappings,
 analyzers, shards, segments, refresh, indexing, queries, relevance, aliases,
 reindexing, snapshots, cluster state, and version compatibility.
 
-Name the schema and data authority, writers, scale, consistency, durability, and
-migration owner for Mappings, analyzers, shards, segments, refresh, indexing,
-queries. Prove relevance, aliases, reindexing, snapshots, cluster state, version
-compatibility under concurrent access, mixed versions, failover, interrupted
-migration, rollback, and restore.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Define relevance and correctness tests; plausible search results are not proof
   that analysis and scoring work.
@@ -36,28 +23,11 @@ migration, rollback, and restore.
 - Treat reindexing, mapping evolution, lifecycle deletion, access control,
   snapshots, and restore drills as required operations.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared Elasticsearch and OpenSearch
-  topology and workload: Mappings, analyzers, shards, segments, refresh,
-  indexing, queries. Use production-shaped scale and workload while observing
-  latency, resource use, locks or conflicts, replication, and application
-  errors.
-- Exercise failure and edge behavior for: relevance, aliases, reindexing,
-  snapshots, cluster state, version compatibility. Exercise concurrent writers,
-  retries, duplicate operations, failover, interrupted migration, and mixed
-  application versions where applicable.
-- Restore or reconstruct state in isolation and verify data, metadata, security,
-  application startup, and recovery objectives.
-
-## Ask when evidence is missing
-
-- Which Elasticsearch or OpenSearch product, exact version, deployment mode,
-  plugins, and compatibility promises apply?
-- How are mappings, aliases, refresh behavior, reindexing, shard size, and
-  failed-node recovery handled?
-
-## Calibrate findings
-
-- Downgrade when product-specific behavior, bounded shard sizing, alias rollout,
-  and rebuild paths are proven.
+- Index representative documents and check expected matches and ranking for
+  the chosen analyzers and mappings. Measure expensive aggregations,
+  pagination, and bulk ingestion with the actual shard layout.
+- Reindex while writes continue, switch aliases, and interrupt a node or
+  ingestion worker. Check missing or duplicate documents, partial search
+  failures, and recovery from a snapshot on the supported product version.

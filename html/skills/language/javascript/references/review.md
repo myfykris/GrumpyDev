@@ -1,6 +1,6 @@
-# JavaScript standard review
+# JavaScript full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Node, browser, edge, or embedded runtimes and
 versions, module system, package manager, bundler, transpilation targets, worker
@@ -9,15 +9,7 @@ semantics, event loops, promises, cancellation, modules, package resolution,
 runtime globals, serialization, prototype and injection hazards, workers,
 memory, and build output.
 
-Define ownership, errors, cancellation, and concurrency for ECMAScript
-semantics, event loops, promises, cancellation, modules, package resolution.
-Verify version, package, native, serialization, and artifact compatibility for
-runtime globals, serialization, prototype and injection hazards, workers,
-memory, build output across every declared target and rollback path.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require runtime validation for network, storage, environment, and user data;
   JavaScript shape assumptions are not contracts.
@@ -40,30 +32,15 @@ memory, build output across every declared target and rollback path.
 - Require tests against built artifacts and supported runtimes, not only source
   code under one test runner.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared JavaScript compiler and runtime
-  targets: ECMAScript semantics, event loops, promises, cancellation, modules,
-  package resolution. Use the real compiler or interpreter and supported release
-  modes rather than a development substitute.
-- Exercise failure and edge behavior for: runtime globals, serialization,
-  prototype and injection hazards, workers, memory, build output. Exercise
-  boundary values, encoding, cancellation, resource exhaustion, concurrency,
-  dependency failure, and termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
+- Load the built packages through the actual ESM or CommonJS entrypoints in
+  each supported runtime. Check conditional exports, runtime globals, and
+  emitted syntax outside the test runner's module loader.
+- Resolve asynchronous requests out of order, reject them, and cancel their
+  owners. Verify stale callbacks cannot overwrite newer state and that
+  listeners, timers, workers, and rejected promises are handled.
+
 - Exercise prototype-polluting keys, hostile property names, deep and cyclic
   objects, expensive regular expressions, executable strings, oversized input,
   and dangerous output contexts where those paths exist.
-
-## Ask when evidence is missing
-
-- Which ECMAScript, Node.js or browser versions, module mode, package
-  resolution, and runtime globals apply?
-- How do promises, cancellation, event-loop work, coercion, serialization, and
-  untrusted input cross the boundary?
-
-## Calibrate findings
-
-- Downgrade when inputs and runtime are bounded and async, module,
-  compatibility, and failure tests cover the path.

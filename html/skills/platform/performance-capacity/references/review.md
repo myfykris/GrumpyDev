@@ -1,6 +1,6 @@
-# Performance and capacity standard review
+# Performance and capacity full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: SLOs, traffic and growth, workload mix, peak
 factors, capacity budgets, test environments, autoscaling, resource limits, and
@@ -8,16 +8,7 @@ cost constraints. The changed boundary must define: Workload model, latency
 distributions, throughput, concurrency, saturation, queuing, caches, load tests,
 profiling, limits, scaling, and degradation.
 
-Identify the workload model and owner, user-visible latency and throughput
-objectives, concurrency and burst assumptions, resource and downstream budgets,
-queue limits, scaling delay, cache behavior, degradation policy, and measurement
-source. Prove the first saturated resource and the system's response before,
-at, and beyond the expected peak rather than extrapolating from an average or a
-single-component benchmark.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require percentile budgets and workload distributions; averages hide the users
   who wait longest.
@@ -30,7 +21,7 @@ single-component benchmark.
 - Prove scaling speed, safe maximum capacity, degraded-mode behavior, recovery
   after overload, and cost per useful unit.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Measure production-shaped request and data mixes at idle, expected, peak and
   beyond-peak concurrency, reporting latency distributions, throughput, queues,
@@ -40,15 +31,3 @@ single-component benchmark.
   queues, admission control and degradation protect critical work.
 - Compare old and new versions at equal workload, including mixed-version
   rollout, drain and rollback, without hiding warmup or background work.
-
-## Ask when evidence is missing
-
-- What measured latency, throughput, concurrency, resource, and tail-percentile
-  budget defines success?
-- Which representative load shape, bottleneck, saturation point, and degraded
-  mode support the capacity claim?
-
-## Calibrate findings
-
-- Downgrade when load is bounded and representative measurements demonstrate
-  headroom and controlled degradation.

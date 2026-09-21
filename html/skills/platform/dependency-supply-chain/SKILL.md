@@ -1,25 +1,11 @@
 ---
-name: dependency-supply-chain
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review software dependency and supply-chain engineering work for provenance, pinning, source trust, transitive risk, build isolation, licensing, patching, and artifact traceability."
+name: gd-dependency-supply-chain
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review software dependency and supply-chain engineering work for provenance, pinning, source trust, transitive risk, build isolation, licensing, patching, and artifact traceability."
 ---
 
 # Dependency and supply-chain GrumpyDev review
 
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-Apply this guidance alongside the core GrumpyDev review, the `containers` and
-`ci-cd` skills when applicable, and the installed language specialist for the
-package ecosystem.
-
-## Lean review
+## Quick checks
 
 - Read manifests, lockfiles, canonical registries, publishers, install scripts,
   build plugins, generated artifacts, licenses, vulnerability reports, and
@@ -36,22 +22,16 @@ provenance, vulnerable packages dismissed because no direct call is obvious,
 development tools and IDE extensions outside inventory, and emergency upgrades
 with no compatibility evidence.
 
-Lean mode is insufficient when this material severity condition may apply:
+- Assess an untrusted publisher, executable install path, or dependency that can
+  alter release artifacts without review under the core severity rules.
 
-- Treat an untrusted publisher, executable install path, or dependency that can
-  alter release artifacts without review as critical.
+## References
 
-## Load local references
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the Dependency and
+supply-chain specialist.
 
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete Dependency and supply-chain evidence, operating model,
-failure, verification, question, and calibration guidance. Never load
-`SURVEY.md` during an ordinary review.
-
-## Add to the verdict
+## Verdict context
 
 State dependency justification, resolution and source controls, build authority,
 deployed inventory, provenance, licensing, patch and end-of-life ownership,

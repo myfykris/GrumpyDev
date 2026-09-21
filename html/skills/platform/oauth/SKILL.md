@@ -1,25 +1,11 @@
 ---
-name: oauth
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review token-based authentication and authorization engineering work for issuance, transport, audience, scope, validation, storage, rotation, revocation, replay, and identity-linking risks."
+name: gd-oauth
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review token-based authentication and authorization engineering work for issuance, transport, audience, scope, validation, storage, rotation, revocation, replay, and identity-linking risks."
 ---
 
 # OAuth, OIDC, and token authentication GrumpyDev review
 
-Treat provider behavior and current security guidance as time-sensitive; verify
-primary documentation when the reviewed work directly or indirectly depends on
-vendor-specific claims.
-
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-## Lean review
+## Quick checks
 
 - Identify every token or credential type, who issues it, who presents it, who
   accepts it, its subject, audience, permissions, transport, storage,
@@ -37,23 +23,16 @@ tokens used as general API credentials; broad redirects; refresh-token reuse;
 opaque-token introspection cached past revocation; and account linking based on
 mutable or unverified claims.
 
-Lean mode is insufficient when this material severity condition may apply:
+- Inspect account takeover, privilege escalation, cross-tenant acceptance,
+  redirect abuse, reusable token disclosure, or ambiguous account linking.
 
-- Treat account takeover, privilege escalation, cross-tenant acceptance,
-  redirect abuse, reusable token disclosure, or ambiguous account linking as
-  critical.
+## References
 
-## Load local references
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material OAuth, OIDC, and token authentication effect or
+uncertainty.
 
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete token-authentication evidence, operating model, failure,
-verification, question, and calibration guidance. Never load `SURVEY.md` during
-an ordinary review.
-
-## Add to the verdict
+## Verdict context
 
 State each token class and purpose, issuer and audience, validation and replay
 controls, storage and transport boundary, lifecycle and compromise response,

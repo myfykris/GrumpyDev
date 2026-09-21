@@ -1,62 +1,24 @@
 # Vite survey contribution
 
-## Applicability
+## Applies when
 
 Apply this contribution when the project builds or serves applications with Vite.
 
-Skip it only when project evidence or an explicit user answer establishes that this
-domain does not constrain a supported build, runtime, client, data, deployment, or
-operating boundary.
+## Inspect
 
-This is project-level applicability, not a current-plan trigger. Once the package is
-installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
-explicitly invoked GrumpyDev review.
+- Read Vite, framework plugin, runtime, package manager, TypeScript, browser target, and
+  test-tool versions.
 
-## Inspect before asking
+## Ask when unresolved
 
-Inspect package and lock files, effective configuration, generated output, infrastructure, build
-and deployment workflows, project documentation, representative code, tests, and existing .grump
-doctrine for Vite. Resolve facts from current evidence before asking.
+- Which Vite, framework plugins, runtime, package manager, environments,
+  browser targets, and base path apply?
 
-## Durable project facts
+- How are public variables, SSR builds, assets, dependencies, plugins,
+  production serving, and source maps handled?
 
-- Target and operating model: Vite and plugin versions, framework and runtime, application or
-  library mode, environment types, browser targets, base path, asset policy, public variables,
-  aliases, dependency optimization, SSR entrypoints, output directories, source maps, and
-  production server.
-- Review doctrine: The development server and vite preview are development inspection tools,
-  not production serving architecture. Client-prefixed environment values are compiled into
-  browser code and must be treated as public.
-- Deployment-profile facts: Vite and plugin versions, runtime and package manager,
-  workspace root, environment prefixes, browser targets, base path, client and SSR entries,
-  output directories, assets, source maps, headers, and production server.
+## Record
 
-## Ask only when materially unresolved
-
-- Which Vite, framework plugins, runtime, package manager, environments, browser targets, and
-  base path apply?
-- How are public variables, SSR builds, assets, dependencies, plugins, production serving, and
-  source maps handled?
-
-## Record in .grump
-
-Record confirmed Vite answers as project technology, architecture, security, deployment,
-verification, and operational doctrine. Preserve source, scope, confidence, and environment
-differences. Record a material unknown as unresolved instead of inventing a default.
-
-Map execution-specific facts to the affected `DEP-###` profile. Reference a shared `INF-###`
-component rather than copying its common contract. Keep separate ownership, support, confidence,
-source, and scope fields.
-
-## Do not ask or record
-
-Do not record transient host identifiers, current resource readings, temporary rollout values,
-credentials, private endpoints, or plan-only choices as durable Vite doctrine. Do not duplicate
-facts owned by another applicable contribution.
-
-## Re-survey triggers
-
-Re-survey Vite when its version, mode and environment contract, plugin set, SSR or
-worker targets, output format, dependency optimization, development proxy, or supported
-browser baseline materially changes. Also re-survey when evidence conflicts with saved
-doctrine or the user requests a context refresh.
+Map durable Vite requirements and constraints to the matching doctrine
+sections, runtime facts to `Runtime and deployment`, and material gaps to
+`Unknowns`.

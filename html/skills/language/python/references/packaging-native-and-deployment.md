@@ -17,7 +17,6 @@ artifacts, or deployment environment behavior.
 - Inspect generated code, packages, native boundaries, and final artifacts for
   target and compatibility claims.
 
-
 ## Ask when evidence is missing
 
 - Which Python version and implementation, target platforms, dependency

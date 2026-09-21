@@ -1,11 +1,6 @@
-# DynamoDB standard review
+# DynamoDB full-review guidance
 
-## Inspect additional evidence
-
-- Trace every query and write through key selection, retries, throttling,
-  consistency, duplication, growth, and region failure.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Regions and table topology, capacity mode,
 consistency needs, key conventions, indexes, global tables, TTL, streams,
@@ -13,15 +8,7 @@ backup, and workload limits. The changed boundary must define: Keys and access
 patterns, indexes, capacity, partitions, consistency, transactions, condition
 expressions, streams, TTL, global tables, retries, and hot keys.
 
-Name the schema and data authority, writers, scale, consistency, durability, and
-migration owner for Keys and access patterns, indexes, capacity, partitions,
-consistency, transactions. Prove condition expressions, streams, TTL, global
-tables, retries, hot keys under concurrent access, mixed versions, failover,
-interrupted migration, rollback, and restore.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require each access pattern to map to a key or index; scans are not a fallback
   architecture.
@@ -34,28 +21,12 @@ interrupted migration, rollback, and restore.
 - Model on-demand or provisioned capacity cost, throttling backoff, backup,
   point-in-time recovery, and restore validation.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared DynamoDB topology and workload:
-  Keys and access patterns, indexes, capacity, partitions, consistency,
-  transactions. Use production-shaped scale and workload while observing
-  latency, resource use, locks or conflicts, replication, and application
-  errors.
-- Exercise failure and edge behavior for: condition expressions, streams, TTL,
-  global tables, retries, hot keys. Exercise concurrent writers, retries,
-  duplicate operations, failover, interrupted migration, and mixed application
-  versions where applicable.
-- Restore or reconstruct state in isolation and verify data, metadata, security,
-  application startup, and recovery objectives.
-
-## Ask when evidence is missing
-
-- Which access patterns, key distributions, consistency needs, table mode,
-  regions, and transaction boundaries apply?
-- How are conditional writes, hot keys, retries, streams, indexes, and item
-  growth bounded?
-
-## Calibrate findings
-
-- Downgrade when access patterns and distributions are measured and conditional
-  operations plus recovery cover concurrency.
+- Exercise conditional writes and transaction retries with concurrent callers
+  and ambiguous timeouts. Check index-read freshness, paginated results, and
+  duplicate stream delivery against the application's contract.
+- Load skewed partition keys and throttled requests using the selected
+  capacity mode. Where used, test delayed TTL removal and global-table
+  conflicts; restore a backup and verify application access to the recovered
+  table.

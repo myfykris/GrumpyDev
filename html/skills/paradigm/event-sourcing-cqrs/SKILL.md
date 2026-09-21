@@ -1,53 +1,37 @@
 ---
-name: event-sourcing-cqrs
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review event sourcing and CQRS engineering work for immutable history, projection rebuilds, command invariants, event evolution, consistency lag, and operational burden."
+name: gd-event-sourcing-cqrs
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review event sourcing or CQRS engineering work for command invariants, read/write model separation, consistency, and, when events are authoritative, history, replay, and event evolution."
 ---
 
 # Event sourcing and CQRS GrumpyDev review
 
-## Invocation and participation boundary
+## Quick checks
 
-This specialist cannot start a GrumpyDev review.
+- Establish whether the project uses CQRS, event sourcing, or both. CQRS can
+  use separate read and write models over one database without an event log.
 
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
+- Trace commands, invariant enforcement, read models, and their consistency
+  contract. Check synchronization and recovery when reads use a separate store.
 
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
+- Only for event-sourced state, inspect event append guarantees, aggregate
+  reconstruction, event evolution, replay, and snapshots if used.
 
-Apply this guidance alongside the core GrumpyDev review and the
-`event-driven-architecture`, `schema-evolution`, and applicable installed
-storage skills.
+Watch especially for duplicate commands, reads used beyond their freshness
+contract, and unjustified storage or messaging infrastructure. With event
+sourcing, also check rewritten history, replay repeating live side effects,
+incompatible events, and deletion obligations with no workable policy.
 
-## Lean review
+- Assess unrebuildable history, conflicting aggregate writes, or a projection
+  used beyond its consistency contract under the core severity rules.
 
-- Read command handlers, aggregate reconstruction, event store guarantees,
-  snapshots, projections, checkpoints, and rebuild tooling.
+## References
 
-- Trace a command through validation, event append, projection lag, failure,
-  replay, correction, and data erasure requirements.
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the Event sourcing and
+CQRS specialist.
 
-Watch especially for rewriting historical events, projections treated as
-immediately consistent, replay triggering live side effects, command retries
-without idempotency, snapshots treated as a correctness boundary, event schemas
-that cannot evolve, and deletion obligations with no workable policy.
+## Verdict context
 
-Lean mode is insufficient when this material severity condition may apply:
-
-- Treat unrebuildable history, conflicting aggregate writes, or a projection
-  used beyond its consistency contract as critical.
-
-## Load local references
-
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete Event sourcing and CQRS evidence, operating model,
-failure, verification, question, and calibration guidance. Never load
-`SURVEY.md` during an ordinary review.
-
-## Add to the verdict
-
-State why the pattern is justified, append guarantees, event evolution,
-projection recovery, consistency lag, and operational cost.
+State which pattern is used, why it is justified, command and read guarantees,
+and recovery costs. Include append and replay guarantees only for event-sourced
+state; do not require an event store, snapshots, or replay for CQRS alone.

@@ -1,6 +1,6 @@
-# Web accessibility standard review
+# Web accessibility full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Accessibility target and standard, browser and
 assistive-technology matrix, input methods, localization, design-system
@@ -8,16 +8,7 @@ constraints, test tooling, and exception process. The changed boundary must
 define: Semantic structure, keyboard behavior, focus, names and roles, forms,
 errors, contrast, motion, zoom, dynamic updates, media, and assistive testing.
 
-Identify owners for component semantics, design-system behavior, content,
-keyboard and focus contracts, forms and errors, motion and media, assistive
-testing, supported browser and technology matrices, and documented exceptions.
-Prove complete user flows remain understandable and operable across keyboard,
-screen reader, zoom and reflow, reduced motion, high contrast, slow updates, and
-validation failure.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Prefer native elements and semantics; ARIA does not repair a div that behaves
   like a broken button.
@@ -30,7 +21,7 @@ validation failure.
 - Use automated checks as a floor, then require manual keyboard and
   representative assistive-technology evidence for critical flows.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Complete critical flows with keyboard only and with representative screen
   readers across the supported browser matrix. Inspect semantics, names, roles,
@@ -40,15 +31,3 @@ validation failure.
   alternatives.
 - Use automated checks as a regression floor, then retain manual evidence for
   interactions whose behavior cannot be established from static markup.
-
-## Ask when evidence is missing
-
-- Which changed interactions must work by keyboard, screen reader, zoom, reduced
-  motion, and high-contrast settings?
-- How are focus, accessible names, errors, live updates, and semantic
-  relationships verified?
-
-## Calibrate findings
-
-- Downgrade when the component is non-interactive or tested platform semantics
-  already provide the required behavior.

@@ -1,6 +1,6 @@
-# Phoenix standard review
+# Phoenix full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Phoenix, Elixir and OTP versions, LiveView use,
 database, PubSub and cluster topology, session and proxy setup, release tooling,
@@ -8,15 +8,7 @@ and deployment environment. The changed boundary must define: Endpoint and plug
 order, LiveView lifecycle, channels, PubSub, Ecto transactions, supervision,
 sessions, presence, clustering, releases, and deployment.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Endpoint and plug order, LiveView lifecycle, channels, PubSub, Ecto
-transactions, supervision. Prove sessions, presence, clustering, releases,
-deployment through startup, invalid or denied work, cancellation, background
-execution, mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Verify router pipeline and plug order for sessions, CSRF, authentication,
   authorization, parsing, and proxy behavior.
@@ -29,26 +21,11 @@ execution, mixed versions, shutdown, rollback, and recovery.
 - Test clustered PubSub, node loss, rolling releases, socket reconnect, job
   retries, and graceful drain.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the actual Phoenix lifecycle and production
-  pipeline: Endpoint and plug order, LiveView lifecycle, channels, PubSub, Ecto
-  transactions, supervision. Use the actual framework pipeline and production
-  build with representative services and configuration.
-- Exercise failure and edge behavior for: sessions, presence, clustering,
-  releases, deployment. Exercise invalid input, denied access, cancellation,
-  dependency failure, concurrent work, shutdown, and mixed-version deployment
-  where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Elixir, Erlang/OTP, Phoenix, LiveView, and deployment versions apply?
-- How do process ownership, supervision, socket state, PubSub, transactions,
-  reconnect, and release rollout interact?
-
-## Calibrate findings
-
-- Downgrade when process lifecycles, authorization, reconnect, and release
-  compatibility are integration-tested.
+- Reconnect LiveViews and channels while state changes and permissions expire.
+  Check event authorization, duplicate submissions, mailbox growth, and
+  restoration rather than relying on existing assigns.
+- Exercise Ecto operations and migrations with competing writes and
+  overlapping releases. Where clustered PubSub is used, lose a node during
+  delivery and verify the application's resynchronization path.

@@ -1,11 +1,6 @@
-# TypeScript standard review
+# TypeScript full-review guidance
 
-## Inspect additional evidence
-
-- Trace external data from network, storage, environment, and JavaScript callers
-  to its runtime validation boundary.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: TypeScript version, runtime targets, module system
 and resolution, strictness flags, emit owner, bundler, package manager,
@@ -14,15 +9,7 @@ define: Erased types, compiler options, narrowing, structural typing,
 declaration accuracy, module resolution, emit modes, runtime validation,
 decorators, generated types, build graph, and JS interoperability.
 
-Define ownership, errors, cancellation, and concurrency for Erased types,
-compiler options, narrowing, structural typing, declaration accuracy, module
-resolution. Verify version, package, native, serialization, and artifact
-compatibility for emit modes, runtime validation, decorators, generated types,
-build graph, JS interoperability across every declared target and rollback path.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Reject any assumption that a TypeScript type validates runtime data. Require
   parsing or guards at trust boundaries and defined failure behavior.
@@ -39,27 +26,11 @@ build graph, JS interoperability across every declared target and rollback path.
 - Demand tests that execute emitted/runtime behavior, not only compile-time type
   assertions.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared TypeScript compiler and runtime
-  targets: Erased types, compiler options, narrowing, structural typing,
-  declaration accuracy, module resolution. Use the real compiler or interpreter
-  and supported release modes rather than a development substitute.
-- Exercise failure and edge behavior for: emit modes, runtime validation,
-  decorators, generated types, build graph, JS interoperability. Exercise
-  boundary values, encoding, cancellation, resource exhaustion, concurrency,
-  dependency failure, and termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
-
-## Ask when evidence is missing
-
-- Which TypeScript version, tsconfig strictness, module mode, runtime, and
-  generated-type sources apply?
-- Where do untyped inputs, assertions, narrowing, serialization, async work, and
-  JavaScript consumers cross the boundary?
-
-## Calibrate findings
-
-- Downgrade when inputs are internal and proven or runtime validation, strict
-  settings, and compatibility tests cover the boundary.
+- Type-check using the actual project configuration, then execute the emitted
+  JavaScript. Send malformed runtime data through typed boundaries to verify
+  validation does not depend on erased types or assertions.
+- Compile and run a consumer of changed package exports and declarations using
+  the supported module resolution and runtime targets. Check path aliases,
+  generated types, and independently versioned consumers.

@@ -1,6 +1,6 @@
-# Java standard review
+# Java full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: JDK vendor and versions, language and bytecode
 target, JVM flags and GC, build tool, module use, container limits, native
@@ -9,16 +9,7 @@ and JVM semantics, memory model, threads and virtual threads, exceptions, class
 loading, reflection, serialization, JNI, GC, resource lifecycle, modules,
 bytecode compatibility, and container behavior.
 
-Define ownership, errors, cancellation, and concurrency for Java and JVM
-semantics, memory model, threads and virtual threads, exceptions, class loading,
-reflection, serialization. Verify version, package, native, serialization, and
-artifact compatibility for JNI, GC, resource lifecycle, modules, bytecode
-compatibility, container behavior across every declared target and rollback
-path.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require bounded executors, explicit queue policy, cancellation, and shutdown
   ownership for asynchronous work.
@@ -43,30 +34,15 @@ path.
 - Demand tests under production JVM settings for memory pressure, concurrency,
   graceful shutdown, and dependency conflicts.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared Java compiler and runtime targets:
-  Java and JVM semantics, memory model, threads and virtual threads, exceptions,
-  class loading, reflection, serialization. Use the real compiler or interpreter
-  and supported release modes rather than a development substitute.
-- Exercise failure and edge behavior for: JNI, GC, resource lifecycle, modules,
-  bytecode compatibility, container behavior. Exercise boundary values,
-  encoding, cancellation, resource exhaustion, concurrency, dependency failure,
-  and termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
+- Run the packaged application on the supported JVMs with representative heap,
+  GC, and container settings. Exercise reflective loading, module access,
+  serialization, and JNI where the change affects them.
+- Saturate affected executors and interrupt work during exceptions, timeouts,
+  and shutdown. Check bounded queues, observable failures, and release of
+  connections, files, and transaction state.
+
 - Exercise hostile serialized types, external XML references, archive entries,
   dynamic lookup values, command options, expensive regular expressions, and
   parser limits where those boundaries exist.
-
-## Ask when evidence is missing
-
-- Which Java language level, JDK vendor and version, JVM settings, target
-  runtime, and dependency versions apply?
-- How do threads, virtual threads, interruption, resource lifetime,
-  serialization, and memory visibility cross the boundary?
-
-## Calibrate findings
-
-- Downgrade when concurrency is isolated and target-JDK, resource, failure, and
-  compatibility tests cover the path.

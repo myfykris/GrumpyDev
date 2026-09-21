@@ -1,24 +1,11 @@
 ---
-name: express
-description: "Use only when the user explicitly asks for a GrumpyDev review. Never start a review automatically. If installed and not marked inapplicable, use this skill in every GrumpyDev review. Review Express engineering work for middleware order, async error propagation, request validation, authorization, resource limits, proxy behavior, and shutdown risks."
+name: gd-express
+description: "Use only during an explicitly requested GrumpyDev review when this installed specialist is applicable. Never start or continue a review automatically. Review Express engineering work for middleware order, async error propagation, request validation, authorization, resource limits, proxy behavior, and shutdown risks."
 ---
 
 # Express GrumpyDev review
 
-## Invocation and participation boundary
-
-This specialist cannot start a GrumpyDev review.
-
-Use this skill in every explicitly requested GrumpyDev review when it is
-installed and `.grump` does not explicitly mark it `inapplicable`.
-
-Check direct and indirect effects even when the reviewed target does not name
-or modify this technology. Produce no finding when there is no material effect.
-
-Apply this guidance alongside the core GrumpyDev review and the `javascript` or
-`typescript` skill.
-
-## Lean review
+## Quick checks
 
 - Read application setup, Express and Node versions, routers, middleware order,
   validation, authentication, proxy settings, server timeouts, and integration
@@ -33,22 +20,15 @@ version and wrapper conventions, global request state, body and proxy defaults
 treated as security controls, and CPU or synchronous I/O blocking the event
 loop.
 
-Lean mode is insufficient when this material severity condition may apply:
+- Assess auth bypass, spoofed client identity, unhandled async failure, or
+  unbounded request input under the core severity rules.
 
-- Treat auth bypass, spoofed client identity, unhandled async failure, or
-  unbounded request input as critical.
+## References
 
-## Load local references
+In a full review, read [review.md](references/review.md) after a quick check
+establishes a material effect or uncertainty covered by the Express specialist.
 
-When this entrypoint identifies a plausible direct or indirect material effect
-during a standard or deep review, or whenever lean evidence or escalation
-conditions leave a material uncertainty, read
-[review.md](references/review.md). It
-contains the complete Express evidence, operating model, failure, verification,
-question, and calibration guidance. Never load `SURVEY.md` during an ordinary
-review.
-
-## Add to the verdict
+## Verdict context
 
 State middleware and validation boundaries, async error behavior, resource
 limits, proxy assumptions, shutdown behavior, and HTTP integration evidence.

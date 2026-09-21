@@ -1,11 +1,6 @@
-# Sinatra standard review
+# Sinatra full-review guidance
 
-## Inspect additional evidence
-
-- Trace request data, global or class state, authentication, errors, streaming,
-  background work, thread safety, and shutdown.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Sinatra and Ruby versions, Rack and server
 versions, thread and worker model, middleware, sessions, proxy setup, and
@@ -13,15 +8,7 @@ deployment platform. The changed boundary must define: Request lifecycle,
 settings and environments, middleware, thread safety, sessions, errors,
 streaming, reloading, server behavior, and deployment.
 
-Assign lifecycle, state, dependency, persistence, and security ownership for
-Request lifecycle, settings and environments, middleware, thread safety,
-sessions. Prove errors, streaming, reloading, server behavior, deployment
-through startup, invalid or denied work, cancellation, background execution,
-mixed versions, shutdown, rollback, and recovery.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Verify route and middleware order, method matching, error-handler coverage,
   and behavior under mounted or modular applications.
@@ -34,27 +21,11 @@ mixed versions, shutdown, rollback, and recovery.
 - Test under the production Rack server and proxy for concurrency, path base,
   sessions, client disconnect, and graceful shutdown.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the actual Sinatra lifecycle and production
-  pipeline: Request lifecycle, settings and environments, middleware, thread
-  safety, sessions. Use the actual framework pipeline and production build with
-  representative services and configuration.
-- Exercise failure and edge behavior for: errors, streaming, reloading, server
-  behavior, deployment. Exercise invalid input, denied access, cancellation,
-  dependency failure, concurrent work, shutdown, and mixed-version deployment
-  where plausible.
-- Inspect effective configuration, generated output, persistence effects, and
-  deployable artifacts, then rehearse recovery from irreversible steps.
-
-## Ask when evidence is missing
-
-- Which Ruby, Sinatra, Rack, server, concurrency, and deployment versions or
-  modes apply?
-- How do middleware, shared state, sessions, authentication, errors, blocking
-  work, and shutdown behave?
-
-## Calibrate findings
-
-- Downgrade when the process model is single-threaded by contract or state,
-  middleware, and concurrency are tested.
+- Exercise mounted routes, method matching, session handling, and error
+  handlers under the production Rack server. Send concurrent identities to
+  detect mutable class or global state leaking between requests.
+- Disconnect clients during streaming and fail downstream calls. Check
+  connection release, bounded work, and shutdown behavior with the configured
+  proxy paths and timeouts.

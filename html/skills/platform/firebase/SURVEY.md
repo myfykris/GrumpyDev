@@ -1,63 +1,25 @@
 # Firebase survey contribution
 
-## Applicability
+## Applies when
 
 Apply this contribution when the project uses or materially depends on Firebase
 services.
 
-Skip it only when project evidence or an explicit user answer establishes that this
-domain does not constrain a supported build, runtime, client, data, deployment, or
-operating boundary.
+## Inspect
 
-This is project-level applicability, not a current-plan trigger. Once the package is
-installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
-explicitly invoked GrumpyDev review.
+- Read Firebase products, SDK and rules versions, project aliases, emulator configuration,
+  indexes, functions, and deployment files.
 
-## Inspect before asking
+## Ask when unresolved
 
-Inspect package and lock files, effective configuration, generated output, infrastructure, build
-and deployment workflows, project documentation, representative code, tests, and existing .grump
-doctrine for Firebase. Resolve facts from current evidence before asking.
+- Which Firebase products, SDKs, projects, identity providers, tenant model,
+  rules, and Admin SDK boundaries apply?
 
-## Durable project facts
+- How are queries, indexes, offline conflicts, functions retries, Storage,
+  quotas, backups, deployment, and rollback handled?
 
-- Target and operating model: Firebase products and SDKs, projects per environment,
-  Authentication providers and tenant model, Security Rules ownership and versions, Admin SDK
-  boundaries, Firestore model and indexes, offline policy, functions runtime and region, Storage
-  layout, quotas, and deployment process.
-- Review doctrine: Client SDK calls are authorized by deployed Security Rules, while trusted
-  Admin SDK code bypasses those rules. Query rules are not post-query filters, so planned
-  queries must satisfy their authorization constraints.
-- Deployment-profile facts: Firebase projects and aliases, product regions, SDK and
-  rules versions, indexes, functions runtime and concurrency, Storage rules, service accounts,
-  secrets, emulator limits, quotas, billing alerts, and deployment targets.
+## Record
 
-## Ask only when materially unresolved
-
-- Which Firebase products, SDKs, projects, identity providers, tenant model, rules, and Admin
-  SDK boundaries apply?
-- How are queries, indexes, offline conflicts, functions retries, Storage, quotas, backups,
-  deployment, and rollback handled?
-
-## Record in .grump
-
-Record confirmed Firebase answers as project technology, architecture, security, deployment,
-verification, and operational doctrine. Preserve source, scope, confidence, and environment
-differences. Record a material unknown as unresolved instead of inventing a default.
-
-Map execution-specific facts to the affected `DEP-###` profile. Reference a shared `INF-###`
-component rather than copying its common contract. Keep separate ownership, support, confidence,
-source, and scope fields.
-
-## Do not ask or record
-
-Do not record transient host identifiers, current resource readings, temporary rollout values,
-credentials, private endpoints, or plan-only choices as durable Firebase doctrine. Do not
-duplicate facts owned by another applicable contribution.
-
-## Re-survey triggers
-
-Re-survey Firebase when the services or projects in use, client SDKs, authentication
-providers, Security Rules, indexes, Functions runtime, emulator coverage, retention,
-or backup policy materially changes. Also re-survey when evidence conflicts with saved
-doctrine or the user requests a context refresh.
+Map durable Firebase requirements and constraints to the matching doctrine
+sections, runtime facts to `Runtime and deployment`, and material gaps to
+`Unknowns`.

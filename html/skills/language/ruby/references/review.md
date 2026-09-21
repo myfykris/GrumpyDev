@@ -1,6 +1,6 @@
-# Ruby standard review
+# Ruby full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Ruby implementation and version, web and job
 servers, concurrency model, Bundler and lock policy, native extensions, OS
@@ -9,15 +9,7 @@ boundary must define: Object model, blocks, exceptions, fibers, threads and
 Ractors, GVL implications, metaprogramming, autoloading, gems, serialization,
 GC, web and job lifecycles, and native extensions.
 
-Define ownership, errors, cancellation, and concurrency for Object model,
-blocks, exceptions, fibers, threads and Ractors, GVL implications,
-metaprogramming. Verify version, package, native, serialization, and artifact
-compatibility for autoloading, gems, serialization, GC, web and job lifecycles,
-native extensions across every declared target and rollback path.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Check monkey patches, callbacks, dynamic dispatch, autoloading, and constant
   resolution for order-dependent behavior.
@@ -39,30 +31,16 @@ native extensions across every declared target and rollback path.
 - Demand tests for transactions, retries, partial callbacks, serialization
   changes, time zones, and deployed boot behavior.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared Ruby compiler and runtime targets:
-  Object model, blocks, exceptions, fibers, threads and Ractors, GVL
-  implications, metaprogramming. Use the real compiler or interpreter and
-  supported release modes rather than a development substitute.
-- Exercise failure and edge behavior for: autoloading, gems, serialization, GC,
-  web and job lifecycles, native extensions. Exercise boundary values, encoding,
-  cancellation, resource exhaustion, concurrency, dependency failure, and
-  termination where they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
+- Boot the packaged application with its locked gems and native extensions
+  under the production Ruby implementation and server model. Exercise eager
+  loading, constant lookup, and worker startup without development reload
+  behavior.
+- Run concurrent requests or jobs that touch shared class state; fail
+  callbacks and interrupt workers mid-operation. Verify resource cleanup and
+  that retries do not repeat committed effects.
+
 - Exercise malicious YAML and Marshal data, dynamic names, command options,
   archive traversal, symlink swaps, expensive regular expressions, and parser
   limits where those boundaries exist.
-
-## Ask when evidence is missing
-
-- Which Ruby version and implementation, thread and process model, native
-  extensions, and gem versions apply?
-- How do mutable state, blocks, exceptions, fibers, threads, resources, and
-  serialization cross the boundary?
-
-## Calibrate findings
-
-- Downgrade when the process model is bounded and concurrency, exception,
-  resource, and version tests cover the path.

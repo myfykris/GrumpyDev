@@ -1,6 +1,6 @@
-# Object-oriented design standard review
+# Object-oriented design full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Domain object conventions, framework lifecycle
 constraints, mutability policy, dependency injection approach, persistence
@@ -9,15 +9,7 @@ must define: Identity, state and invariants, composition, inheritance,
 substitutability, encapsulation, mutation, lifecycle, dependency direction, and
 test seams.
 
-Name the invariants, authorities, owners, and enforcement for Identity, state
-and invariants, composition, inheritance, substitutability. Prove encapsulation,
-mutation, lifecycle, dependency direction, test seams under concurrency, partial
-failure, incompatible versions, operational response, rollback, and repair, and
-justify the added complexity.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Reject classes that only rename records, functions, or database tables without
   owning behavior or invariants.
@@ -30,26 +22,11 @@ justify the added complexity.
 - Expose temporal coupling, feature envy, god objects, hidden mutation, and
   mocks that test implementation instead of behavior.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the claimed architecture and its enforcement
-  boundaries: Identity, state and invariants, composition, inheritance,
-  substitutability. Use dependency, architecture, contract, schema, or ownership
-  tests that fail when a claimed boundary is violated.
-- Exercise failure and edge behavior for: encapsulation, mutation, lifecycle,
-  dependency direction, test seams. Exercise the material invariant under
-  concurrency, delay, duplication, partial failure, incompatible versions,
-  rollback, and repair.
-- Verify that operators can observe, diagnose, and recover the design without
-  bypassing its ownership rules.
-
-## Ask when evidence is missing
-
-- Which object owns each invariant, mutable resource, and lifecycle transition?
-- Which substitution, identity, concurrency, persistence, or failure assumptions
-  must callers respect?
-
-## Calibrate findings
-
-- Downgrade when the abstraction is local and stable or contracts, ownership,
-  and behavior tests prove substitutability.
+- Run the same caller-level contract against each subtype, including error and
+  lifecycle behavior. Check that substituting an implementation does not
+  strengthen preconditions or weaken guarantees.
+- Exercise invalid construction, unexpected method order, and mutation through
+  shared references. Verify object invariants survive without requiring
+  callers to know hidden initialization or cleanup steps.

@@ -1,6 +1,6 @@
-# C# standard review
+# C# full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Target frameworks, runtime and SDK versions, OS
 targets, nullable mode, server or desktop model, trimming or AOT, deployment
@@ -9,15 +9,7 @@ mode, and native dependencies. The changed boundary must define: Language and
 lifetimes, GC, threading, reflection, serialization, interop, trimming, AOT, and
 deployment.
 
-Define ownership, errors, cancellation, and concurrency for Language and .NET
-semantics, nullability, async and cancellation, dependency injection lifetimes,
-GC, threading. Verify version, package, native, serialization, and artifact
-compatibility for reflection, serialization, interop, trimming, AOT, deployment
-across every declared target and rollback path.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Reject sync-over-async, unobserved tasks, missing cancellation,
   fire-and-forget work without ownership, and scope leakage into singletons.
@@ -40,30 +32,15 @@ across every declared target and rollback path.
 - Require tests for host shutdown, dependency failures, concurrency, culture,
   time, and publish-mode behavior.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared C# compiler and runtime targets:
-  Language and .NET semantics, nullability, async and cancellation, dependency
-  injection lifetimes, GC, threading. Use the real compiler or interpreter and
-  supported release modes rather than a development substitute.
-- Exercise failure and edge behavior for: reflection, serialization, interop,
-  trimming, AOT, deployment. Exercise boundary values, encoding, cancellation,
-  resource exhaustion, concurrency, dependency failure, and termination where
-  they can change behavior.
-- Inspect generated code, packages, native boundaries, and final artifacts for
-  target and compatibility claims.
+- Run the published application with the selected target framework and
+  deployment settings. If trimming or AOT is enabled, exercise reflection,
+  serializers, generated code, and native interop in that artifact.
+- Cancel and fail asynchronous operations while scopes are being disposed.
+  Verify task failures are observed, scoped services do not outlive their
+  owners, and streams, contexts, timers, and native handles are released.
+
 - Exercise hostile type metadata, external XML references, archive traversal,
   command options, expensive regular expressions, deep input, and parser limits
   where those boundaries exist.
-
-## Ask when evidence is missing
-
-- Which C# language, .NET runtime, nullable context, target framework, and
-  deployment versions apply?
-- How do async cancellation, disposal, dependency lifetime, serialization, and
-  concurrency cross the changed boundary?
-
-## Calibrate findings
-
-- Downgrade when lifetimes are bounded and nullable, cancellation, disposal, and
-  runtime-version tests cover the path.

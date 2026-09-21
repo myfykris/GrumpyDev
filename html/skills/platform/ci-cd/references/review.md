@@ -1,6 +1,6 @@
-# CI/CD standard review
+# CI/CD full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: CI/CD platform, runner trust and OS, branch and
 approval policy, artifact flow, environments, credential model, deployment
@@ -8,15 +8,7 @@ ownership, and retention. The changed boundary must define: Trigger and trust
 boundaries, reproducibility, artifacts, credentials, environments, approvals,
 concurrency, caching, provenance, rollback, and failure recovery.
 
-Identify the authoritative workflow, runner image, dependency inputs, artifact,
-promotion record, credential issuer, protected environment, approval, and
-rollback owner. Trace untrusted code and output through caches, artifacts,
-identity requests, logs, and reusable workflows, and prove that only the
-reviewed artifact can cross into a more privileged environment.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Minimize token and runner permissions by job; forked or pull-request code must
   not inherit release credentials.
@@ -43,7 +35,7 @@ reviewed artifact can cross into a more privileged environment.
 - Prove rollback or roll-forward against schema changes, background jobs,
   feature flags, and mixed-version traffic.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Rebuild the same revision in clean runners and compare the resolved inputs,
   artifacts, metadata and attestations that promotion will trust.
@@ -55,15 +47,3 @@ reviewed artifact can cross into a more privileged environment.
 - Exercise untrusted pull requests, changed workflow files, malicious test
   output, poisoned caches, persistent runner state, expired identities,
   concurrent deploys, rejected promotion, signature failure, and rollback.
-
-## Ask when evidence is missing
-
-- Which triggers can run untrusted changes, and which credentials or protected
-  environments can those runs reach?
-- Is one verified artifact promoted across environments, and what restores
-  service after a failed release?
-
-## Calibrate findings
-
-- Downgrade when triggers, permissions, promotion, and rollback are isolated and
-  demonstrated by the workflow evidence.

@@ -1,75 +1,30 @@
 # Java survey contribution
 
-## Applicability
+## Applies when
 
 Apply this contribution when the project contains, builds, deploys, operates, or
 interoperates with Java, JVM bytecode, or JVM runtime behavior.
 
-Skip it only when project evidence or an explicit user answer establishes that this
-domain does not constrain a supported build, runtime, client, data, deployment, or
-operating boundary.
+## Inspect
 
-This is project-level applicability, not a current-plan trigger. Once the package is
-installed and not explicitly marked inapplicable, its `SKILL.md` participates in every
-explicitly invoked GrumpyDev review.
+- Read Maven or Gradle configuration, toolchains, dependency locks, module
+  settings, JVM flags, serialization mappings, and representative tests.
 
-## Inspect before asking
-
-For Java, inspect language and runtime declarations, dependency locks, build
-files, compiler or interpreter flags, generated-code settings, CI matrices,
-native dependencies, packaging, and deployment documentation. Read existing
-`.grump` doctrine and project documentation before treating a durable fact as
-unresolved.
-
-## Durable project facts
-
-- Target and operating model: JDK vendor and versions, language and bytecode
-  target, JVM flags and GC, build tool, module use, container limits, native
-  dependencies, and supported platforms.
-- Review doctrine for: Java and JVM semantics, memory model, threads and virtual
-  threads, exceptions, class loading, reflection, serialization, JNI, GC,
-  resource lifecycle, modules, bytecode compatibility, and container behavior.
-- Sources of truth and owners for relevant configuration, contracts, builds,
-  deployment, upgrades, incidents, rollback, and recovery.
-- Environment differences that materially change these facts.
-- Deployment-profile facts: JDK vendor and version, JVM flags and collector,
-  container limits, application server or standalone process, architecture,
-  native libraries, packaging, and shutdown.
-
-## Ask only when materially unresolved
+## Ask when unresolved
 
 - Which Java language level, JDK vendor and version, JVM settings, target
   runtime, and dependency versions apply?
+
 - How do threads, virtual threads, interruption, resource lifetime,
   serialization, and memory visibility cross the boundary?
-- For the affected profiles, which of these facts materially differ across
-  current, planned, and retiring operation, what support commitments apply, and
-  what evidence establishes each fact: JDK vendor and version, JVM flags and
-  collector, container limits, application server or standalone process,
-  architecture, native libraries, packaging, and shutdown? Ask only when
-  evidence and the core profile confirmation do not resolve them.
 
-## Record in .grump
+- Which runtime or deployment differences materially change future reviews: JDK
+  vendor and version, JVM flags and collector, container limits, application
+  server or standalone process, architecture, native libraries, packaging, and
+  shutdown?
 
-Record Java answers in project technology, runtime, build, compatibility, and
-deployment doctrine. Preserve source and scope. Record a material unknown as
-unresolved doctrine instead of guessing.
+## Record
 
-Record confirmed Java deployment facts on the affected `DEP-###` profile. Use a
-referenced `INF-###` entry for a material component shared by several profiles.
-Preserve separate state, support, ownership, confidence, source, and scope
-fields.
-
-## Do not ask or record
-
-Keep local tool paths, one-off build flags, transient process details, and
-plan-only implementation choices out of durable Java doctrine. Do not duplicate
-facts owned by another applicable contribution.
-
-## Re-survey triggers
-
-Re-survey Java when supported language or runtime versions, compiler, standard
-library, package tool, operating systems, architectures, build modes,
-concurrency model, native dependencies, or deployment form materially change,
-when evidence conflicts with saved doctrine, or when the user requests a context
-refresh.
+Map durable Java version and compatibility requirements to `Requirements` or
+`Constraints`, runtime facts to `Runtime and deployment`, and material gaps to
+`Unknowns`.

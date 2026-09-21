@@ -1,11 +1,6 @@
-# SQLite standard review
+# SQLite full-review guidance
 
-## Inspect additional evidence
-
-- Trace readers and writers across threads, processes, containers, crashes,
-  upgrades, and file replacement.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: SQLite library versions, bindings, file location,
 filesystem semantics, journal mode, connection and process topology, foreign-key
@@ -13,15 +8,7 @@ policy, backup, and data size. The changed boundary must define: File and
 connection model, locking, WAL, transactions, foreign keys, type affinity,
 migrations, corruption boundaries, backups, threading, and deployment.
 
-Name the schema and data authority, writers, scale, consistency, durability, and
-migration owner for File and connection model, locking, WAL, transactions,
-foreign keys, type affinity. Prove migrations, corruption boundaries, backups,
-threading, deployment under concurrent access, mixed versions, failover,
-interrupted migration, rollback, and restore.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Confirm one process or coordinated hosts own the file; a network filesystem is
   not a transparent database server.
@@ -34,27 +21,11 @@ interrupted migration, rollback, and restore.
 - Require migration and online-backup procedures that preserve file integrity
   and are tested against crash interruption.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
-- Verify these behaviors through the declared SQLite topology and workload: File
-  and connection model, locking, WAL, transactions, foreign keys, type affinity.
-  Use production-shaped scale and workload while observing latency, resource
-  use, locks or conflicts, replication, and application errors.
-- Exercise failure and edge behavior for: migrations, corruption boundaries,
-  backups, threading, deployment. Exercise concurrent writers, retries,
-  duplicate operations, failover, interrupted migration, and mixed application
-  versions where applicable.
-- Restore or reconstruct state in isolation and verify data, metadata, security,
-  application startup, and recovery objectives.
-
-## Ask when evidence is missing
-
-- Which SQLite library version, build options, filesystem, process model,
-  journal mode, and connection ownership apply?
-- How are writer contention, busy handling, migrations, type affinity, backup,
-  and file replacement coordinated?
-
-## Calibrate findings
-
-- Downgrade when ownership is single-process and bounded or exact runtime,
-  transaction, backup, and contention behavior are proven.
+- Run concurrent connections or processes against the actual filesystem and
+  journal mode. Check busy handling, long readers, checkpoints, and
+  foreign-key enforcement on each new connection.
+- Interrupt transactions and table-rebuild migrations, then reopen the
+  database and verify invariants. Restore using the selected backup method and
+  check WAL handling, schema metadata, and application startup.

@@ -1,6 +1,6 @@
-# Observability standard review
+# Observability full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Telemetry stack and versions, signal ownership,
 SLOs, sampling, retention, cardinality and cost limits, incident workflows, and
@@ -8,16 +8,7 @@ data sensitivity. The changed boundary must define: Signals, semantic
 conventions, context propagation, sampling, cardinality, privacy, SLOs,
 alerting, dashboards, retention, cost, and degraded telemetry.
 
-Identify owners for instrumentation, semantic conventions, context propagation,
-collectors, sampling, cardinality budgets, privacy filtering, storage,
-retention, SLOs, alerts, dashboards, cost, and incident response. Prove the
-critical signals survive representative load and partial telemetry failure,
-that alerts correspond to user-visible objectives, and that missing telemetry
-is itself visible rather than mistaken for health.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Start from decisions operators must make; collecting everything is expensive
   noise, not observability.
@@ -40,7 +31,7 @@ is itself visible rather than mistaken for health.
 - Tie alerts to user impact or exhausted error budgets, then test that runbooks
   and telemetry diagnose real injected failures.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Generate representative success, user-visible failure, dependency failure,
   retry, partial result and saturation paths and trace them across service and
@@ -53,15 +44,3 @@ is itself visible rather than mistaken for health.
 - Inject representative security failures and attempted log injection. Prove
   the event is recorded without secrets, correlated to the actor and affected
   object, delivered to an owned alert when required, and usable in the runbook.
-
-## Ask when evidence is missing
-
-- Which user or operator decision will each signal support, and what service
-  objective or failure condition triggers action?
-- What cardinality, sampling, sensitive-data, retention, and correlation limits
-  apply?
-
-## Calibrate findings
-
-- Downgrade when existing signals already support the decision with bounded cost
-  and incident-tested routing.

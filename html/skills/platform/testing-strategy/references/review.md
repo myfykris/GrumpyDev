@@ -1,6 +1,6 @@
-# Testing strategy standard review
+# Testing strategy full-review guidance
 
-## Establish the operating model
+## Operating conditions
 
 Establish the project target: Test frameworks, CI environments, supported
 platforms, fixture and data policy, external dependency strategy, coverage
@@ -9,15 +9,7 @@ define: Risk model, test boundaries, determinism, fixtures, contracts, property
 tests, concurrency, failure injection, coverage meaning, environments, and
 maintenance.
 
-Map each material failure risk to the lowest representative boundary that can
-observe it, its fixture and environment, deterministic controls, assertion and
-maintenance owner. Identify which contracts require real parsers, storage,
-protocols, concurrency, clocks or failure injection, and distinguish that
-evidence from line coverage or mock interactions.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Test observable behavior and invariants; line coverage and mock call counts
   are not correctness.
@@ -40,7 +32,7 @@ evidence from line coverage or mock interactions.
   commits, malformed upstream data, alert failure, revoked credentials, and
   resource exhaustion must preserve authorization and data invariants.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Demonstrate that each named risk causes a test to fail when the protected
   behavior is deliberately broken, and that the assertion observes the real
@@ -51,15 +43,3 @@ evidence from line coverage or mock interactions.
 - Execute the relevant suite in the actual CI environments and supported
   platforms, checking isolation, order dependence, flake rate, fixture cleanup,
   runtime and failure diagnostics.
-
-## Ask when evidence is missing
-
-- Which concrete failure risks must the tests detect, and at which boundary can
-  each be observed reliably?
-- How are fixtures, time, randomness, concurrency, external systems, and failure
-  injection made representative and deterministic?
-
-## Calibrate findings
-
-- Downgrade when lower layers or existing contract evidence already cover the
-  risk with stable, representative assertions.

@@ -1,13 +1,6 @@
-# OAuth, OIDC, and token authentication standard review
+# OAuth, OIDC, and token authentication full-review guidance
 
-## Inspect additional evidence
-
-- Trace creation or issuance, delivery, presentation, validation, refresh or
-  replacement, revocation, expiry, failure, compromise, and recovery for every
-  token class. Trace OAuth initiation, callback, exchange, consent, and logout
-  paths when they apply.
-
-## Establish the operating model
+## Operating conditions
 
 For each token class, establish its purpose, issuer or creator, subject,
 presenter, accepting audience, tenant boundary, permissions, format, transport,
@@ -15,14 +8,7 @@ storage, validation authority, lifetime, rotation, revocation, replay control,
 and compromise owner. Never assume that all token classes share one trust
 model.
 
-For OAuth and OIDC, also establish providers, protocol profiles, client types,
-flows, redirects, PKCE, state, nonce, discovery, consent, logout, refresh-token
-behavior, session linkage, and account-linking authority. For non-OAuth tokens,
-apply only the lifecycle and trust concepts that actually fit their design.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Treat any bearer token as usable by whoever possesses it. Require TLS, keep it
   out of URLs and logs, limit audience and permissions, prefer short lifetimes,
@@ -55,7 +41,7 @@ apply only the lifecycle and trust concepts that actually fit their design.
   nonce behavior, clock handling, and lost-key recovery instead of assuming the
   token format alone prevents replay.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Test every accepting service with valid tokens and with wrong issuer,
   audience, tenant, type, algorithm, signature, scope, expiry, and replay state.
@@ -67,18 +53,3 @@ apply only the lifecycle and trust concepts that actually fit their design.
   the effective provider and client configuration.
 - Inspect logs, URLs, telemetry, client storage, caches, crash reports, and
   generated artifacts for credential disclosure.
-
-## Ask when evidence is missing
-
-- Which token classes exist, what is each one for, who issues and accepts it,
-  and what subject, audience, tenant, permission, transport, and lifetime apply?
-- How does each token class handle validation, storage, logging, replay,
-  rotation, revocation, key rollover, and compromise? When OAuth or OIDC is
-  involved, which actors, flow, redirects, PKCE, state, nonce, and
-  account-linking rules apply?
-
-## Calibrate findings
-
-- Downgrade when each token has one clear purpose and audience, validation and
-  lifecycle controls are enforced at every accepting boundary, compromise and
-  rotation are rehearsed, and applicable OAuth or provider behavior is tested.

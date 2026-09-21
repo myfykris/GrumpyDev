@@ -1,27 +1,13 @@
-# TanStack standard review
+# TanStack full-review guidance
 
-## Inspect additional evidence
-
-- Trace server, client, edge, build, generated, persisted, synchronized, and
-  serialized boundaries. Include authentication and per-operation
-  authorization wherever a selected product can cross a trust boundary.
-- Inspect the exact products in use and their state identity, lifecycle,
-  cancellation, errors, rendering, accessibility, performance, and production
-  artifact behavior.
-
-## Establish the operating model
+## Operating conditions
 
 Establish the exact TanStack product roster and versions, supported UI framework
 and runtime, source of truth for each product's state or generated output, and
 the boundaries where its data becomes persisted, serialized, rendered,
 executed, or trusted.
 
-Route visibility and client middleware are user experience controls, not data authorization.
-Every server function and protected data source must enforce its own trusted authorization.
-
-## Challenge the reviewed work
-
-### Recurring traps
+## Failure patterns
 
 - Require canonical query keys that include every identity, tenant, locale, filter, and version
   dimension affecting data.
@@ -61,7 +47,7 @@ Every server function and protected data source must enforce its own trusted aut
   generated output, identify the authoritative input, make regeneration
   reproducible, and prove development-only behavior cannot leak into production.
 
-## Verify the claims
+## Verification to run or specify in the plan
 
 - Exercise navigation, preloading, parallel requests, cancellation, stale data, failed
   mutations, optimistic rollback, and tenant changes.
@@ -73,17 +59,3 @@ Every server function and protected data source must enforce its own trusted aut
   updates, cancellation, navigation or teardown, persistence and reload,
   synchronization conflict, SSR and hydration, authorization failure, untrusted
   content, keyboard and assistive use, and production build output as applicable.
-
-## Ask when evidence is missing
-
-- Which TanStack products and versions apply, which framework and runtime host
-  them, and what project concern does each product own?
-- For the selected products, which identity, state, persistence, authorization,
-  trust, accessibility, performance, build, and deployment rules materially
-  affect this review?
-
-## Calibrate findings
-
-- Downgrade when the applicable product-specific identity, state, trust,
-  lifecycle, accessibility, performance, build, and production-runtime claims
-  are demonstrated rather than inferred from the TanStack name.
