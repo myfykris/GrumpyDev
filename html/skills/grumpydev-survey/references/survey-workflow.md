@@ -12,17 +12,25 @@ allowed values.
 
 1. `Plan addenda`: ask whether completed plan reviews may be appended to a
    GrumpyDev addendum or must remain `chat only`. Store `allowed` or `chat only`.
-2. `Review questions`: ask whether reviews should pause for material numbered
+2. `Plan execution rules`: ask, "Do you want GrumpyDev to automatically add its
+   execution rules to approved plans to attempt to steer the agent better so it
+   stays within the reviewed scope better?" Explain that this applies after
+   future `APPROVE` or `APPROVE WITH CONCERNS` plan reviews, without asking
+   again. It is separate
+   from saving review results and does not authorize implementation. Store
+   `allowed` for yes or `disabled` for no. Setting this preference does not edit
+   any plan during the survey.
+3. `Review questions`: ask whether reviews should pause for material numbered
    questions or finish without pausing and list gaps. Store `interactive` or
    `non-interactive`.
-3. `Confirmed doctrine updates`: ask whether explicitly confirmed durable facts
+4. `Confirmed doctrine updates`: ask whether explicitly confirmed durable facts
    may update `.grump` or should be proposed only. Store `allowed` or
    `propose only`.
-4. `Decision-affecting research`: ask whether research that can change an
+5. `Decision-affecting research`: ask whether research that can change an
    implementation decision must be resolved before plan approval, or may be a
    bounded discovery phase followed by another review. Store `resolve first` or
    `gated discovery`.
-5. `Research execution`: ask whether safe read-only research should run
+6. `Research execution`: ask whether safe read-only research should run
    automatically, require permission, or only be reported. Store `automatic`,
    `ask first`, or `report only`.
 
@@ -65,7 +73,7 @@ decisions as user statements. Do not
 promote inference into confirmed fact or convert a review recommendation into
 doctrine.
 
-Generate and interpret only the eight managed fields defined in the installed
+Generate and interpret only the managed fields defined in the installed
 [review-preferences.md](../../grumpydev/references/review-preferences.md).
 Unknown human-authored preference fields are non-operative. Make bounded edits;
 if surrounding content cannot be preserved, leave the file unchanged and return

@@ -141,7 +141,7 @@ file unchanged and return the exact proposed change in chat.
 
 ## Minimal example
 
-Illustration only, not evidence about the current project. These two preference
+Illustration only, not evidence about the current project. These three preference
 values assume explicit project-wide answers; do not store defaults as answers.
 
 ```markdown
@@ -159,4 +159,5 @@ values assume explicit project-wide answers; do not store defaults as answers.
 
 - Doctrine format: compact
 - Plan addenda: chat only
+- Plan execution rules: allowed
 ```

@@ -17,6 +17,40 @@ A statement that something is fixed is not proof; claims about existing
 implementation behavior require inspected implementation evidence. Planned
 checks are not completed checks.
 
+## Report problems that matter here
+
+Before reporting a finding, establish why its failure scenario is credible for
+this project's intended use, actual or planned configuration, and operating
+conditions. A technically possible failure is not enough.
+
+- Identify the concrete trigger and project evidence that it can occur here.
+  Use the described design when reviewing a plan; a past incident or runnable
+  reproduction is not required.
+- Check for constraints or controls that prevent the scenario before
+  recommending another safeguard. Neither assume a protection exists nor
+  ignore one that the evidence establishes.
+- Do not invent concurrency, traffic, deployment arrangements, user behavior,
+  or future requirements to make a concern apply.
+- Exclude scenarios that require violating established constraints,
+  deliberately disabling protections, or an unsupported chain of unusual
+  actions, unless those actions are relevant to the project's threat model or
+  foreseeable mistakes.
+- Judge practical significance using both consequences and supported likelihood
+  or exposure. Do not invent probabilities. Keep the proposed correction
+  proportionate to the supported risk.
+- Omit concerns that fail this check. Do not preserve them as `LOW` findings,
+  optional improvements, or evidence gaps merely to include them. Ask a
+  question or report a gap only when the unknown could materially change a
+  credible concern or review decision, not to rule out every imagined scenario.
+
+Rare does not mean irrelevant. Retain credible security, data-loss, and other
+serious risks when their triggering conditions are supported. Intended use does
+not exclude foreseeable mistakes or relevant adversarial behavior.
+
+For a race-condition finding, identify which operations can overlap, through
+what actual or planned path, and why the overlap matters. A missing lock is not
+enough when the project's execution model prevents that overlap.
+
 ## Severity and confidence
 
 Assign severity only after evidence establishes the condition and its

@@ -99,8 +99,9 @@ Read `Review questions` from `.grump` when present:
 A current explicit user instruction overrides the stored mode for the current
 evaluation without rewriting `.grump`. This mode controls substantive review
 questions only. It does not suppress required safety confirmations, host
-approvals, clarification needed to identify the review target, or the
-post-review plan-rules offer when the target is an implementation plan.
+approvals, or clarification needed to identify the review target. Execution
+rules follow the saved `Plan execution rules` preference, not a per-review
+question.
 
 ## Deduplicate and ask review questions
 

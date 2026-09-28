@@ -2,7 +2,9 @@
 
 Load this reference when an earlier review exists for the same target, when a
 plan addendum already exists, or when the exact `Plan addenda` preference or a
-current explicit instruction authorizes persistence.
+current explicit instruction authorizes persistence. Also use its placement,
+encoding, and verification rules when the execution-rules reference authorizes
+adding rules to a plan; that permission does not authorize saving review results.
 
 ## Preserve issue continuity
 
@@ -41,8 +43,8 @@ bare statement that something is fixed is not proof.
 Always return the complete review in chat. Append it to the local plan only
 when `Plan addenda: allowed` is an exact valid `.grump` preference or the user
 explicitly authorizes that write now. `chat only`, missing, invalid, or
-conflicting values authorize no plan edit. This permission never authorizes a
-remote write or a change outside the addendum.
+conflicting values do not authorize saving review results. This permission
+never authorizes a remote write or a change outside the addendum.
 
 Append only after the review and verdict are complete:
 
@@ -55,7 +57,8 @@ Append only after the review and verdict are complete:
 3. Persist the verdict, summary, confidence, findings, review scope, warnings,
    and material review answers used. Include evidence gaps, strengths, revised
    path, resolutions, `Why new`, and revision closure only when the chat review
-   includes them. Do not persist the later execution-rules question.
+   includes them. Keep any separately authorized execution rules in their own
+   section of the addendum.
 4. Keep every evidence locator, established-fact scope, inference, condition,
    consequence, required action, and confidence limitation aligned with chat.
    Compact wording may deduplicate text but may not erase a material

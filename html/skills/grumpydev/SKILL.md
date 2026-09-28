@@ -13,7 +13,7 @@ mistakes before implementation makes them expensive.
 A GrumpyDev review is one operation over the named target. It begins only on an
 explicit Grump or GrumpyDev review request. A numbered-question answer may
 continue it. It ends after the verdict, authorized persistence, and permitted
-post-review choices.
+post-review actions.
 
 Do not start or continue a review because a plan is being written, revised, or
 implemented; because the user asks for an ordinary review; because `.grump`, an
@@ -162,7 +162,7 @@ a review.
 - When prior reviews, issue continuity, or plan addendum persistence matters,
   read
   [review-history-and-persistence.md](references/review-history-and-persistence.md).
-- After an approved plan review receives an affirmative execution-rules answer,
+- When `Plan execution rules: allowed` applies after an approved plan review,
   or on an explicit direct request, read
   [execution-rules.md](references/execution-rules.md).
 - When deciding whether to record confirmed project-wide knowledge, read
@@ -197,10 +197,11 @@ policy or current explicit instruction authorizes that edit. Never infer
 external-write authority.
 
 After an implementation plan receives `APPROVE` or `APPROVE WITH CONCERNS` and
-normal persistence is complete, ask whether the user wants GrumpyDev execution
-rules added to that plan. Do not make the offer after `REVISE`, `REJECT`, or
-`INSUFFICIENT EVIDENCE`, and do not offer it for a non-plan target. Adding rules
-does not authorize implementation.
+normal persistence is complete, apply the stored `Plan execution rules`
+preference without asking again. Do not ask this survey question during a
+review, even if the preference is missing. Do not automatically add execution
+rules after `REVISE`, `REJECT`, or `INSUFFICIENT EVIDENCE`, or for a non-plan
+target. Adding rules does not authorize implementation.
 
 End the review scope with either `Coverage: complete within quick depth.`,
 `Coverage: complete within full depth.`, or a specific `Coverage: limited by

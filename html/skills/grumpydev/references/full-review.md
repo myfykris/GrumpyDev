@@ -26,9 +26,10 @@ and evidence contract. It does not authorize changes to the reviewed work.
 5. Pool and deduplicate decision-affecting questions and research needs. Use the
    research-and-questions reference when any exist. Add a checklist item only
    when an answer or research result reveals a new material dependency.
-6. Investigate supported candidates to full depth, beginning with issues that
-   can invalidate the most downstream work. Check the effects of likely
-   corrections without implementing them.
+6. Investigate supported candidates in depth only when they can realistically
+   matter to this project. Start with issues that can invalidate the most
+   downstream work. Check the effects of likely corrections without
+   implementing them.
 7. Group issues only when the same cause reaches the same consequence boundary
    and the same correction and closing condition resolve all of them.
 8. Perform one final completeness and evidence pass. Check for unfinished
@@ -69,16 +70,20 @@ Before a candidate becomes a finding, record:
 1. the exact inspected locator;
 2. the established fact that locator supports;
 3. any inference, labeled separately;
-4. the condition under which failure occurs;
-5. the consequence without assuming unknown scale or exposure;
-6. the smallest observable required action; and
+4. the concrete triggering condition and why inspected evidence makes it
+   realistically reachable here, accounting for existing or planned controls;
+5. the consequence and practical significance without assuming unknown scale,
+   exposure, or likelihood;
+6. the smallest proportionate required action with an observable result; and
 7. the evidence that would close or materially narrow the issue when it is not
    obvious.
 
-Confirm that the evidence supports the severity. If a step fails, inspect more
-evidence, ask one permitted material question, conduct permitted research,
-report an evidence gap, or remove the candidate. Uncertainty is not a reason to
-retain an unsupported `LOW` finding.
+Apply the shared [review criteria](review-criteria.md) before choosing severity.
+Remove candidates that do not apply here; do not convert them into evidence
+gaps. If a material unknown prevents deciding whether a credible scenario
+applies, inspect relevant evidence, ask one permitted material question,
+conduct permitted research, or report that specific gap. Uncertainty is not a
+reason to retain an unsupported `LOW` finding.
 
 State future failures conditionally unless current evidence shows the failure
 already occurs. Verify every cited local path and locator in the current
