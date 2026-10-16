@@ -1,0 +1,21 @@
+# Project doctrine
+
+## Purpose
+Every Partner invoice reaches Ledgerly exactly once, within 5 minutes of
+receipt, and Finance can reconcile the nightly CSV against Ledgerly.
+
+## Platform pins
+- Node 22 (base image node:22-slim).
+- PostgreSQL 16 (managed instance).
+
+## Constraints
+- Ledgerly is the system of record.
+
+## Accepted decisions
+- None recorded yet.
+
+## Known debt
+- None recorded.
+
+## Settings
+- Ledger: on

@@ -1,0 +1,26 @@
+# Project doctrine
+
+## Purpose
+Customer invoice portal for one client (Northwind Supply). It shows invoices
+and payment status from the vendor's SOAP billing API.
+
+## Platform pins
+- PHP 7.4. The client's licensed ionCube-encoded reporting module only loads
+  on 7.4, so production cannot be upgraded. All code and dependencies must run
+  on 7.4. The local Docker image uses PHP 8.2 for convenience only.
+
+## Constraints
+- The vendor's SOAP billing API is mandatory; the vendor has no REST API.
+
+## Accepted decisions
+- Deployment is an FTP upload to the client's server. No containers in
+  production.
+
+## Boundaries
+- None recorded.
+
+## Known debt
+- src/Legacy/SoapGateway.php: static client, no timeouts, raw stdClass results.
+
+## Settings
+- Ledger: on

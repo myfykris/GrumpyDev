@@ -1,0 +1,13 @@
+# Project doctrine
+
+## Purpose
+invoice-sync receives Partner invoice webhooks, stores them in PostgreSQL, and a worker pushes each invoice to the Ledgerly accounting API. Every invoice must reach Ledgerly exactly once; duplicates are the most expensive failure. Finance reconciles a nightly CSV each morning (New York time).
+
+## Platform pins
+- Node.js 22 (package.json engines).
+
+## Constraints
+- Ledgerly is the accounting system of record.
+
+## Settings
+- Ledger: on

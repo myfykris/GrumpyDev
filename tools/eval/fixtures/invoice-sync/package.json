@@ -1,0 +1,26 @@
+{
+  "name": "invoice-sync",
+  "version": "1.4.2",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "tsc -p .",
+    "start": "node dist/server.js",
+    "worker": "node dist/worker.js",
+    "migrate": "node-pg-migrate up",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "pg": "^8.13.1",
+    "undici": "^6.21.0",
+    "node-pg-migrate": "^7.8.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.8",
+    "@types/express": "^4.17.21",
+    "@types/pg": "^8.11.10"
+  }
+}

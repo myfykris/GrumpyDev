@@ -1,0 +1,7 @@
+{
+  "name": "acme/ledger-client",
+  "version": "1.0.0",
+  "description": "Posts payment events to the Acme ledger service",
+  "require": { "php": "^8.1" },
+  "autoload": { "psr-4": { "Acme\\Ledger\\": "src/" } }
+}

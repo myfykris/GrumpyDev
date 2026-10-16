@@ -1,0 +1,23 @@
+# Project doctrine
+
+## Purpose
+Every Partner invoice reaches Ledgerly exactly once, within 5 minutes of
+receipt, and Finance can reconcile the nightly CSV against Ledgerly.
+
+## Platform pins
+- Node 22 (base image node:22-slim).
+- PostgreSQL 16 (managed instance).
+
+## Constraints
+- Ledgerly is the system of record.
+
+## Accepted decisions
+- None recorded yet.
+
+## Known debt
+- The Partner webhook handler (src/routes/webhooks.ts) does the signature check,
+  validation, the credit-limit Slack alert and the insert in one function.
+  Accepted until the v3 ingest rewrite (2027 Q1).
+
+## Settings
+- Ledger: on

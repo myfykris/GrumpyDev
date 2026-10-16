@@ -1,0 +1,10 @@
+{
+  "name": "acme/invoice-portal",
+  "description": "Customer invoice portal",
+  "type": "project",
+  "require": {
+    "ext-pdo": "*",
+    "ext-soap": "*"
+  },
+  "autoload": { "psr-4": { "App\\": "src/" } }
+}

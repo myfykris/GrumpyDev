@@ -1,0 +1,42 @@
+# GrumpyDev project doctrine
+
+## Purpose
+
+- invoice-sync receives Partner invoice-event webhooks, stores them in PostgreSQL, and a worker pushes each invoice to the Ledgerly accounting API for Finance. Source: README.md, docs/product.md (confirmed).
+
+## Requirements
+
+- Every invoice must reach Ledgerly exactly once. Duplicate invoices are the most expensive failure (Finance voids them by hand; auditors ask about each). Source: docs/product.md (confirmed).
+- Finance (New York) wants a nightly CSV export of the day's invoices to reconcile against Ledgerly each morning. Source: docs/product.md (confirmed request; no export exists in inspected src/).
+- Volume: about 3,000 invoices per business day, peaks about 9,000. Source: docs/product.md (confirmed).
+
+## Project evidence
+
+- Docs: README.md, docs/product.md (the user agrees with all of docs/product.md).
+- Code and config: package.json, Dockerfile, deploy/server.yaml, deploy/worker.yaml, migrations/001_init.sql, src/server.ts, src/worker.ts, src/db.ts, src/middleware/verifySignature.ts, src/routes/webhooksV1.ts.
+
+## Runtime and deployment
+
+Declared by repo files only (not confirmed against the deployed environment; see UNK-005):
+- Node >=22 ESM, TypeScript ^5.6.3 built with `tsc -p .` into dist/; image node:22-slim. Source: package.json, Dockerfile.
+- One image, registry.internal/invoice-sync:1.4.2, run as two Kubernetes Deployments, both TZ=UTC. Source: deploy/server.yaml, deploy/worker.yaml.
+  - invoice-sync-server: 3 replicas, RollingUpdate maxUnavailable 0, maxSurge 1; serves /healthz and /webhooks/partner/v1.
+  - invoice-sync-worker: 1 replica, RollingUpdate with default surge settings; polls every 5 s, claims up to 50 pending rows, POSTs each invoice to Ledgerly /v2/invoices with an idempotency-key header.
+- Migrations: node-pg-migrate SQL in migrations/, run as a pre-deploy job before the rolling update. Source: README.md (job definition not in repo).
+- Logging: console.log JSON lines on stdout, shipped to Loki by the platform. Source: README.md.
+
+## Unknowns
+
+- UNK-001: Whether Ledgerly honors the idempotency-key header on POST /v2/invoices, how long it retains keys, and whether a written contract exists for its invoice and bulk endpoints. Affects the exactly-once guarantee. User: not sure (Q010).
+- UNK-002: PostgreSQL hosting model, server version, pooler and mode, backup and restore ownership. User: not sure (Q011).
+- UNK-003: Whether the webhook endpoint is internet-facing and what fronts it (ingress, proxy, TLS termination, allow-list). User: not sure (Q012).
+- UNK-004: tsconfig.json and package-lock.json are absent from the repo although `tsc -p .` and `npm ci` need them; intended compiler settings and lock policy unknown. User: not sure (Q013).
+- UNK-005: Deployment facts not in the repo: migration job definition, injection of DATABASE_URL, PARTNER_WEBHOOK_SECRET, LEDGERLY_URL and LEDGERLY_TOKEN (manifests set only TZ), cluster version, who applies manifests. User: not sure (Q009).
+
+## Review preferences
+
+- Doctrine format: compact
+- Plan addenda: chat only
+- Plan execution rules: disabled
+- Review questions: non-interactive
+- Research execution: report only
