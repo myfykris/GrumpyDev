@@ -1,53 +1,40 @@
 # Security policy
 
-## Reporting a vulnerability
+## Reporting a problem
 
-Do not include secrets, credentials, private repository content, personal data,
-or exploit details in a public issue.
-
-Use GitHub private vulnerability reporting when it is available for this
-repository. Open the repository's Security page, select "Report a
-vulnerability", and submit the smallest reproduction that establishes the
-problem.
-
-If private vulnerability reporting is unavailable, open a public issue that
-only asks the maintainers to establish a private contact channel. Do not include
-technical vulnerability details in that issue.
-
-Include the affected file or behavior, expected security boundary, practical
-impact, and a minimal reproduction. Remove unrelated project data and rotate
-any credential that may have been exposed.
+Open a GitHub issue. Say which file or behavior is affected, what it should not
+be able to do, and how to reproduce it. Leave out secrets, credentials and
+private code, and rotate any credential that may have been exposed.
 
 ## Scope
 
-Security reports may cover the static website, installer instructions,
-manifest, core skills, specialist skills, survey behavior, or project-local
-routing instructions. A skill does not grant an agent additional permissions or
-authority; the host and user still control both.
+Reports may cover the static website, the installer (`skills/install.md`), the
+skill (`skills/grumpydev/SKILL.md` and `references/audit.md`), or the blocks
+GrumpyDev writes into project instruction files. A skill grants an
+agent no additional permissions or authority; the host and the user still
+control both.
 
-Installed skills include every file listed for that skill in the manifest.
-Ordinary reviews use those local files and must not fetch new instructions.
+The installer and skill files are untrusted plain text. The installer fetches
+only the two skill files, only from `https://grumpydev.ai`, rejects a redirect
+to another origin, and installs inside the current project only.
 
-The installer, manifest, and downloaded skills are untrusted plain text. The
-installer and maintenance instructions accept remote files only from the exact
-`https://grumpydev.ai` origin and require rejecting a redirect outside that
-origin. They require project-local setup, `gd-` specialist names, and inspection
-of an existing destination before replacement. When an agent harness needs a
-project instruction to discover GrumpyDev, the installer tells the agent to add
-one marked routing block that points to the local entrypoint and preserves all
-surrounding instructions. The block says that a missing entrypoint must remain
-inert and must not trigger an automatic download.
+During a review the skill fetches nothing and writes only to
+`.grumpydev/reviews/`. It never edits the reviewed work, source code or
+`.grump`. `Grump accept` writes `.grump` only after the user confirms, and
+`Grump sync` writes only inside the marked constraints blocks.
 
-GrumpyDev defines no installation receipt, state database, lockfile, or
-ownership database. For an explicit update or removal request, the maintenance
-skill instructs the agent to inspect the actual local files. It requires the
-agent to show and ask before replacing a local file whose contents differ from
-the fetched replacement or touching an ambiguous target. It limits removal to
-confirmed GrumpyDev files, `.grump`, a confirmed local manifest when present,
-GrumpyDev-only directories, and the contents of bounded GrumpyDev routing
-blocks.
+Setup may add marked blocks to project instruction files: a constraints block
+(`BEGIN GRUMPYDEV CONSTRAINTS` ... `END GRUMPYDEV CONSTRAINTS`) in each agent
+context file the user chooses, and, only for harnesses without project skill
+discovery, a routing block (`BEGIN GRUMPYDEV ROUTING INSTRUCTION` ...
+`END GRUMPYDEV ROUTING INSTRUCTION`). The routing block tells the agent to read
+the local skill only on an explicit GrumpyDev request and never to fetch or
+reinstall it automatically. Nothing outside a block is changed.
 
-## Disclosure
+`Grump update` shows the diff for each skill file and replaces them only after
+the user confirms. `Grump remove` deletes the skill directory and the marked blocks, and asks
+before deleting `.grump` or `.grumpydev/`. GrumpyDev keeps no installation
+receipt, state database or lockfile.
 
-Allow the maintainers a reasonable opportunity to investigate and prepare a
-fix before public disclosure. No response deadline or bounty is promised.
+Keep passwords, API keys and production data out of `.grump` and the ledgers;
+they are plain text intended for the repository.

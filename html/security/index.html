@@ -3,23 +3,23 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>GrumpyDev security and trust</title>
-    <meta name="description" content="Understand GrumpyDev's skill selection, project-local files, safe updates and removal, permission boundaries, and static distribution.">
+    <title>GrumpyDev security</title>
+    <meta name="description" content="What GrumpyDev installs, what a review may write, where files come from, and how to report a security problem.">
     <meta name="theme-color" content="#1c242b">
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'">
+          content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'">
     <link rel="canonical" href="https://grumpydev.ai/security/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="GrumpyDev security and trust">
-    <meta property="og:description" content="Understand GrumpyDev's skill selection, project-local files, safe updates and removal, permission boundaries, and static distribution.">
+    <meta property="og:title" content="GrumpyDev security">
+    <meta property="og:description" content="What GrumpyDev installs, what a review may write, where files come from, and how to report a security problem.">
     <meta property="og:url" content="https://grumpydev.ai/security/">
     <meta property="og:image" content="https://grumpydev.ai/assets/social-card.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="GrumpyDev: Your plan has problems.">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="GrumpyDev security and trust">
-    <meta name="twitter:description" content="Understand GrumpyDev's skill selection, project-local files, safe updates and removal, permission boundaries, and static distribution.">
+    <meta name="twitter:title" content="GrumpyDev security">
+    <meta name="twitter:description" content="What GrumpyDev installs, what a review may write, where files come from, and how to report a security problem.">
     <meta name="twitter:image" content="https://grumpydev.ai/assets/social-card.png">
     <meta name="twitter:image:alt" content="GrumpyDev: Your plan has problems.">
     <link rel="icon" href="../assets/favicon.png" type="image/png" sizes="64x64">
@@ -39,8 +39,6 @@
           <ul class="menu menu-horizontal gap-1 px-1 font-semibold">
             <li><a href="../">Home</a></li>
             <li><a href="../how-it-works/">How it works</a></li>
-            <li><a href="../skills/">Skills</a></li>
-            <li><a href="../author/">For authors</a></li>
             <li><a href="../security/">Security</a></li>
             <li><a href="../contact/">Contact</a></li>
             <li><a href="https://github.com/myfykris/grumpydev">GitHub</a></li>
@@ -55,8 +53,6 @@
             <ul class="menu dropdown-content bg-base-200 rounded-box z-10 mt-3 w-56 border soft-rule p-2 shadow-2xl">
               <li><a href="../">Home</a></li>
               <li><a href="../how-it-works/">How it works</a></li>
-              <li><a href="../skills/">Skills</a></li>
-              <li><a href="../author/">For authors</a></li>
               <li><a href="../security/">Security</a></li>
               <li><a href="../contact/">Contact</a></li>
               <li><a href="https://github.com/myfykris/grumpydev">GitHub</a></li>
@@ -67,70 +63,56 @@
       </div>
     </header>
 
-    <main id="main">
-<section class="border-b soft-rule py-20 lg:py-28">
-  <div class="site-shell grid gap-10 lg:grid-cols-[1fr_.7fr] lg:items-end">
-    <div><span class="eyebrow">Security &amp; trust</span><h1 class="mt-6 text-5xl leading-none font-black tracking-[-0.05em] sm:text-7xl">Inspect the instructions before using them.</h1></div>
-    <div class="text-lg leading-8 text-base-content/65">
-      <p>GrumpyDev is plain-text guidance you can inspect before installing it. Your coding agent performs setup and reviews; this website does not.</p>
-      <p class="mt-5">These files guide your agent. They do not enforce its behavior or replace its approval controls.</p>
+    <main id="main"><section class="border-b soft-rule py-20 lg:py-28">
+  <div class="site-shell grid gap-12 lg:grid-cols-[1fr_.7fr] lg:items-end">
+    <div>
+      <span class="eyebrow">Security &amp; trust</span>
+      <h1 class="mt-6 max-w-4xl text-5xl leading-none font-black tracking-[-0.05em] sm:text-7xl">Read every file before you use it.</h1>
     </div>
+    <p class="text-lg leading-8 text-base-content/65">GrumpyDev is two Markdown files and an installer you can read in a few minutes. Your coding agent does the setup and the reviews; this website is static and never sees your code. These files guide your agent; they do not override its permissions or your approval controls.</p>
   </div>
 </section>
 
-<section class="bg-base-200/60 py-20">
-  <div class="site-shell grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-    <div class="rounded-2xl border soft-rule bg-base-200 p-6"><span class="badge badge-success badge-outline">STATIC</span><h2 class="mt-4 font-black">Plain-text instructions</h2><p class="mt-2 text-sm leading-6 text-base-content/55">The installer is Markdown to inspect, not an installer program to execute.</p></div>
-    <div class="rounded-2xl border soft-rule bg-base-200 p-6"><span class="badge badge-success badge-outline">VISIBLE</span><h2 class="mt-4 font-black">Protect existing files</h2><p class="mt-2 text-sm leading-6 text-base-content/55">The installation instructions prohibit replacing unrelated skills or project instructions.</p></div>
-    <div class="rounded-2xl border soft-rule bg-base-200 p-6"><span class="badge badge-success badge-outline">CONSENT</span><h2 class="mt-4 font-black">Approve specialist skills</h2><p class="mt-2 text-sm leading-6 text-base-content/55">The installer must ask before downloading specialist skills for your project.</p></div>
-    <div class="rounded-2xl border soft-rule bg-base-200 p-6"><span class="badge badge-success badge-outline">LOCAL</span><h2 class="mt-4 font-black">No extra skills during reviews</h2><p class="mt-2 text-sm leading-6 text-base-content/55">The review instructions use installed skills and prohibit downloading additional skills during a review.</p></div>
+<section class="bg-base-200/60 py-20 lg:py-28">
+  <div class="site-shell">
+    <div class="grid gap-px overflow-hidden rounded-2xl border soft-rule bg-base-content/10 lg:grid-cols-4">
+      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">SOURCE</div><h2 class="mt-5 text-xl font-black">One site</h2><p class="mt-3 leading-7 text-base-content/60">The installer fetches only the two skill files, only from grumpydev.ai, and refuses a redirect to another site.</p></article>
+      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">LOCAL</div><h2 class="mt-5 text-xl font-black">No fetching during reviews</h2><p class="mt-3 leading-7 text-base-content/60">A review uses the installed files only. The skill names a URL just once, for <code>Grump update</code> and <code>Grump remove</code>.</p></article>
+      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">BOUNDED</div><h2 class="mt-5 text-xl font-black">Reviews write one place</h2><p class="mt-3 leading-7 text-base-content/60">A review writes only to <code>.grumpydev/reviews/</code>. It never edits your code, your plan or <code>.grump</code>.</p></article>
+      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">EXPLICIT</div><h2 class="mt-5 text-xl font-black">Only when asked</h2><p class="mt-3 leading-7 text-base-content/60">Nothing runs unless you say Grump. Writing or implementing a plan never starts a review.</p></article>
+    </div>
   </div>
 </section>
 
 <section class="py-20 lg:py-28">
   <div class="site-shell grid gap-14 lg:grid-cols-2 lg:items-start">
     <div>
-      <h2 class="text-3xl font-black tracking-tight sm:text-5xl">What to check before installing</h2>
-      <ol class="mt-8 space-y-5">
-        <li class="flex gap-4"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-primary font-mono font-bold text-primary-content">1</span><div><h3 class="font-black">Read the installer</h3><p class="mt-1 text-base-content/60">Inspect the <a class="link link-primary" href="../skills/grumpydev-install/SKILL.md">GrumpyDev installer</a> before acting on it. Its instructions require accepting remote files only from the exact <code>https://grumpydev.ai</code> origin and treating them as untrusted text.</p></div></li>
-        <li class="flex gap-4"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-primary font-mono font-bold text-primary-content">2</span><div><h3 class="font-black">Check the specialist choices</h3><p class="mt-1 text-base-content/60">Check that the proposed specialist skills match your project before approving their download.</p></div></li>
-        <li class="flex gap-4"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-primary font-mono font-bold text-primary-content">3</span><div><h3 class="font-black">Check the proposed file changes</h3><p class="mt-1 text-base-content/60">Check which project-local files setup proposes to create or change. Unrelated skills and project instructions must be preserved.</p></div></li>
-        <li class="flex gap-4"><span class="grid size-8 shrink-0 place-items-center rounded-full bg-primary font-mono font-bold text-primary-content">4</span><div><h3 class="font-black">Read the setup result</h3><p class="mt-1 text-base-content/60">Read what your agent reports after setup, including anything incomplete or unresolved.</p></div></li>
-      </ol>
+      <span class="eyebrow">What setup changes</span>
+      <h2 class="mt-5 text-3xl font-black tracking-tight sm:text-4xl">Four kinds of file, all in your project.</h2>
+      <ul class="mt-7 space-y-3 leading-7 text-base-content/65">
+        <li><code>.claude/skills/grumpydev/</code> or your harness's skill folder: the skill.</li>
+        <li><code>.grump</code>: your project doctrine. Changed later only after you confirm a <code>Grump accept</code>.</li>
+        <li><code>.grumpydev/reviews/</code>: the issue ledgers.</li>
+        <li>One marked block in each agent context file you choose, for example <code>CLAUDE.md</code>. Nothing outside the block is ever changed; <code>Grump remove</code> deletes only the block.</li>
+      </ul>
+      <p class="mt-6 leading-7 text-base-content/65">If your agent cannot discover project skills, setup adds one routing block instead, telling it to read the local skill only when you ask for GrumpyDev and never to fetch it automatically.</p>
     </div>
-    <details class="rounded-2xl border soft-rule bg-neutral p-7 text-neutral-content sm:p-9">
-      <summary class="font-bold">When setup adds project instructions</summary>
-      <p class="mt-3 text-sm leading-6 text-neutral-content/55">If your agent cannot discover project skills, setup may add a short note pointing to GrumpyDev. The instructions require preserving your other project instructions.</p>
-      <pre class="mt-6 overflow-x-auto text-sm leading-7"><code>BEGIN GRUMPYDEV ROUTING INSTRUCTION
-Only when the user explicitly requests GrumpyDev,
-read &lt;entrypoint&gt; before doing the requested
-GrumpyDev operation. Never activate GrumpyDev for
-ordinary planning, implementation, or review.
-...
-END GRUMPYDEV ROUTING INSTRUCTION</code></pre>
-      <p class="mt-5 text-sm leading-6 text-neutral-content/55">Update and removal may replace or delete only the complete marked block. Every surrounding instruction belongs to the project and must be preserved.</p>
-    </details>
-  </div>
-</section>
-
-<section class="bg-base-200/60 py-20">
-  <div class="site-shell">
-    <div class="max-w-3xl"><span class="eyebrow">Safe maintenance</span><h2 class="mt-5 text-3xl font-black tracking-tight sm:text-5xl">Update or remove it when you choose.</h2><p class="mt-5 text-lg leading-8 text-base-content/65">Make these requests in your coding agent, not in a terminal or on this website.</p></div>
-    <div class="mt-10 grid gap-4 md:grid-cols-2">
-      <article class="rounded-2xl border soft-rule bg-base-200 p-7"><h3 class="text-xl font-black">Update GrumpyDev</h3><p class="mt-4 font-mono text-primary"><code>Update GrumpyDev for this project.</code></p><p class="mt-3 leading-7 text-base-content/60">The maintenance instructions require the agent to show files that differ and ask before replacing them. Adding a new specialist still requires your approval.</p></article>
-      <article class="rounded-2xl border soft-rule bg-base-200 p-7"><h3 class="text-xl font-black">Remove GrumpyDev</h3><p class="mt-4 font-mono text-primary"><code>Remove GrumpyDev from this project.</code></p><p class="mt-3 leading-7 text-base-content/60">The removal instructions cover confirmed GrumpyDev files, including <code>.grump</code>, and GrumpyDev's marked project instructions. Unrelated files and instructions must be preserved.</p></article>
+    <div class="space-y-6">
+      <div class="rounded-2xl border soft-rule bg-base-200 p-6">
+        <h3 class="text-lg font-bold">Keep secrets out of .grump</h3>
+        <p class="mt-2 leading-7 text-base-content/65"><code>.grump</code> and the ledgers are plain text meant for your repository. Record decisions and versions, never passwords, keys or production data.</p>
+      </div>
+      <div class="rounded-2xl border soft-rule bg-base-200 p-6">
+        <h3 class="text-lg font-bold">Your agent's permissions still apply</h3>
+        <p class="mt-2 leading-7 text-base-content/65">GrumpyDev grants no access to production, publishing or external systems. Keep your normal approval controls on.</p>
+      </div>
+      <div class="rounded-2xl border soft-rule bg-base-200 p-6">
+        <h3 class="text-lg font-bold">Found a security problem?</h3>
+        <p class="mt-2 leading-7 text-base-content/65">Open a <a class="link link-primary" href="https://github.com/myfykris/grumpydev/issues">GitHub issue</a>. Leave out secrets, credentials and private code. <a class="link link-primary" href="https://github.com/myfykris/grumpydev/blob/main/SECURITY.md">Read the policy</a>.</p>
+      </div>
     </div>
   </div>
 </section>
-
-<section class="border-y soft-rule bg-base-200/60 py-20">
-  <div class="site-shell grid gap-12 lg:grid-cols-2">
-    <div><span class="eyebrow">Data boundaries</span><h2 class="mt-5 text-3xl font-black">You do not need to upload your repository here.</h2><p class="mt-5 leading-8 text-base-content/65">GrumpyDev does not ask you to upload your repository to this site, and, in fact, this site is completely static. Reviews are performed by your existing coding agent, whose own data handling and tool permissions still apply.</p><p class="mt-5 leading-8 text-base-content/65">Keep passwords, API keys, and production data out of <code>.grump</code>. Record only the project context needed for reviews.</p></div>
-    <div><span class="eyebrow">Agent boundaries</span><h2 class="mt-5 text-3xl font-black">Your agent's permissions still apply.</h2><p class="mt-5 leading-8 text-base-content/65">GrumpyDev's instructions do not grant permission to access production, publish work, or change external systems. Keep your normal agent approval controls in place.</p></div>
-  </div>
-</section>
-
-<section class="py-20"><div class="site-shell rounded-2xl border border-warning/30 bg-warning/5 p-8 sm:flex sm:items-center sm:justify-between"><div><h2 class="text-2xl font-black">Found a security problem?</h2><p class="mt-2 text-base-content/60">Do not include secrets or exploit details in a public issue. Use the private reporting process when it is available.</p></div><a class="btn btn-warning mt-6 sm:mt-0" href="https://github.com/myfykris/grumpydev/security/policy">Read the reporting policy</a></div></section>
 </main>
 
     <footer class="border-t soft-rule bg-base-300">
@@ -140,19 +122,18 @@ END GRUMPYDEV ROUTING INSTRUCTION</code></pre>
             <img class="size-9" src="../assets/grumpy-head.png" alt="" width="36" height="36">
             GrumpyDev.ai
           </div>
-          <p class="mt-3 text-base-content/65">Adversarial engineering review for plans that deserve better than a polite nod.</p>
+          <p class="mt-3 text-base-content/65">Skeptical engineering review, tracked until it is fixed.</p>
         </aside>
         <nav>
           <h2 class="footer-title">Product</h2>
           <a class="link link-hover" href="../how-it-works/">How it works</a>
-          <a class="link link-hover" href="../skills/">Skills</a>
+          <a class="link link-hover" href="../skills/grumpydev/SKILL.md">The skill</a>
+          <a class="link link-hover" href="../skills/install.md">The installer</a>
         </nav>
         <nav>
           <h2 class="footer-title">Resources</h2>
-          <a class="link link-hover" href="../author/">Author a skill</a>
           <a class="link link-hover" href="../security/">Security</a>
           <a class="link link-hover" href="../contact/">Contact</a>
-          <a class="link link-hover" href="../manifest.json">Manifest</a>
         </nav>
         <nav>
           <h2 class="footer-title">Source</h2>
@@ -162,5 +143,6 @@ END GRUMPYDEV ROUTING INSTRUCTION</code></pre>
         </nav>
       </div>
     </footer>
+    <script src="../assets/site.js?v=4" defer></script>
   </body>
 </html>

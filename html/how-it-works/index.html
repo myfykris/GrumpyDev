@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>How GrumpyDev works</title>
-    <meta name="description" content="Learn how to set up GrumpyDev in your coding agent, save your project's goals and constraints, and request a review of a plan or code.">
+    <meta name="description" content="The four Grump commands, the issue ledger, what a review checks, and the .grump file that reviews and coding agents share.">
     <meta name="theme-color" content="#1c242b">
     <meta http-equiv="Content-Security-Policy"
-          content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'none'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'">
+          content="default-src 'self'; base-uri 'self'; object-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'none'; form-action 'self'">
     <link rel="canonical" href="https://grumpydev.ai/how-it-works/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="How GrumpyDev works">
-    <meta property="og:description" content="Learn how to set up GrumpyDev in your coding agent, save your project's goals and constraints, and request a review of a plan or code.">
+    <meta property="og:description" content="The four Grump commands, the issue ledger, what a review checks, and the .grump file that reviews and coding agents share.">
     <meta property="og:url" content="https://grumpydev.ai/how-it-works/">
     <meta property="og:image" content="https://grumpydev.ai/assets/social-card.png">
     <meta property="og:image:width" content="1200">
@@ -19,7 +19,7 @@
     <meta property="og:image:alt" content="GrumpyDev: Your plan has problems.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="How GrumpyDev works">
-    <meta name="twitter:description" content="Learn how to set up GrumpyDev in your coding agent, save your project's goals and constraints, and request a review of a plan or code.">
+    <meta name="twitter:description" content="The four Grump commands, the issue ledger, what a review checks, and the .grump file that reviews and coding agents share.">
     <meta name="twitter:image" content="https://grumpydev.ai/assets/social-card.png">
     <meta name="twitter:image:alt" content="GrumpyDev: Your plan has problems.">
     <link rel="icon" href="../assets/favicon.png" type="image/png" sizes="64x64">
@@ -39,8 +39,6 @@
           <ul class="menu menu-horizontal gap-1 px-1 font-semibold">
             <li><a href="../">Home</a></li>
             <li><a href="../how-it-works/">How it works</a></li>
-            <li><a href="../skills/">Skills</a></li>
-            <li><a href="../author/">For authors</a></li>
             <li><a href="../security/">Security</a></li>
             <li><a href="../contact/">Contact</a></li>
             <li><a href="https://github.com/myfykris/grumpydev">GitHub</a></li>
@@ -55,8 +53,6 @@
             <ul class="menu dropdown-content bg-base-200 rounded-box z-10 mt-3 w-56 border soft-rule p-2 shadow-2xl">
               <li><a href="../">Home</a></li>
               <li><a href="../how-it-works/">How it works</a></li>
-              <li><a href="../skills/">Skills</a></li>
-              <li><a href="../author/">For authors</a></li>
               <li><a href="../security/">Security</a></li>
               <li><a href="../contact/">Contact</a></li>
               <li><a href="https://github.com/myfykris/grumpydev">GitHub</a></li>
@@ -71,50 +67,45 @@
   <div class="site-shell grid gap-12 lg:grid-cols-[1fr_.7fr] lg:items-end">
     <div>
       <span class="eyebrow">How it works</span>
-      <h1 class="mt-6 max-w-4xl text-5xl leading-none font-black tracking-[-0.05em] sm:text-7xl">A review system made of files you can read.</h1>
+      <h1 class="mt-6 max-w-4xl text-5xl leading-none font-black tracking-[-0.05em] sm:text-7xl">A skill your agent reads, plus a rules file and a ledger.</h1>
     </div>
-    <p class="text-lg leading-8 text-base-content/65">GrumpyDev is plain-text review guidance for your existing coding agent. Set it up in your project, answer questions about what matters, and ask for a review when you want one. No GrumpyDev account or background service is needed.</p>
+    <p class="text-lg leading-8 text-base-content/65">GrumpyDev is a plain-text skill for the coding agent you already use. Install it in a project, answer at most four questions, and ask for a review when you want one. There is no account or service, and nothing runs in the background.</p>
   </div>
 </section>
 
 <section class="bg-base-200/60 py-20 lg:py-28">
   <div class="site-shell">
-    <div class="grid gap-px overflow-hidden rounded-2xl border soft-rule bg-base-content/10 lg:grid-cols-4">
-      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">01</div><h2 class="mt-5 text-xl font-black">Install</h2><p class="mt-3 leading-7 text-base-content/60">Paste the setup prompt into your coding agent. The installer requires it to inspect the downloaded instructions and get your approval before adding specialist skills.</p></article>
-      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">02</div><h2 class="mt-5 text-xl font-black">Answer project questions</h2><p class="mt-3 leading-7 text-base-content/60">Answer numbered questions about missing project context and your review preferences. The agent is instructed to read your project first and skip factual questions it can already answer.</p></article>
-      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">03</div><h2 class="mt-5 text-xl font-black">Save project context</h2><p class="mt-3 leading-7 text-base-content/60">The survey asks your agent to save this context in <code>.grump</code>. Choose compact notes or more explanation, and edit the file yourself whenever you need to.</p></article>
-      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">04</div><h2 class="mt-5 text-xl font-black">Ask for a review</h2><p class="mt-3 leading-7 text-base-content/60">Show your agent the plan or name its file, then ask: <code>Grump this plan.</code></p><p class="mt-3 leading-7 text-base-content/60">For code changes, you can also ask: <code>Grump this diff.</code></p><p class="mt-3 leading-7 text-base-content/60">The review instructions require an explicit request and a result in chat.</p></article>
+    <span class="eyebrow">Commands</span>
+    <div class="mt-7 grid gap-px overflow-hidden rounded-2xl border soft-rule bg-base-content/10 lg:grid-cols-4">
+      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">REVIEW</div><h2 class="mt-5 text-xl font-black"><code>Grump this plan</code></h2><p class="mt-3 leading-7 text-base-content/60">Also <code>Grump &lt;file&gt;</code>, <code>Grump this diff</code> and <code>Grump this project</code>. The agent reviews, gives a verdict and updates the ledger.</p></article>
+      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">STATUS</div><h2 class="mt-5 text-xl font-black"><code>Grump status</code></h2><p class="mt-3 leading-7 text-base-content/60">Lists every unresolved issue across all ledgers, by severity. Changes nothing.</p></article>
+      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">ACCEPT</div><h2 class="mt-5 text-xl font-black"><code>Grump accept GD-004</code></h2><p class="mt-3 leading-7 text-base-content/60">Marks an issue accepted, with your reason, and offers to record it in <code>.grump</code> so it is not raised again.</p></article>
+      <article class="bg-base-200 p-7"><div class="badge badge-primary badge-outline font-mono">SYNC</div><h2 class="mt-5 text-xl font-black"><code>Grump sync</code></h2><p class="mt-3 leading-7 text-base-content/60">After you edit <code>.grump</code> by hand, rewrites the constraints block in each agent file from it.</p></article>
     </div>
-    <p class="mt-7 rounded-2xl border soft-rule bg-base-200 p-6 leading-7 text-base-content/65">Later, tell your coding agent: <code>Update GrumpyDev for this project.</code> or <code>Remove GrumpyDev from this project.</code> The maintenance instructions require your agent to ask before replacing files that differ. Unrelated files and instructions must be preserved. <a class="link link-primary" href="../security/">Read about updates and removal</a>.</p>
+    <p class="mt-7 rounded-2xl border soft-rule bg-base-200 p-6 leading-7 text-base-content/65">Later: <code>Grump update</code> or <code>Grump remove</code>. Update shows you the diff for each skill file and replaces them after you confirm. Remove asks before deleting <code>.grump</code> or the ledgers. Reviews only start on an explicit Grump request.</p>
   </div>
 </section>
 
 <section class="py-20 lg:py-28">
   <div class="site-shell grid gap-14 lg:grid-cols-2 lg:items-start">
     <div>
-      <span class="eyebrow">What to expect from a review</span>
-      <h2 class="mt-5 text-3xl font-black tracking-tight sm:text-5xl">Specific criticism or it doesn't count.</h2>
-      <p class="mt-5 text-lg leading-8 text-base-content/65">GrumpyDev requires the agent to back each objection with evidence, explain what could go wrong, and say what would fix it.</p>
-      <p class="mt-5 leading-8 text-base-content/65">The instructions require the agent to finish the requested review before giving its verdict. Fixing the work does not start another review; ask for one when you are ready.</p>
-      <p class="mt-5 leading-8 text-base-content/65">When earlier reviews are available, the agent is told to recheck previous findings and explain why any new issue appeared.</p>
+      <span class="eyebrow">What a review checks</span>
+      <h2 class="mt-5 text-3xl font-black tracking-tight sm:text-5xl">The work against the repository.</h2>
+      <p class="mt-5 text-lg leading-8 text-base-content/65">The agent reads the plan or diff, then the code, config, schema, deploy files and docs it touches. Every finding says where, what happens, and the fix.</p>
       <div class="mt-8 space-y-3">
-        <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-primary">EVIDENCE</span><span>What the repository, project documents, reviewed work, or user actually says.</span></div>
-        <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-warning">RISK</span><span>What can fail, for whom, and under which condition.</span></div>
-        <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-error">IMPACT</span><span>Why the failure matters enough to require a change.</span></div>
-        <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-success">ACTION</span><span>The smallest concrete correction or decision needed.</span></div>
+        <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-primary">FAILURES</span><span>Claims the code contradicts, mixed versions during a deploy, retries and partial failure, units and time zones, concurrency.</span></div>
+        <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-warning">OWNERS</span><span>Rules copied into several places, helpers bypassed, code reaching into another unit's internals, layers pointing the wrong way. Copies are counted.</span></div>
+        <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-error">TOUCHED</span><span>Problems already in the files the work edits or uses, marked pre-existing, with fix first, fix now, or record as debt. Nothing outside those files.</span></div>
+        <div class="alert border soft-rule bg-base-200"><span class="review-field-label font-mono text-success">DEFERRED</span><span>Steps that say "research" or "TBD": answered from the repository when it can, otherwise tracked, and NEEDS INFO when they block the core of the plan.</span></div>
       </div>
     </div>
     <div class="rounded-2xl border soft-rule bg-neutral p-7 text-neutral-content shadow-2xl sm:p-9">
-      <div class="flex items-center justify-between border-b border-neutral-content/10 pb-5 font-mono text-xs"><span>GRUMP REVIEW</span><span class="text-warning">🛠️ REVISE</span></div>
-      <div class="mt-6 space-y-6 text-sm leading-7">
-        <div><p class="font-bold text-warning">Summary</p><p class="mt-1 text-neutral-content/60">1 HIGH finding. Invoice retries can create duplicate remote jobs.</p></div>
-        <div><p class="font-bold text-error">🔴 GD-001 [HIGH] Retry can create duplicate jobs</p></div>
-        <div><p class="font-bold text-primary">Evidence</p><p class="text-neutral-content/60"><code>src/jobs/create.ts::submitJob()</code> and plan section "Job submission".</p></div>
-        <div><p class="font-bold">Established fact</p><p class="text-neutral-content/60">The plan retries after a timeout, the client sends no operation key, and the remote ID is stored only after a response returns.</p></div>
-        <div><p class="font-bold text-warning">Conditional risk</p><p class="text-neutral-content/60">A successful first request with a lost response makes the retry unsafe.</p></div>
-        <div><p class="font-bold text-error">Impact</p><p class="text-neutral-content/60">One local operation can produce two remote jobs.</p></div>
-        <div><p class="font-bold text-success">Required change</p><p class="text-neutral-content/60">Define an idempotency boundary and persist the operation key before the first remote call.</p></div>
-        <div class="border-t border-neutral-content/10 pt-4 font-mono text-xs text-neutral-content/45">Review scope: implementation plan / full / deployment</div>
+      <div class="flex items-center justify-between border-b border-neutral-content/10 pb-5 font-mono text-xs"><span>GRUMP REVIEW</span><span class="text-warning">REVISE</span></div>
+      <div class="mt-6 space-y-5 text-sm leading-7">
+        <p class="font-bold text-warning">REVISE - step 3 edits a batch's private rows, so credits change what Ledgerly receives but never reach the database.</p>
+        <div><p class="font-bold text-error">GD-001 HIGH NEW</p><p class="text-neutral-content/60">Where: plan step 3; src/invoices/batch.ts:30-44. commit() writes only status, so the CSV shows the gross amount while Ledgerly holds the net. Fix: add an InvoiceBatch method, or send credits separately.</p></div>
+        <div><p class="font-bold text-warning">GD-002 MEDIUM NEW (pre-existing)</p><p class="text-neutral-content/60">Where: src/export/nightlyCsv.ts:21. Divides every amount by 100, so JPY is 100x too small. The plan edits this loop: fix it in this change with formatMinor().</p></div>
+        <div class="border-t border-neutral-content/10 pt-4 font-mono text-xs text-neutral-content/45">Ledger: .grumpydev/reviews/docs-plans-credit-notes-md.md</div>
       </div>
     </div>
   </div>
@@ -123,23 +114,58 @@
 <section class="border-y soft-rule bg-base-200/60 py-20">
   <div class="site-shell grid gap-12 lg:grid-cols-2">
     <div>
-      <span class="eyebrow">Review depth</span>
-      <p class="mt-5 leading-7 text-base-content/65">Ask for a quick GrumpyDev review to choose Quick. Otherwise, GrumpyDev's instructions use Full.</p>
-      <div class="alert mt-7 border border-primary/30 bg-base-200"><span class="badge badge-primary">MODEL</span><span>Use a reasoning-capable model at medium effort or above. High, xhigh (sometimes labeled extra high), or max is preferred when supported.</span></div>
-      <div class="mt-7 space-y-4">
-        <div class="collapse-arrow collapse border soft-rule bg-base-200"><input type="radio" name="depth" aria-label="Quick review depth"><div class="collapse-title font-bold">Quick - a lighter review</div><div class="collapse-content text-base-content/60"><p>A lighter review of the whole target, focused on the main risks. The agent is instructed to say when a full review is needed to reach a responsible conclusion.</p></div></div>
-        <div class="collapse-arrow collapse border soft-rule bg-base-200"><input type="radio" name="depth" aria-label="Full review depth" checked><div class="collapse-title font-bold">Full - a more thorough review, used by default</div><div class="collapse-content text-base-content/60"><p>A closer investigation of the work, its assumptions and failure cases, and how it could affect other parts of the project.</p></div></div>
-      </div>
+      <span class="eyebrow">The ledger</span>
+      <p class="mt-5 leading-7 text-base-content/65">Each reviewed target gets <code>.grumpydev/reviews/&lt;target&gt;.md</code>: a table of issues with severity, status, the condition that closes each one, and a dated entry per review. History is never deleted.</p>
+      <p class="mt-5 leading-7 text-base-content/65">Problems that predate the work go in <code>.grumpydev/reviews/project.md</code> instead, with stable IDs. A later plan that touches the same file inherits them instead of rediscovering them, and fixing one closes it everywhere. Run <code>Grump this project</code> once to seed it with a full audit of boundaries, duplicated rules and the fix history behind them.</p>
     </div>
     <div>
       <span class="eyebrow">Verdicts</span>
       <div class="mt-7 grid gap-3 sm:grid-cols-2">
-        <div class="rounded-xl border border-success/30 bg-success/5 p-5"><strong class="text-success">APPROVE</strong><p class="mt-2 text-sm text-base-content/60">Sound for its stated purpose.</p></div>
-        <div class="rounded-xl border border-info/30 bg-info/5 p-5"><strong class="text-info">APPROVE WITH CONCERNS</strong><p class="mt-2 text-sm text-base-content/60">Proceed with named nonblocking concerns.</p></div>
-        <div class="rounded-xl border border-warning/30 bg-warning/5 p-5"><strong class="text-warning">REVISE</strong><p class="mt-2 text-sm text-base-content/60">Fix material gaps first.</p></div>
-        <div class="rounded-xl border border-error/30 bg-error/5 p-5"><strong class="text-error">REJECT</strong><p class="mt-2 text-sm text-base-content/60">The approach is fundamentally unsafe or misaligned.</p></div>
-        <div class="rounded-xl border soft-rule bg-base-300 p-5 sm:col-span-2"><strong>INSUFFICIENT EVIDENCE</strong><p class="mt-2 text-sm text-base-content/60">The honest verdict when available evidence cannot support a conclusion.</p></div>
+        <div class="rounded-xl border border-success/30 bg-success/5 p-5"><strong class="text-success">APPROVE</strong><p class="mt-2 text-sm text-base-content/60">Nothing material is wrong.</p></div>
+        <div class="rounded-xl border border-info/30 bg-info/5 p-5"><strong class="text-info">APPROVE WITH CONCERNS</strong><p class="mt-2 text-sm text-base-content/60">Sound work; named concerns, often pre-existing.</p></div>
+        <div class="rounded-xl border border-warning/30 bg-warning/5 p-5"><strong class="text-warning">REVISE</strong><p class="mt-2 text-sm text-base-content/60">Fix the HIGH issues first.</p></div>
+        <div class="rounded-xl border border-error/30 bg-error/5 p-5"><strong class="text-error">REJECT</strong><p class="mt-2 text-sm text-base-content/60">The approach cannot work.</p></div>
+        <div class="rounded-xl border soft-rule bg-base-200 p-5 sm:col-span-2"><strong>NEEDS INFO</strong><p class="mt-2 text-sm text-base-content/60">Undecided questions block the core of the plan: do the discovery first, then plan on the answers.</p></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="py-20 lg:py-28">
+  <div class="site-shell grid gap-12 lg:grid-cols-[.8fr_1.2fr] lg:items-start">
+    <div class="lg:sticky lg:top-28">
+      <span class="eyebrow">The rulebook</span>
+      <h2 class="mt-5 text-3xl font-black tracking-tight sm:text-5xl"><code>.grump</code></h2>
+      <p class="mt-5 text-lg leading-8 text-base-content/65">Your project's rules, in a file you own. Reviews judge the work against it: they never suggest changing a pin, never re-argue a settled decision, and report known debt only when new work spreads it.</p>
+      <p class="mt-5 leading-8 text-base-content/65">Pins, constraints, decisions and boundaries are copied into a marked block in each agent context file you choose, so the agent writing the code follows them before any review happens.</p>
+    </div>
+    <div class="rounded-2xl border soft-rule bg-base-200 p-3 shadow-xl sm:p-6">
+      <div class="flex items-center justify-between border-b soft-rule px-3 pb-4 font-mono text-xs text-base-content/50">
+        <span>.grump</span><span>YOURS TO EDIT</span>
+      </div>
+      <pre class="overflow-x-auto p-3 pt-6 text-sm leading-7 text-base-content/75"><code><span class="text-primary"># Project doctrine</span>
+
+<span class="text-primary">## Purpose</span>
+Customer invoice portal for one client.
+
+<span class="text-primary">## Platform pins</span>
+- PHP 7.4. The client's licensed ionCube module only
+  loads on 7.4. Local Docker runs 8.2 for convenience.
+
+<span class="text-primary">## Constraints</span>
+- The vendor's SOAP billing API is mandatory.
+
+<span class="text-primary">## Accepted decisions</span>
+- Deployment is an FTP upload. No containers.
+
+<span class="text-primary">## Boundaries</span>
+- Money rules live only in src/Money.php.
+
+<span class="text-primary">## Known debt</span>
+- src/Legacy/SoapGateway.php: no timeouts.
+
+<span class="text-primary">## Settings</span>
+- Ledger: on</code></pre>
     </div>
   </div>
 </section>
@@ -156,19 +182,18 @@
             <img class="size-9" src="../assets/grumpy-head.png" alt="" width="36" height="36">
             GrumpyDev.ai
           </div>
-          <p class="mt-3 text-base-content/65">Adversarial engineering review for plans that deserve better than a polite nod.</p>
+          <p class="mt-3 text-base-content/65">Skeptical engineering review, tracked until it is fixed.</p>
         </aside>
         <nav>
           <h2 class="footer-title">Product</h2>
           <a class="link link-hover" href="../how-it-works/">How it works</a>
-          <a class="link link-hover" href="../skills/">Skills</a>
+          <a class="link link-hover" href="../skills/grumpydev/SKILL.md">The skill</a>
+          <a class="link link-hover" href="../skills/install.md">The installer</a>
         </nav>
         <nav>
           <h2 class="footer-title">Resources</h2>
-          <a class="link link-hover" href="../author/">Author a skill</a>
           <a class="link link-hover" href="../security/">Security</a>
           <a class="link link-hover" href="../contact/">Contact</a>
-          <a class="link link-hover" href="../manifest.json">Manifest</a>
         </nav>
         <nav>
           <h2 class="footer-title">Source</h2>
@@ -178,5 +203,6 @@
         </nav>
       </div>
     </footer>
+    <script src="../assets/site.js?v=4" defer></script>
   </body>
 </html>
