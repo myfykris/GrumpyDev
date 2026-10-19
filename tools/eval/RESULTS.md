@@ -115,3 +115,69 @@ the plain prompt read little of the project.
   with the review labels).
 - s2 calibration fails for every arm and model. Reviewers rate real but minor
   issues (catch-all 4xx handling, rows stranded by a rollback) HIGH.
+
+## Same-session priorities test (October 19, 2026)
+
+The usual flow is to write a plan with the agent and then ask for the review in the
+same conversation. This test ran that way: the user stated priorities in the first
+message, and the review was requested in the second. Arms: plain prompt, the skill
+without a priorities section, and the skill with the "Fit with the project" section
+that is now published. Sonnet and Haiku, 3 runs each, blind Opus judges.
+
+| Scenario | Model | Plain | Skill without | Skill with |
+|---|---|---|---|---|
+| Over-built plan for a one-person project: fit items (of 4) | Sonnet | 4.00 | 3.83 | 3.83 |
+| Over-built plan: fit items (of 4) | Haiku | 4.00 | 2.33 | 3.83 |
+| Flawed plan, "speed over polish": fixes sized to the deadline (of 1) | Sonnet | 1.00 | 0.67 | 1.00 |
+| Flawed plan, "speed over polish": fixes sized to the deadline (of 1) | Haiku | 1.00 | 0.83 | 1.00 |
+| Sound plan, "a few hours' delay is fine": delay issues rated by that (of 1) | Sonnet | 0.00 | 0.00 | 1.00 |
+| Sound plan, "a few hours' delay is fine": delay issues rated by that (of 1) | Haiku | 0.00 | 0.00 | 0.00 |
+
+- Without the section, the skill followed the user's stated priorities less than a
+  plain prompt did. With it, it matched the plain prompt, and on the sound plan with
+  Sonnet it rated delay-only issues by what the user said (3 of 3, against 0 of 3).
+- No arm lowered the severity of a real bug because of a priority. Every review in
+  every arm found both data-loss bugs in the over-built plan and kept the security,
+  rollout and duplicate bugs in the flawed plan at HIGH.
+- The sound plan was still not approved in most runs: 1 of 3 with the section on
+  Sonnet, 0 everywhere else.
+- Cost: the section did not change the tokens per review on average.
+
+Reviewing a plan the agent just wrote: in a sixth scenario the agent wrote the plan
+from a short brief and then reviewed it in the same conversation. A fresh agent then
+reviewed the same plan with no history. Across 18 plans, the same-session review found
+64.5 of 98 material defects (66%) and the fresh review 82.5 (84%). The gap appeared in
+all six arm and model combinations, with or without GrumpyDev. Verdicts were about as
+strict either way; the same-session review simply missed more.
+
+## Running the review in a subagent
+
+Tested this line at the top of "Before reviewing": "If you can start a subagent, run
+the review in one. Give it the path of this file, the target, and everything the user
+has said in this conversation about the project's goals, priorities and constraints,
+in the user's words. Tell it to do the review itself, and show the user its review as
+written." Same flow as above, on the over-built plan, the sound plan and the plan the
+agent wrote itself. Sonnet and Haiku, 3 runs each, blind Opus judges.
+
+- Whether agents follow the line could not be measured here. The reviewers in this
+  harness are themselves subagents, and Claude Code tells a subagent to do its task
+  rather than hand it to another subagent. Asked afterwards, reviewers said they saw
+  the line and followed that rule instead. Sonnet never delegated (0 of 9). Haiku
+  delegated in all 6 runs on the over-built and self-written plans and in none of the
+  3 on the sound plan.
+- When it delegated, the handoff worked: all 6 briefs quoted the user's statement
+  word for word, and all 6 reviews reached the user unchanged. (In one run the agent
+  started the subagent in the background and stopped before it finished; that review
+  was scored as the subagent wrote it.)
+- Priorities survived the handoff. On the over-built plan, Haiku's delegated reviews
+  scored 3.67 of 4 on fit items, the same as reviews done in place, and found both
+  data-loss bugs (one at half credit in one run).
+- It did not close the self-review gap. On plans the agent had just written, Haiku's
+  delegated reviews found 12 of 17 defects and fresh reviews of the same plans found
+  14. A Sonnet repeat without delegation found 12.5 of 16 in the same session against
+  13 fresh, so at 3 runs the gap itself is noisy.
+- Cost: delegated reviews used 1.7x (self-written plan) to 2.7x (over-built plan) the
+  tokens of a review done in place, and 3 to 5 times the uncached input, because the
+  subagent reads the project again.
+
+Not added to the skill: about twice the cost, and no measured gain.

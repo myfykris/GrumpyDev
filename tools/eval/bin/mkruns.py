@@ -3,11 +3,14 @@
 Usage:
   mkruns.py <work_dir> <scenario> <arm> <model> <rep>
   mkruns.py <work_dir> xs2 <arm> <model> <rep> --ledger-from <run_dir>
+  mkruns.py <work_dir> <scenario> prio|sub <model> <rep> --skill <skill_dir>
 
 Each run is <work_dir>/runs/<scenario>-<arm>-<model>-r<rep>, a git repo holding the
 scenario's project. Arms:
   plain   no GrumpyDev (the strong prompt)
   lean    v2 skill from html/skills/grumpydev plus the scenario's v2 .grump
+  prio    like lean, with the skill directory given by --skill
+  sub     like prio; the agent may start subagents (same-session scenarios)
   v1      the earlier GrumpyDev (core skills and 20 specialists from commit e275a2c) plus its .grump
   block   impl only: CLAUDE.md with the constraints block
   none    impl only: no doctrine anywhere
@@ -26,7 +29,9 @@ V1_SPECIALISTS = ["postgresql", "schema-evolution", "sql", "distributed-systems"
 LEAN_DOCTRINE = {"s1": "research.grump", "s1r2": "research.grump", "s2": "research.grump", "s3": "research.grump", "s5": "research.grump",
                  "xs1": "research.grump", "xs2": "research.grump", "research": "research.grump",
                  "pin": "pin.grump", "upgrade": "pin.grump", "bplan": "boundaries.grump",
-                 "baudit": "boundaries.grump", "touch": "touch.grump", "touchseed": "touch.grump"}
+                 "baudit": "boundaries.grump", "touch": "touch.grump", "touchseed": "touch.grump",
+                 "fover": "research.grump", "ftol": "research.grump", "fspeed": "research.grump",
+                 "fself": "research.grump"}
 
 def git(cwd, *args, date="2026-10-14T16:00:00Z"):
     env = dict(os.environ, GIT_AUTHOR_NAME="Sam Rivera", GIT_AUTHOR_EMAIL="sam@example.com",
@@ -64,11 +69,16 @@ def invoicer(work):
     return cache
 
 def build_project(work, scen, d):
-    if scen in ("s1", "xs1", "s1r2"):
+    if scen in ("s1", "xs1", "s1r2", "fspeed"):
         copy_into(os.path.join(FIX, "invoice-sync"), d); init_commit(d)
-    elif scen in ("s2", "s3", "s5", "research", "xs2"):
+    elif scen in ("fover", "fself"):
+        copy_into(os.path.join(FIX, "invoice-sync"), d, skip=(S1PLAN,)); init_commit(d)
+        if scen == "fover":
+            put(d, "docs/plans/event-pipeline.md", os.path.join(SCEN, "fit", "event-pipeline.md"))
+            git(d, "add", "-A"); git(d, "commit", "-q", "-m", "Plan draft: event pipeline")
+    elif scen in ("s2", "s3", "s5", "research", "xs2", "ftol"):
         copy_into(os.path.join(FIX, "invoice-sync"), d, skip=(S1PLAN,) if scen != "xs2" else ())
-        if scen in ("s2", "s5"):
+        if scen in ("s2", "s5", "ftol"):
             copy_into(os.path.join(SCEN, "s2"), d)
         elif scen == "s3":
             copy_into(os.path.join(SCEN, "s3"), d)
@@ -117,8 +127,7 @@ def v1_overlay(d):
         sys.exit(f"v1 overlay missing {sorted(missing)}")
     shutil.copy2(os.path.join(DOC, "v1-invoice-sync.grump"), os.path.join(d, ".grump"))
 
-def lean_overlay(d, scen):
-    src = os.path.join(REPO, "html", "skills", "grumpydev")
+def lean_overlay(d, scen, src=os.path.join(REPO, "html", "skills", "grumpydev")):
     shutil.copytree(src, os.path.join(d, ".claude", "skills", "grumpydev"))
     shutil.copy2(os.path.join(DOC, LEAN_DOCTRINE[scen]), os.path.join(d, ".grump"))
 
@@ -136,6 +145,8 @@ def main():
         shutil.copytree(os.path.join(src, ".grumpydev"), os.path.join(d, ".grumpydev"))
     if arm == "lean":
         lean_overlay(d, scen)
+    elif arm in ("prio", "sub"):
+        lean_overlay(d, scen, os.path.abspath(a[a.index("--skill") + 1]))
     elif arm == "v1":
         v1_overlay(d)
     elif arm == "block":

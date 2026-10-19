@@ -21,4 +21,7 @@ same-session re-review, xs1/xs2 cross-session re-review with the ledger, pin (PH
 upgrade (plan needing PHP 8), impl (coding with and without the constraints block),
 research (deferred decisions), bplan/baudit (boundaries plan and audit), touch and
 touchseed (sound plan in files with pre-existing problems, without and with a seeded
-project ledger). Arms: plain (strong prompt), lean (this skill), v1 (the old skill with specialists, commit e275a2c).
+project ledger). Same-session scenarios, where the first message states priorities and the second
+asks for the review: fover (over-built plan), ftol (sound plan with stated tolerances),
+fspeed (flawed plan under a deadline), fself (the agent writes the plan, then reviews it;
+fcold is a fresh review of the same plan). Arms: plain (strong prompt), lean (this skill), prio (a skill variant given with --skill), sub (like prio, and the reviewer may start subagents), v1 (the old skill with specialists, commit e275a2c).
