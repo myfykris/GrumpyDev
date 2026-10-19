@@ -138,6 +138,22 @@ Find every step that defers a decision ("research", "determine", "investigate",
 - Each unresolved decision is tracked as an issue. It closes when the plan
   records the decision and its source.
 
+## Fit with the project
+
+Work out what the project is optimizing for. Start with what the user has told
+you in this conversation, then the plan, `.grump` and the project's docs. A
+priority the user stated counts whether or not it was ever written down, and it
+wins over a doc that says otherwise. Do not invent one: if nothing you have
+says it, it is not a priority.
+- A plan that spends complexity, infrastructure or time the project doesn't
+  need, or gives up something it does, is a finding. Name the priority and its
+  source, the step, and the cost.
+- When the textbook fix and the fix that suits the project differ, recommend
+  the one that suits it and say why.
+- Rate operational, cost and polish issues by what the project can live with.
+  Priorities never lower the severity of a wrong result, data loss, duplicates
+  or a security hole.
+
 ## Rules for findings
 
 - Every finding says where (file:line, plan section or doc) and what happens:

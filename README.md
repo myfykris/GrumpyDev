@@ -67,6 +67,11 @@ formatting. The point is questions like:
 - Why Redis?
 - Seriously, why Redis?
 
+Tell the agent what matters before you ask ("it's just me, there's no on-call,
+fewest moving parts"). The review holds the plan to that even if you never
+wrote it down. It will not let a real bug slide because you said you're in a
+hurry.
+
 ## Why not just ask your agent?
 
 You can. We tested it ([results](tools/eval/RESULTS.md)). On an ordinary plan
