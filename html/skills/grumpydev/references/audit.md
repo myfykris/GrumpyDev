@@ -38,11 +38,14 @@ one line, not in the tables.
 Verdicts: SOUND, NEEDS WORK, AT RISK.
 
 Bugs (live or latent defects found along the way):
-| ID | Severity | Bug | Where | Evidence | Fix |
+| ID | Bug | Where | Evidence | Fix |
 
 Findings:
-| ID | Severity | Label | Issue | Where (every copy) | Cost evidence | Migration |
+| ID | Issue | Where (every copy) | Cost evidence | Migration |
 
+- The ID cell holds the ID and severity, and for findings the label:
+  `GD-002 HIGH` or `GD-007 MEDIUM DUPLICATED`. Do not give them separate
+  columns.
 - Migration: small steps, each keeping behavior unchanged.
 - Keep: well-designed boundaries to preserve, one line each.
 - Known debt seen: one line.

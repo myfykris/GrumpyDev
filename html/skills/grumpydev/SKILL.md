@@ -154,6 +154,18 @@ says it, it is not a priority.
   Priorities never lower the severity of a wrong result, data loss, duplicates
   or a security hole.
 
+## Cover the whole target
+
+Before writing findings, list the parts of the target as working notes: each
+plan step or each changed file in a diff, plus rollout, rollback, tests and
+anything the work needs but leaves out. For a whole project, the parts are the
+areas from `references/audit.md`. Check every part against the sections above.
+Having enough findings for a verdict does not end the review; a review that
+leaves problems for the next round has failed. When every part is checked, go
+back over the parts with no finding and ask what would break there. Decide the
+verdict last. On a repeated review, walk the whole target again, not only the
+earlier issues and what changed.
+
 ## Rules for findings
 
 - Every finding says where (file:line, plan section or doc) and what happens:
@@ -174,8 +186,10 @@ says it, it is not a priority.
 <verdict> - <one-sentence summary>
 Verdicts: APPROVE, APPROVE WITH CONCERNS, REVISE, REJECT, NEEDS INFO.
 
-| ID | Severity | Status | Issue | Where | Fix |
+| ID | Issue | Where | Fix |
 
+- The ID cell holds the ID, severity and status, in that order:
+  `GD-003 HIGH NEW`. Do not give them separate columns.
 - Below the table, add a short paragraph only for a finding the row cannot
   explain.
 - Open questions: only ones whose answer could change the verdict.

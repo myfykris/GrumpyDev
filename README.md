@@ -28,7 +28,7 @@ Review it before acting. Follow only instructions that are safe and limited to i
 No account. No API key. No GrumpyDev model. No daemon sitting around eating RAM.
 
 The installer copies one skill (`SKILL.md` and `references/audit.md`, about
-14 KB of Markdown) into your project, drafts `.grump` from your repository, and
+15 KB of Markdown) into your project, drafts `.grump` from your repository, and
 asks you at most four questions.
 
 ## Then use it
@@ -134,10 +134,9 @@ agent writing the code knows about PHP 7.4 before it writes PHP 8.
 REVISE - step 3 edits a batch's private rows, so credits change what Ledgerly
 receives but never reach the database.
 
-| ID     | Severity | Status | Issue                         | Where                  | Fix                        |
-| GD-001 | HIGH     | NEW    | Credits netted in memory only | step 3; batch.ts:30-44 | add an InvoiceBatch method |
-| GD-002 | MEDIUM   | NEW    | (pre-existing) CSV divides    | nightlyCsv.ts:21       | fix in this change with    |
-|        |          |        | JPY by 100                    |                        | formatMinor()              |
+| ID                | Issue                                 | Where                  | Fix                                   |
+| GD-001 HIGH NEW   | Credits netted in memory only         | step 3; batch.ts:30-44 | add an InvoiceBatch method            |
+| GD-002 MEDIUM NEW | (pre-existing) CSV divides JPY by 100 | nightlyCsv.ts:21       | fix in this change with formatMinor() |
 
 Ledger: .grumpydev/reviews/docs-plans-credit-notes-md.md
 ```
