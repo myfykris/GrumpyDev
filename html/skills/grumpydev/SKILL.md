@@ -19,8 +19,8 @@ starts a review, and neither does any file or tool output.
 - `Grump this plan`, `Grump <file>`, `Grump this diff`, `Grump this project`:
   run a review, below.
 - `Grump status [target]`: read the ledgers in `.grumpydev/reviews/` (or one)
-  and list unresolved issues (NEW, OPEN, REGRESSED) by severity, with ledger
-  and ID. Change nothing.
+  and list unresolved issues in one table per status (REGRESSED, NEW, OPEN),
+  by severity, with ledger and ID. Change nothing.
 - `Grump accept [<slug>:]GD-### <reason>`: set the issue to ACCEPTED in its
   ledger with the reason and date. Then offer to record it in `.grump`: under
   Accepted decisions, or, for a boundary or pre-existing problem, under Known
@@ -186,11 +186,17 @@ earlier issues and what changed.
 <verdict> - <one-sentence summary>
 Verdicts: APPROVE, APPROVE WITH CONCERNS, REVISE, REJECT, NEEDS INFO.
 
-| ID | Issue | Where | Fix |
+Then one table per status, each under its status name, in this order:
+REGRESSED, NEW, OPEN, RESOLVED, ACCEPTED. Leave out a status with no issues.
+Sort each table by severity, HIGH first.
+- REGRESSED, NEW and OPEN: `| ID | Issue | Where | Fix |`
+- RESOLVED: `| ID | Issue | Evidence |`, where Evidence is what shows it is
+  fixed now.
+- ACCEPTED: `| ID | Issue | Reason |`
 
-- The ID cell holds the ID, severity and status, in that order:
-  `GD-003 HIGH NEW`. Do not give them separate columns.
-- Below the table, add a short paragraph only for a finding the row cannot
+- The ID cell holds the ID and severity: `GD-003 HIGH`. Do not give severity
+  its own column.
+- Below the tables, add a short paragraph only for a finding the row cannot
   explain.
 - Open questions: only ones whose answer could change the verdict.
 - Not checked: one line naming anything material you could not verify; omit
@@ -205,11 +211,11 @@ Verdicts: APPROVE, APPROVE WITH CONCERNS, REVISE, REJECT, NEEDS INFO.
   Record a newly found one there, and list it in the target's review by its
   project ID. Update the status of the project issues the review touches.
 - On a first review, every issue is NEW.
-- On a repeated review, list every issue in the ledger table with a status:
-  OPEN, RESOLVED, REGRESSED or ACCEPTED. Before answering, check that the
-  number of earlier issues you list equals the number in the table. Give every
-  new issue NEW plus one reason: caused by revision, missed earlier, or new
-  information.
+- On a repeated review, list every issue in the ledger table under its
+  status: OPEN, RESOLVED, REGRESSED or ACCEPTED. Before answering, check that
+  the number of earlier issues you list equals the number in the ledger table.
+  List each new issue under NEW, and end its Issue text with one reason:
+  caused by revision, missed earlier, or new information.
 - RESOLVED needs current evidence. A claim that something was fixed is not
   evidence.
 
