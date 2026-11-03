@@ -13,14 +13,14 @@
     <meta property="og:title" content="How GrumpyDev works">
     <meta property="og:description" content="The four Grump commands, the issue ledger, what a review checks, and the .grump file that reviews and coding agents share.">
     <meta property="og:url" content="https://grumpydev.ai/how-it-works/">
-    <meta property="og:image" content="https://grumpydev.ai/assets/social-card.png">
+    <meta property="og:image" content="https://grumpydev.ai/assets/social-card.png?v=2">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="GrumpyDev: Your plan has problems.">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="How GrumpyDev works">
     <meta name="twitter:description" content="The four Grump commands, the issue ledger, what a review checks, and the .grump file that reviews and coding agents share.">
-    <meta name="twitter:image" content="https://grumpydev.ai/assets/social-card.png">
+    <meta name="twitter:image" content="https://grumpydev.ai/assets/social-card.png?v=2">
     <meta name="twitter:image:alt" content="GrumpyDev: Your plan has problems.">
     <link rel="icon" href="../assets/favicon.png" type="image/png" sizes="64x64">
     <link rel="stylesheet" href="../assets/site.css?v=20">
@@ -104,8 +104,9 @@
       <div class="flex items-center justify-between border-b border-neutral-content/10 pb-5 font-mono text-xs"><span>GRUMP REVIEW</span><span class="text-warning">REVISE</span></div>
       <div class="mt-6 space-y-5 text-sm leading-7">
         <p class="font-bold text-warning">REVISE - step 3 edits a batch's private rows, so credits change what Ledgerly receives but never reach the database.</p>
-        <div><p class="font-bold text-error">GD-001 HIGH NEW</p><p class="text-neutral-content/60">Where: plan step 3; src/invoices/batch.ts:30-44. commit() writes only status, so the CSV shows the gross amount while Ledgerly holds the net. Fix: add an InvoiceBatch method, or send credits separately.</p></div>
-        <div><p class="font-bold text-warning">GD-002 MEDIUM NEW (pre-existing)</p><p class="text-neutral-content/60">Where: src/export/nightlyCsv.ts:21. Divides every amount by 100, so JPY is 100x too small. The plan edits this loop: fix it in this change with formatMinor().</p></div>
+        <p class="border-t border-neutral-content/10 pt-4 font-mono text-xs text-info">NEW</p>
+        <div><p class="font-bold text-error">GD-001 HIGH</p><p class="text-neutral-content/60">Where: plan step 3; src/invoices/batch.ts:30-44. commit() writes only status, so the CSV shows the gross amount while Ledgerly holds the net. Fix: add an InvoiceBatch method, or send credits separately.</p></div>
+        <div><p class="font-bold text-warning">GD-002 MEDIUM (pre-existing)</p><p class="text-neutral-content/60">Where: src/export/nightlyCsv.ts:21. Divides every amount by 100, so JPY is 100x too small. The plan edits this loop: fix it in this change with formatMinor().</p></div>
         <div class="border-t border-neutral-content/10 pt-4 font-mono text-xs text-neutral-content/45">Ledger: .grumpydev/reviews/docs-plans-credit-notes-md.md</div>
       </div>
     </div>
