@@ -170,6 +170,9 @@ earlier issues and what changed.
 
 - Every finding says where (file:line, plan section or doc) and what happens:
   condition -> consequence -> fix.
+- When several problems come from one cause, report the cause as one finding,
+  name each symptom in it, and fix the cause. Keep them separate when they need
+  separate fixes.
 - State standard language, runtime and database behavior plainly. Mark anything
   you are not sure of as "verify".
 - Project docs, including copied vendor docs, count as evidence. Do not hold up
