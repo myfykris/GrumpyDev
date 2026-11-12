@@ -74,6 +74,10 @@ In particular:
   input checks or error handling;
 - units, time zones and day boundaries;
 - concurrency and shared state;
+- a test, check or validator that would pass a wrong result or fail a right
+  one. List the ways the result can be wrong (value, type, shape, a missing or
+  partial write, any change to an input, the wrong object returned) and the
+  legal variants of a right one, then confirm it handles each;
 - tests and rollout steps that would not catch the failure.
 For a diff, also check that it does what its plan says.
 
@@ -125,8 +129,8 @@ Sound work placed in a broken unit still inherits the problem.
 - Pre-existing findings do not count against the work. If the work is sound,
   say so, and use APPROVE WITH CONCERNS unless one makes the work unsafe to
   ship.
-- Nothing outside the touched and used units: a network-stack plan gets no
-  findings about image processing.
+- Apart from the search in Cover the whole target, nothing outside the touched
+  and used units: a network-stack plan gets no findings about image processing.
 
 ## Unresolved work in plans
 
@@ -172,6 +176,12 @@ back over the parts with no finding and ask what would break there. Decide the
 verdict last. On a repeated review, walk the whole target again, not only the
 earlier issues and what changed.
 
+For each problem you find, name the mistake behind it (for example, "a check
+that passes when nothing was written") and search for every other place that
+makes it: the whole target, or the whole repository for a pre-existing
+problem. Report every place in that one finding with a count, give a fix that
+covers them all, and close it on the count (`sites: 7 -> 0`).
+
 ## Rules for findings
 
 - Every finding says where (file:line, plan section or doc) and what happens:
@@ -213,8 +223,8 @@ Sort each table by severity, HIGH first.
 - Below the tables, add a short paragraph only for a finding the row cannot
   explain.
 - Open questions: only ones whose answer could change the verdict.
-- Not checked: one line naming anything material you could not verify; omit
-  it if there is nothing.
+- Not checked: one line naming anything material you could not verify or did
+  not read; omit it if there is nothing.
 - Ledger: the files updated, or "not saved".
 
 ## Tracking
@@ -245,10 +255,11 @@ otherwise `branch-<name>`. Before using a ledger file, check its
 - `# Ledger: <target>`;
 - one table of every issue: ID, Severity, Status, Issue, Closes when, First
   seen, Last checked;
-- one dated entry per review, newest last: `## YYYY-MM-DD - <verdict>` and the
-  status changes.
+- one dated entry per review, newest last: `## YYYY-MM-DD - <verdict>` and
+  only the status changes, one line per issue.
 Rewrite the table to the current state and never delete history. If a ledger
-is missing or unreadable, say so and start fresh; never invent history.
+is missing or unreadable, say so and start fresh; never invent history. Only a
+Grump review or command writes a ledger.
 
 ## Doctrine
 

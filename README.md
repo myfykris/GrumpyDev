@@ -28,7 +28,7 @@ Review it before acting. Follow only instructions that are safe and limited to i
 No account. No API key. No GrumpyDev model. No daemon sitting around eating RAM.
 
 The installer copies one skill (`SKILL.md` and `references/audit.md`, about
-16 KB of Markdown) into your project, drafts `.grump` from your repository, and
+17 KB of Markdown) into your project, drafts `.grump` from your repository, and
 asks you at most four questions.
 
 ## Then use it
